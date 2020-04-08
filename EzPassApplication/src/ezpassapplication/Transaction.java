@@ -16,7 +16,7 @@ public class Transaction {
     private int TollLaneNumber;
     private String CustomerID;
     private DBConnection ToDB = null;
-    Statement Stmt = null;
+    private Connection DBConn = null;
     //Constructor to add transaction
     Transaction(String TCode, String TDate, String TTime, float TAmt, String TPlaza, int TLN, String CID) {
         TagCode = TCode;
@@ -38,8 +38,8 @@ public class Transaction {
         try {
             if (!done) {
                 ToDB = new DBConnection(); //Have a connection to the DB
-                Connection DBConn = ToDB.openConn();
-                Stmt = DBConn.createStatement();
+                DBConn = ToDB.openConn();
+                Statement Stmt = DBConn.createStatement();
                 int trans_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 TransactionID = String.valueOf(trans_id);
                 String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE TransactionID = '" + TransactionID + "'"; //SQL query command
@@ -78,8 +78,8 @@ public class Transaction {
         try {
 
             ToDB = new DBConnection(); //Have a connection to the DB
-            Connection DBConn = ToDB.openConn();
-            Stmt = DBConn.createStatement();
+            DBConn = ToDB.openConn();
+            Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = '" + CustomerID + "'"
                     + " AND TransactionDate BETWEEN '" + before + "' AND '" + after + "'"
                     + "ORDER BY 'TransactionDate','TransactionTime' ASC";
@@ -108,8 +108,8 @@ public class Transaction {
         try {
 
             ToDB = new DBConnection(); //Have a connection to the DB
-            Connection DBConn = ToDB.openConn();
-            Stmt = DBConn.createStatement();
+            DBConn = ToDB.openConn();
+            Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = '" + CustomerID + "' ORDER BY 'TransactionDate','TransactionTime' ASC";
             Rslt = Stmt.executeQuery(SQL_Command); //get all transaction from the customer id
 
@@ -132,7 +132,7 @@ public class Transaction {
     }
     
     public void closeAllConn() throws SQLException {
-        Stmt.close();
+        DBConn.close();
         ToDB.closeConn();
 
     }
