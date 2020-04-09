@@ -103,6 +103,7 @@ public class Transaction {
         return Rslt; //returns the executed query rows
     }
 
+    //to close connection when returning resultset
     public ResultSet getAllTransactions() {
         ResultSet Rslt = null;
         try {

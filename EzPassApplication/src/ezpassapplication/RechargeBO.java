@@ -7,7 +7,7 @@ import javax.swing.*;
 class RechargePanel extends JPanel implements ActionListener {
 
     private JButton OpenButton;
-    private JTextField CIDField, CardField, NameField, ExpField, CVVField, CurrentBalField, NewBalField;
+    private JTextField CIDField, CardField, NameField, ExpField, CVVField, CurrentBalField, AddBalField;
     private String CustomerID, CurrentBalance, CardNumber, ExpirationDate, CVV, Name, AddBalance;
 
     public RechargePanel(String CID, float Bal) {
@@ -36,14 +36,14 @@ class RechargePanel extends JPanel implements ActionListener {
         BalPane.add(CurrentBalField);
 
         //textfields
-        NewBalField = new JTextField(15);
+        AddBalField = new JTextField(15);
         CardField = new JTextField(15);
         NameField = new JTextField(15);
         ExpField = new JTextField(15);
         CVVField = new JTextField(15);
 
         //labels
-        JLabel NewBalLabel = new JLabel("Add to Balance:");
+        JLabel AddBalLabel = new JLabel("Add to Balance:");
         JLabel CardLabel = new JLabel("Card Number:");
         JLabel NameLabel = new JLabel("Name on Card:");
         JLabel EXPLabel = new JLabel("Expiration Date:");
@@ -51,8 +51,8 @@ class RechargePanel extends JPanel implements ActionListener {
 
         //add textfields and labels to respective panels
         JPanel NewBalPane = new JPanel();
-        NewBalPane.add(NewBalLabel);
-        NewBalPane.add(NewBalField);
+        NewBalPane.add(AddBalLabel);
+        NewBalPane.add(AddBalField);
         JPanel CardPane = new JPanel();
         CardPane.add(CardLabel);
         CardPane.add(CardField);
@@ -95,8 +95,8 @@ class RechargePanel extends JPanel implements ActionListener {
             Name = NameField.getText();
             ExpirationDate = ExpField.getText();
             CVV = CVVField.getText();
-            AddBalance = NewBalField.getText();
-            RechargeControl RC_CTRL = new RechargeControl(CustomerID, CardNumber, Name, ExpirationDate, CVV, AddBalance, CurrentBalance);
+            float add_bal = Float.parseFloat(AddBalField.getText()); //convert string to float
+            RechargeControl RC_CTRL = new RechargeControl(CustomerID, CardNumber, Name, ExpirationDate, CVV, add_bal);
         }
     }
 

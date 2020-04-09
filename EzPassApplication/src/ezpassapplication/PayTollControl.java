@@ -15,9 +15,9 @@ public class PayTollControl {
         float newBal = oldBal - TollAmt;
         EzTag tag = new EzTag(TagCode, CID);
         if (tag.checkTag()) { // Prevent user from stealing someone elses tag code
-            trans.recordTransaction();
-            cus.charge(newBal); //add transaction to db and charge the customer
-            JOptionPane.showMessageDialog(null, "Transaction successful! Your total amount: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            if(trans.recordTransaction() && cus.charge(newBal)){ //record transaction and charge account. 
+                 JOptionPane.showMessageDialog(null, "Transaction successful! Your total amount: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Create transaction failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
