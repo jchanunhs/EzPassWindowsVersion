@@ -73,9 +73,9 @@ class TransactionPanel extends JPanel implements ActionListener {
     private JTextField before, after;
     private JButton getlist;
 
-    DefaultTableModel model = new DefaultTableModel();
-    JTable table; //table
-    String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollAmount", "TollPlaza", "TollLaneNumber", "CustomerID"};
+    private DefaultTableModel model = new DefaultTableModel();
+    private JTable table; //table
+    private String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollAmount", "TollPlaza", "TollLaneNumber"};
 
     public TransactionPanel(String CID) {
         CustomerID = CID;
@@ -111,8 +111,8 @@ class TransactionPanel extends JPanel implements ActionListener {
                 String TAmt ="-"+ String.valueOf(Rslt.getString("TollAmount"));
                 String TP = Rslt.getString("TollPlaza");
                 String TLN = String.valueOf(Rslt.getInt("TollLaneNumber"));
-                String CusID = Rslt.getString("CustomerID");
-                model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN, CusID});
+                
+                model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN});
             }
             
         } catch (Exception e) {
@@ -171,8 +171,8 @@ class TransactionPanel extends JPanel implements ActionListener {
                     String TAmt = "-"+String.valueOf(Rslt.getString("TollAmount"));
                     String TP = Rslt.getString("TollPlaza");
                     String TLN = String.valueOf(Rslt.getInt("TollLaneNumber"));
-                    String CusID = Rslt.getString("CustomerID");
-                    model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN, CusID}); // add new rows to model
+                   
+                    model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN}); // add new rows to model
                 }
 
             } catch (Exception e) {

@@ -7,9 +7,13 @@ public class AddTagControl {
     public AddTagControl(String TC, String TT, String IssueD, String CID) {
         EzTag tag = new EzTag(TC, TT, IssueD, CID); //call ez tag object
         //add the tag to db
-        if (tag.addTag()) {
+        if(TC.equals("") || TT.equals("") || IssueD.equals("")){
+            JOptionPane.showMessageDialog(null, "Add Tag failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (tag.addTag()) {
             JOptionPane.showMessageDialog(null, "Add Tag is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Add Tag failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
