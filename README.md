@@ -42,6 +42,10 @@ CreditCard
 - varchar ExpirationDate
 - varchar CVV
 - varchar CustomerID (FK)
+- varchar Date 
+- varchar Time
+- float CreditAmount
+- Varchar CreditID (PK)
 
 Transaction
 - varchar TransactionID (PK)
