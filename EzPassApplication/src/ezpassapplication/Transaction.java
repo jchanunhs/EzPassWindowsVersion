@@ -1,9 +1,11 @@
 package ezpassapplication;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 public class Transaction {
 
@@ -18,10 +20,8 @@ public class Transaction {
     private DBConnection ToDB = null;
     private Connection DBConn = null;
     //Constructor to add transaction
-    Transaction(String TCode, String TDate, String TTime, float TAmt, String TPlaza, int TLN, String CID) {
+    Transaction(String TCode, float TAmt, String TPlaza, int TLN, String CID) {
         TagCode = TCode;
-        TransactionDate = TDate;
-        TransactionTime = TTime;
         TollAmount = TAmt;
         TollPlaza = TPlaza;
         TollLaneNumber = TLN;
@@ -42,6 +42,13 @@ public class Transaction {
                 Statement Stmt = DBConn.createStatement();
                 int trans_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 TransactionID = String.valueOf(trans_id);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date(System.currentTimeMillis());
+                TransactionDate = formatter.format(date);
+                formatter = new SimpleDateFormat("HH:mm:ss");
+                date = new Date(System.currentTimeMillis());
+                TransactionTime = formatter.format(date);
+                
                 String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE TransactionID = '" + TransactionID + "'"; //SQL query command
                 ResultSet Rslt = Stmt.executeQuery(SQL_Command); //if transaction id does not exist, we are safe to add them to db
                 done = !Rslt.next();

@@ -309,7 +309,7 @@ public class Customer {
         return done;
     }
 
-    public boolean setData(String UName) {
+    public boolean setData(String UName) { //fetch customer information based on username for customer profile
         boolean done = false;
         try {
             if (!done) {
@@ -355,7 +355,7 @@ public class Customer {
 
     }
     
-      public boolean setData() { //fetch data from DB after using setCID
+      public boolean setData() { //fetch data from DB after using setCID for recharge account and paytoll
         boolean done = false;
         try {
             if (!done) {

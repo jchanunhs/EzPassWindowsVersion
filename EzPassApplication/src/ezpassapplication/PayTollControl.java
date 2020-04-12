@@ -6,15 +6,15 @@ public class PayTollControl {
 
     Transaction trans;
 
-    public PayTollControl(String TagCode, String TollPlaza,int intTollLaneNum, float TollAmt, String Date, String Time, String CID) {
-        Transaction trans = new Transaction(TagCode, Date, Time, TollAmt, TollPlaza, intTollLaneNum, CID); //transaction object
+    public PayTollControl(String TagCode, String TollPlaza,int intTollLaneNum, float TollAmt, String CID) {
+        Transaction trans = new Transaction(TagCode, TollAmt, TollPlaza, intTollLaneNum, CID); //transaction object
         Customer cus = new Customer(); //customer object
         cus.setCID(CID);//set the customer id so we can charge the account
         cus.setData();
         float oldBal = cus.getBalance();
         float newBal = oldBal - TollAmt;
         EzTag tag = new EzTag(TagCode, CID);
-        if(TagCode.equals("") || TollPlaza.equals("") || intTollLaneNum == 0 || TollAmt == 0 || Date.equals("") || Time.equals("")){
+        if(TagCode.equals("") || TollPlaza.equals("") || intTollLaneNum == 0 || TollAmt == 0 ){
             
         }
         else if (tag.checkTag()) { // Prevent user from stealing someone elses tag code

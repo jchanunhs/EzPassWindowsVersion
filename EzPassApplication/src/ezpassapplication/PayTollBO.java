@@ -9,8 +9,8 @@ import javax.swing.*;
 class PayTollPanel extends JPanel implements ActionListener {
 
     private JButton OpenButton;
-    private JTextField TagCodeField, TollPlazaField, TollLaneNumberField, TollAmountField, DateField, TimeField;
-    private String TagCode, TollPlaza, TollLaneNumber, TollAmount, Date, Time, CustomerID;
+    private JTextField TagCodeField, TollPlazaField, TollLaneNumberField, TollAmountField;
+    private String TagCode, TollPlaza, TollLaneNumber, TollAmount, CustomerID;
 
     public PayTollPanel(String CID) {
         CustomerID = CID; //set customer id
@@ -21,33 +21,20 @@ class PayTollPanel extends JPanel implements ActionListener {
         TollPlazaField = new JTextField(15);
         TollLaneNumberField = new JTextField(15);
         TollAmountField = new JTextField(15);
-        DateField = new JTextField(15);
-        TimeField = new JTextField(15);
-
-        DateField.setEditable(false); //date and time is already formatted by program so dont allow user to change value
-        TimeField.setEditable(false);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(System.currentTimeMillis());
-        DateField.setText(formatter.format(date));
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        date = new Date(System.currentTimeMillis());
-        TimeField.setText(formatter.format(date));
 
         //labels
         JLabel TagCodeLabel = new JLabel("Tag Code: ");
         JLabel TollPlazaLabel = new JLabel("Toll Plaza: ");
         JLabel TollLaneNumberLabel = new JLabel("Toll Lane: ");
         JLabel TollAmountLabel = new JLabel("Toll Amount: ");
-        JLabel DateLabel = new JLabel("Date: ");
-        JLabel TimeLabel = new JLabel("Time: ");
+       
 
         //panels
         JPanel TagCodePanel = new JPanel();
         JPanel TollPlazaPanel = new JPanel();
         JPanel TollLaneNumberPanel = new JPanel();
         JPanel TollAmountPanel = new JPanel();
-        JPanel DatePanel = new JPanel();
-        JPanel TimePanel = new JPanel();
+        
 
         //add labels and textfields to their respective panels
         TagCodePanel.add(TagCodeLabel);
@@ -58,10 +45,7 @@ class PayTollPanel extends JPanel implements ActionListener {
         TollLaneNumberPanel.add(TollLaneNumberField);
         TollAmountPanel.add(TollAmountLabel);
         TollAmountPanel.add(TollAmountField);
-        DatePanel.add(DateLabel);
-        DatePanel.add(DateField);
-        TimePanel.add(TimeLabel);
-        TimePanel.add(TimeField);
+
         OpenButton.addActionListener(this);
 
         //center it to the middle
@@ -70,8 +54,6 @@ class PayTollPanel extends JPanel implements ActionListener {
         TollPanelCenter.add(TollPlazaPanel);
         TollPanelCenter.add(TollLaneNumberPanel);
         TollPanelCenter.add(TollAmountPanel);
-        TollPanelCenter.add(DatePanel);
-        TollPanelCenter.add(TimePanel);
         TollPanelCenter.add(OpenButton);
         setLayout(new BorderLayout());
         add(TollPanelCenter, BorderLayout.CENTER);
@@ -90,9 +72,7 @@ class PayTollPanel extends JPanel implements ActionListener {
             int intTollLaneNum = Integer.parseInt(String.valueOf(TollLaneNumber)); //Lane number in DB is int
             TollAmount = TollAmountField.getText();
             float TollAmt = Float.parseFloat(String.valueOf(TollAmount)); //Toll amount is float in DB
-            Date = DateField.getText();
-            Time = TimeField.getText();
-            PayTollControl PT_CTRL = new PayTollControl(TagCode, TollPlaza, intTollLaneNum, TollAmt, Date, Time, CustomerID); //pass to control object
+            PayTollControl PT_CTRL = new PayTollControl(TagCode, TollPlaza, intTollLaneNum, TollAmt, CustomerID); //pass to control object
 
         }
     }

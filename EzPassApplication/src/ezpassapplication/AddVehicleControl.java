@@ -10,11 +10,14 @@ public class AddVehicleControl {
         if (LicensePlate.equals("") || Make.equals("") || Model.equals("") || Year.equals("") || Color.equals("") || TagCode.equals("")) {
             JOptionPane.showMessageDialog(null, "Add vehicle failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (ez.checkTag()) { //add vehicle to db and check if tag code belongs to this customer
-            vehicle.addVehicle();
+            if(vehicle.addVehicle()){
             JOptionPane.showMessageDialog(null, "Add vehicle is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Add vehicle failed! Vehicle is already in the database", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Add vehicle failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Add vehicle failed! Tag code is invalid", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
