@@ -20,7 +20,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         then we populate customer information
         Note: user will not be able to edit text field values
          */
-        cus = new Customer(UName);
+        cus = new Customer();
         cus.setData(UName);
         CustomerID = cus.getCustomerID();
 

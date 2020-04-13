@@ -1,8 +1,10 @@
 package ezpassapplication;
 
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class EzTag {
 
@@ -12,7 +14,7 @@ public class EzTag {
     private String CustomerID;
 
     //add tag constructor
-    EzTag(String TC, String TT, String IssueD, String CID) {
+    public EzTag(String TC, String TT, String IssueD, String CID) {
         TagCode = TC;
         TagType = TT;
         IssueDate = IssueD;
@@ -20,9 +22,14 @@ public class EzTag {
     }
 
     //check tag constructor
-    EzTag(String TC, String CID) {
+    public EzTag(String TC, String CID) {
         CustomerID = CID;
         TagCode = TC;
+    }
+   
+    //to get all tags based on CustomerID
+    public EzTag(String CID){
+        CustomerID = CID;
     }
 
     //check if tag belongs to customer
@@ -133,5 +140,38 @@ public class EzTag {
             e.printStackTrace();
         }
         return done;
+    }
+    
+        public ArrayList<String> getTags() { //populate list with tags
+    ArrayList<String> tags = new ArrayList<String>();
+     
+        try {
+
+            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            Connection DBConn = ToDB.openConn();
+            Statement Stmt = DBConn.createStatement();
+            String SQL_Command = "SELECT * FROM EzTag WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
+            ResultSet Rslt = Stmt.executeQuery(SQL_Command); 
+            while (Rslt.next()) {
+                tags.add(Rslt.getString("TagCode"));
+            }
+            Stmt.close();
+            ToDB.closeConn();
+        } catch (java.sql.SQLException e) {
+
+            System.out.println("SQLException: " + e);
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e = e.getNextException();
+                System.out.println("");
+            }
+        } catch (java.lang.Exception e) {
+
+            System.out.println("Exception: " + e);
+            e.printStackTrace();
+        }
+        return tags;
     }
 }

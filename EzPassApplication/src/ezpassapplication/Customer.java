@@ -34,13 +34,9 @@ public class Customer {
         this.UName = UName;
     }
     
-    // to get name of customer to create profile
-    public Customer(String UName) {
-        this.UName = UName;
-    }
     
-    //use cid to fetch data from db
-    public void setCID(String CID) {
+    
+    public Customer(String CID){
         CustomerID = CID;
     }
     
@@ -85,14 +81,14 @@ public class Customer {
         return done;
     }
 
-    public boolean checkExist() {
+    public boolean checkExist(String Username) {
         boolean done = false;
         try {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
                 Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Account WHERE Username ='" + UName + "'"; //SQL query command
+                String SQL_Command = "SELECT * FROM Account WHERE Username ='" + Username + "'"; //SQL query command
                 ResultSet Rslt = Stmt.executeQuery(SQL_Command);
                 Rslt.next();
                 String Customer_ID = Rslt.getString("CustomerID"); //fetch customerid based on the user name
@@ -355,7 +351,7 @@ public class Customer {
 
     }
     
-      public boolean setData() { //fetch data from DB after using setCID for recharge account and paytoll
+      public boolean setData() { //fetch data from DB using CustomerID
         boolean done = false;
         try {
             if (!done) {

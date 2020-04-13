@@ -8,8 +8,7 @@ public class PayTollControl {
 
     public PayTollControl(String TagCode, String TollPlaza,int intTollLaneNum, float TollAmt, String CID) {
         Transaction trans = new Transaction(TagCode, TollAmt, TollPlaza, intTollLaneNum, CID); //transaction object
-        Customer cus = new Customer(); //customer object
-        cus.setCID(CID);//set the customer id so we can charge the account
+        Customer cus = new Customer(CID); //customer object
         cus.setData();
         float oldBal = cus.getBalance();
         float newBal = oldBal - TollAmt;

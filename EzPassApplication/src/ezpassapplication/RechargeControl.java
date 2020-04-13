@@ -5,9 +5,8 @@ import javax.swing.JOptionPane;
 class RechargeControl {
 
     public RechargeControl(String CID, String CNumber, String NM, String EXPDate, String CVV, float AddBal) {
-        Customer cus = new Customer();
+        Customer cus = new Customer(CID);
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
-        cus.setCID(CID);//used to get current balance
         cus.setData();
         float oldBal = cus.getBalance();
         float newBal = oldBal + AddBal; //add the balance together
