@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +15,7 @@ class RechargePanel extends JPanel implements ActionListener {
     private String CustomerID, CurrentBalance, CardNumber, ExpirationDate, CVV, Name, AddBalance;
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
-    private String[] columnName = {"CreditID","CreditAmount", "Date", "Time", "Card Number"};
+    private String[] columnName = {"CreditID", "CardNumber", "Date", "Time", "CreditAmount"};
     private CreditCard credit;
 
     public RechargePanel(String CID, float Bal) {
@@ -57,7 +58,6 @@ class RechargePanel extends JPanel implements ActionListener {
         JLabel CVVLabel = new JLabel("CVV:");
 
         //add textfields and labels to respective panels
-        
         JPanel AddBalPane = new JPanel();
         AddBalPane.add(AddBalLabel);
         AddBalPane.add(AddBalField);
@@ -68,7 +68,7 @@ class RechargePanel extends JPanel implements ActionListener {
         JPanel NamePane = new JPanel();
         NamePane.add(NameLabel);
         NamePane.add(NameField);
-       
+
         JPanel EXPPane = new JPanel();
         EXPPane.add(EXPLabel);
         EXPPane.add(ExpField);
@@ -80,28 +80,21 @@ class RechargePanel extends JPanel implements ActionListener {
 
         //populate table with all credit transactions as default
         model.setColumnIdentifiers(columnName); //column titles
-        ResultSet Rslt = credit.getAllTransactions(); //gets all credit transactions and display them as default
-        try { //get all the values from the query
-            while (Rslt.next()) {
-                String Credit_ID = Rslt.getString("CreditID");
-                String Credit_AMT = Rslt.getString("CreditAmount");
-                String Date = Rslt.getString("Date");
-                String Time = Rslt.getString("Time");
-                String Card_Number = Rslt.getString("CardNumber");
-                
-                model.addRow(new Object[]{Credit_ID, Credit_AMT, Date, Time, Card_Number});
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            try {
-                Rslt.close(); // close connection
-                credit.closeAllConn();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-            }
+        ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
+        ArrayList<String> CN_list = credit.getAllTransactions("CardNumber");
+        ArrayList<String> date_list = credit.getAllTransactions("Date");
+        ArrayList<String> time_list = credit.getAllTransactions("Time");
+        ArrayList<String> CDAmt_list = credit.getAllTransactions("CreditAmount");
+        for (int i = 0; i < CreditID_list.size(); i++) {
+            String Credit_ID = CreditID_list.get(i);
+            String Card_Number = CN_list.get(i);
+            String Date = date_list.get(i);
+            String Time = time_list.get(i);
+            String Credit_AMT = CDAmt_list.get(i);
+            model.addRow(new Object[]{Credit_ID, Card_Number, Date, Time, Credit_AMT});
         }
+
+    
          //initializing a table and scroll pane
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);

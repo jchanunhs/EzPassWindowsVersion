@@ -3,11 +3,9 @@ package ezpassapplication;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 public class CreditCard {
 
@@ -24,7 +22,7 @@ public class CreditCard {
     private Connection DBConn;
 
     //card constructor
-    CreditCard(String CN, String NM, String EXP, String CV, String CID, float CD_AMT) {
+    public CreditCard(String CN, String NM, String EXP, String CV, String CID, float CD_AMT) {
         CardNumber = CN;
         Name = NM;
         ExpirationDate = EXP;
@@ -34,7 +32,7 @@ public class CreditCard {
     }
 
     //Get credit card transactions
-    CreditCard(String CID) {
+    public CreditCard(String CID) {
         CustomerID = CID;
     }
 
@@ -52,7 +50,7 @@ public class CreditCard {
                 formatter = new SimpleDateFormat("HH:mm:ss");
                 date = new Date(System.currentTimeMillis());
                 Time = formatter.format(date);
-
+                
                 Statement Stmt = DBConn.createStatement();
                 //add credit card to db
                 String SQL_Command = "INSERT INTO CreditCard(CardNumber, Name, ExpirationDate, CVV, CustomerID, Date, Time, CreditAmount, CreditID)"
@@ -79,17 +77,46 @@ public class CreditCard {
         }
         return done;
     }
-
-    public ResultSet getAllTransactions() {
-               ResultSet Rslt = null;
+    
+      public ArrayList<String> getAllTransactions(String column_name) { //populate list with credit transactions
+    ArrayList<String> list = new ArrayList<String>();
+     
         try {
 
-            ToDB = new DBConnection(); //Have a connection to the DB
-            DBConn = ToDB.openConn();
+            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            Connection DBConn = ToDB.openConn();
             Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM [TangClass].[dbo].[CreditCard] WHERE CustomerID = '" + CustomerID + "' ORDER BY 'Date','Time' ASC";
-            Rslt = Stmt.executeQuery(SQL_Command); //get all transaction from the customer id
+            ResultSet Rslt = Stmt.executeQuery(SQL_Command); 
+            while (Rslt.next()) {
+               if(column_name.equals("CardNumber")){
+                  list.add(Rslt.getString("CardNumber"));
+               }
+               else if(column_name.equals("Name")){
+                   list.add(Rslt.getString("Name"));
+               }
+               else if(column_name.equals("ExpirationDate")){
+                   list.add(Rslt.getString("ExpirationDate"));
+               }
+               else if(column_name.equals("CVV")){
+                   list.add(Rslt.getString("CVV"));
+               }
+               else if(column_name.equals("Date")){
+                   list.add(Rslt.getString("Date"));
+               }
+               else if(column_name.equals("Time")){
+                   list.add(Rslt.getString("Time"));
+               }
+               else if(column_name.equals("CreditAmount")){
+                   list.add(Rslt.getString("CreditAmount"));
+               }
+               else if(column_name.equals("CreditID")){
+                   list.add(Rslt.getString("CreditID"));
+               }
+            }
 
+            Stmt.close();
+            ToDB.closeConn();
         } catch (java.sql.SQLException e) {
 
             System.out.println("SQLException: " + e);
@@ -105,16 +132,7 @@ public class CreditCard {
             System.out.println("Exception: " + e);
             e.printStackTrace();
         }
-        return Rslt;
-    }
-
-    public void closeAllConn() {
-        try {
-            DBConn.close();
-            ToDB.closeConn();
-        } catch (SQLException ex) {
-            Logger.getLogger(CreditCard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return list;
     }
 
 }

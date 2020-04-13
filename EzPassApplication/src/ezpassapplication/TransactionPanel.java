@@ -4,68 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-/* old panel that uses jlist 
-
-class TransactionPanel extends JPanel implements ActionListener {
-Transaction transaction;
-private String CustomerID;
-private JTextField before, after;
-private JButton getlist;
-
-DefaultListModel holder; //connected to jlist
-DefaultListModel temp; // temp to hold new jlist values to update jlist
-    public TransactionPanel(String CID) {
-        CustomerID = CID;
-        transaction = new Transaction(CustomerID);
-        holder = transaction.getAllTransactions(); //show all transactions for now
-        temp = new DefaultListModel();
-        getlist = new JButton("Populate list");
-        getlist.addActionListener(this);
-        
-        JLabel beforelabel = new JLabel("Date from:");
-        JLabel afterlabel = new JLabel("Date to:");
-        
-        before = new JTextField(15);
-        after = new JTextField(15);
-        
-        JPanel beforepane = new JPanel();
-        JPanel afterpane = new JPanel();
-        
-        beforepane.add(beforelabel);
-        beforepane.add(before);
-        afterpane.add(afterlabel);
-        afterpane.add(after);
-        afterpane.add(getlist);
-        
-        
-        //initializing a list
-        swingComponentList = new JList(holder);
-        swingComponentList.setVisibleRowCount(5); //set the visible rows
-        swingComponentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JLabel listLabel = new JLabel("Transaction List:");
-        JPanel p2 = new JPanel();
-        p2.add(listLabel);
-        p2.add(swingComponentList);
-
-        //declare and initialize a SCROLL PANE
-        JScrollPane listScroll = new JScrollPane(swingComponentList);
-        p2.add(listScroll);
-        
-        
-        
-        Box b = Box.createVerticalBox();
-        b.add(beforepane);
-        b.add(afterpane);
-        b.add(p2);
-        
-        add(b);
-      
-    }
-    
- */
 class TransactionPanel extends JPanel implements ActionListener {
 
     Transaction transaction;
@@ -75,7 +17,7 @@ class TransactionPanel extends JPanel implements ActionListener {
 
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
-    private String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollAmount", "TollPlaza", "TollLaneNumber"};
+    private String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollPlaza", "TollLaneNumber", "TollAmount"};
 
     public TransactionPanel(String CID) {
         CustomerID = CID;
@@ -89,7 +31,7 @@ class TransactionPanel extends JPanel implements ActionListener {
 
         before = new JTextField(15);
         after = new JTextField(15);
-        
+
         //date panels
         JPanel beforepane = new JPanel();
         JPanel afterpane = new JPanel();
@@ -101,31 +43,25 @@ class TransactionPanel extends JPanel implements ActionListener {
 
         //populate table with all transactions as default
         model.setColumnIdentifiers(columnName); //column titles
-        ResultSet Rslt = transaction.getAllTransactions(); //gets all transactions and display them as default
-        try { //get all the values from the query
-            while (Rslt.next()) {
-                String TID = Rslt.getString("TransactionID");
-                String TC = Rslt.getString("TagCode");
-                String TDate = Rslt.getString("TransactionDate");
-                String TTime = Rslt.getString("TransactionTime");
-                String TAmt ="-"+ String.valueOf(Rslt.getString("TollAmount"));
-                String TP = Rslt.getString("TollPlaza");
-                String TLN = String.valueOf(Rslt.getInt("TollLaneNumber"));
-                
-                model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN});
-            }
-            
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            try {
-                Rslt.close(); // close connection
-                transaction.closeAllConn();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-            }
-        }
+        ArrayList<String> TID_list = transaction.getAllTransactions("TransactionID");
+        ArrayList<String> TC_list = transaction.getAllTransactions("TagCode");
+        ArrayList<String> TD_list = transaction.getAllTransactions("TransactionDate");
+        ArrayList<String> TT_list = transaction.getAllTransactions("TransactionTime");
+        ArrayList<String> TP_list = transaction.getAllTransactions("TollPlaza");
+        ArrayList<String> TLN_list = transaction.getAllTransactions("TollLaneNumber");
+        ArrayList<String> TA_list = transaction.getAllTransactions("TollAmount");
 
+        for (int i = 0; i < TID_list.size(); i++) {
+            String TID = TID_list.get(i);
+            String TC = TC_list.get(i);
+            String TDate = TD_list.get(i);
+            String TTime = TT_list.get(i);
+            String TP = TP_list.get(i);
+            String TLN = TLN_list.get(i);
+            String TAmt = "-" + TA_list.get(i);
+            model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
+
+        }
         //initializing a table and scroll pane
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -159,31 +95,25 @@ class TransactionPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
         model.setRowCount(0); //clear the table
-        if (arg.equals("Populate list")) {
-            ResultSet Rslt = transaction.getTransactions(before.getText(), after.getText()); //get transaction based on dates
-            try {
-                while (Rslt.next()) {
-                    //get transaction information
-                    String TID = Rslt.getString("TransactionID");
-                    String TC = Rslt.getString("TagCode");
-                    String TDate = Rslt.getString("TransactionDate");
-                    String TTime = Rslt.getString("TransactionTime");
-                    String TAmt = "-"+String.valueOf(Rslt.getString("TollAmount"));
-                    String TP = Rslt.getString("TollPlaza");
-                    String TLN = String.valueOf(Rslt.getInt("TollLaneNumber"));
-                   
-                    model.addRow(new Object[]{TID, TC, TDate, TTime, TAmt, TP, TLN}); // add new rows to model
-                }
+        if (arg.equals("Populate list")) { //populate list based on date
+            ArrayList<String> TID_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionID");
+            ArrayList<String> TC_list = transaction.getTransactions(before.getText(), after.getText(), "TagCode");
+            ArrayList<String> TD_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionDate");
+            ArrayList<String> TT_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionTime");
+            ArrayList<String> TP_list = transaction.getTransactions(before.getText(), after.getText(), "TollPlaza");
+            ArrayList<String> TLN_list = transaction.getTransactions(before.getText(), after.getText(), "TollLaneNumber");
+            ArrayList<String> TA_list = transaction.getTransactions(before.getText(), after.getText(), "TollAmount");
 
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-            } finally {
-                try {
-                    Rslt.close(); //close connection
-                    transaction.closeAllConn();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex.getMessage());
-                }
+            for (int i = 0; i < TID_list.size(); i++) {
+                String TID = TID_list.get(i);
+                String TC = TC_list.get(i);
+                String TDate = TD_list.get(i);
+                String TTime = TT_list.get(i);
+                String TP = TP_list.get(i);
+                String TLN = TLN_list.get(i);
+                String TAmt = "-" + TA_list.get(i);
+                model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
+
             }
 
         }
