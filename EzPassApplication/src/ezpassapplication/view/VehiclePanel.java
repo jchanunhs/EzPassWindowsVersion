@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.view;
 
+import ezpassapplication.model.Vehicle;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

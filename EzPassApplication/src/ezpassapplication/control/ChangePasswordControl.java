@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.Account;
 import javax.swing.JOptionPane;
 
 public class ChangePasswordControl {

@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.view;
 
+import ezpassapplication.control.RemoveTagControl;
 import java.awt.*;     
 import java.awt.event.*;
 import javax.swing.*;

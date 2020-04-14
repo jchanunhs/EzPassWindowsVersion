@@ -1,9 +1,8 @@
-package ezpassapplication;
+package ezpassapplication.view;
 
+import ezpassapplication.model.Transaction;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

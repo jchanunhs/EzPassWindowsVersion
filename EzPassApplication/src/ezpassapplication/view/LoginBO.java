@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.view;
 
+import ezpassapplication.control.LoginControl;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

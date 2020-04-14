@@ -1,4 +1,4 @@
-package ezpassapplication;
+package ezpassapplication.model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,10 +17,10 @@ public class Customer {
     private float Balance;
     private String UName;
 
-    Customer() {
+    public Customer() {
 
     }
-    
+
     //Add customer to DB
     public Customer(String NM, String ST, String CT, String STE, String ZP, String PN, String EM, float Bal, String UName) {
         this.Name = NM;
@@ -33,14 +33,11 @@ public class Customer {
         this.Balance = Bal;
         this.UName = UName;
     }
-    
-    
-    
-    public Customer(String CID){
+
+    public Customer(String CID) {
         CustomerID = CID;
     }
-    
-    
+
     public boolean createProfile() {
         boolean done = false;
         try {
@@ -350,8 +347,8 @@ public class Customer {
         return done;
 
     }
-    
-      public boolean setData() { //fetch data from DB using CustomerID
+
+    public boolean setData() { //fetch data from DB using CustomerID
         boolean done = false;
         try {
             if (!done) {
@@ -391,7 +388,7 @@ public class Customer {
         return done;
 
     }
- 
+
     //return information after setData was executed
     public String getName() {
         return Name;

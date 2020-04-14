@@ -1,5 +1,8 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.Customer;
+import ezpassapplication.model.EzTag;
+import ezpassapplication.model.Transaction;
 import javax.swing.JOptionPane;
 
 public class PayTollControl {

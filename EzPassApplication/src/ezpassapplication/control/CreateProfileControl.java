@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.Customer;
 import javax.swing.JOptionPane;
 
 public class CreateProfileControl {

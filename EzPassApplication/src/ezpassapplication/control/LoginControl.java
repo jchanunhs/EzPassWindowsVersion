@@ -1,5 +1,9 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.Account;
+import ezpassapplication.model.Customer;
+import ezpassapplication.view.CreateProfileBO;
+import ezpassapplication.view.MainWindowsBO;
 import javax.swing.*;
 
 public class LoginControl {

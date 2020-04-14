@@ -1,4 +1,4 @@
-package ezpassapplication;
+package ezpassapplication.model;
 
 import java.sql.*;
 

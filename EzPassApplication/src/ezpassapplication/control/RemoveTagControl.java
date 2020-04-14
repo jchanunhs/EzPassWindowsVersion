@@ -1,5 +1,6 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.EzTag;
 import javax.swing.JOptionPane;
 
 public class RemoveTagControl {

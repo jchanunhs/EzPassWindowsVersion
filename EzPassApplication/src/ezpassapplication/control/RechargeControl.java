@@ -1,8 +1,10 @@
-package ezpassapplication;
+package ezpassapplication.control;
 
+import ezpassapplication.model.CreditCard;
+import ezpassapplication.model.Customer;
 import javax.swing.JOptionPane;
 
-class RechargeControl {
+public class RechargeControl {
 
     public RechargeControl(String CID, String CNumber, String NM, String EXPDate, String CVV, float AddBal) {
         Customer cus = new Customer(CID);

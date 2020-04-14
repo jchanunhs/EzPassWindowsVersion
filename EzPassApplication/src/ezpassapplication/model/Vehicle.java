@@ -1,4 +1,4 @@
-package ezpassapplication;
+package ezpassapplication.model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class Vehicle {
     private String CustomerID;
 
     //Constructor to add vehicle
-    Vehicle(String LicensePlate, String make, String model, String year, String color, String tagCode, String CID) {
+    public Vehicle(String LicensePlate, String make, String model, String year, String color, String tagCode, String CID) {
         LicensePlateNumber = LicensePlate;
         Make = make;
         Model = model;
@@ -27,12 +27,12 @@ public class Vehicle {
     }
 
     //Constructor to get vehicle information
-    Vehicle(String CID) {
+    public Vehicle(String CID) {
         CustomerID = CID;
     }
 
     //Constructor to remove vehicle
-    Vehicle(String CID, String LicensePlate) {
+    public Vehicle(String CID, String LicensePlate) {
         LicensePlateNumber = LicensePlate;
         CustomerID = CID;
     }
