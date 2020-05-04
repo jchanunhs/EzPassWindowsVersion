@@ -57,7 +57,6 @@ public class Account {
     }
     
     public String getCustomerID() {
-        String Name = "";
         try {
             DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();
@@ -65,7 +64,7 @@ public class Account {
             String SQL_Command = "SELECT * FROM Account WHERE Username ='" + Username + "'AND Password ='" + Password + "'"; //SQL query command
             ResultSet Rslt = Stmt.executeQuery(SQL_Command); // Execute
             Rslt.next();
-            Name = Rslt.getString("CustomerID"); //Fetch name row
+            CustomerID = Rslt.getString("CustomerID"); //Fetch name row
             Stmt.close();
             ToDB.closeConn();
         } catch (java.sql.SQLException e) {
@@ -83,7 +82,7 @@ public class Account {
             System.out.println("Exception: " + e);
             e.printStackTrace();
         }
-        return Name;
+        return CustomerID;
     }
 
     public boolean signUp() {
