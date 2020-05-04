@@ -196,6 +196,8 @@ public class Account {
             String SQL_Command = "SELECT Username FROM Account WHERE Username ='" + Username + "'AND Password ='" + Password + "'"; //SQL query command
             ResultSet Rslt = Stmt.executeQuery(SQL_Command);
             done = Rslt.next();//If there is a row, user typed in valid username and password and return true
+            Stmt.close();
+            ToDB.closeConn();
         } catch (java.sql.SQLException e) {
             done = false;
             System.out.println("SQLException: " + e);

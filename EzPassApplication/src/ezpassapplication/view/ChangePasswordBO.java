@@ -68,15 +68,12 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
             String newPW = NewPassword.getText();
             String newPW1 = Retype.getText();
             String UName = Username.getText();
-            if (newPW.equals(newPW1)) {
-                ChangePasswordControl CP_CTRL = new ChangePasswordControl(UName, CustomerID, oldPW, newPW);
-            } else {
-                JOptionPane.showMessageDialog(null, "Password doesnt match!", "Error", JOptionPane.ERROR_MESSAGE);
+            ChangePasswordControl CP_CTRL = new ChangePasswordControl(UName, oldPW, newPW, newPW1);
             }
         }
     }
 
-}
+
 
 public class ChangePasswordBO extends JFrame {
 

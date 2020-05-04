@@ -18,8 +18,6 @@ public class CreditCard {
     private String Time;
     private float CreditAmount;
     private String CreditID;
-    private DBConnection ToDB;
-    private Connection DBConn;
 
     //card constructor
     public CreditCard(String CN, String NM, String EXP, String CV, String CID, float CD_AMT) {
@@ -40,8 +38,8 @@ public class CreditCard {
         boolean done = false;
         try {
             if (!done) {
-                ToDB = new DBConnection(); //Have a connection to the DB
-                DBConn = ToDB.openConn();
+                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                Connection DBConn = ToDB.openConn();
                 int credit_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 CreditID = String.valueOf(credit_id);
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

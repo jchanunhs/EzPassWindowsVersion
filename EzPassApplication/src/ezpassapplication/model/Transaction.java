@@ -17,8 +17,7 @@ public class Transaction {
     private String TollPlaza;
     private int TollLaneNumber;
     private String CustomerID;
-    private DBConnection ToDB = null;
-    private Connection DBConn = null;
+   
 
     //Constructor to add transaction
     public Transaction(String TCode, float TAmt, String TPlaza, int TLN, String CID) {
@@ -38,8 +37,8 @@ public class Transaction {
         boolean done = false;
         try {
             if (!done) {
-                ToDB = new DBConnection(); //Have a connection to the DB
-                DBConn = ToDB.openConn();
+                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                Connection DBConn = ToDB.openConn();
                 Statement Stmt = DBConn.createStatement();
                 int trans_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 TransactionID = String.valueOf(trans_id);
@@ -133,8 +132,8 @@ public class Transaction {
         ArrayList<String> list = new ArrayList<String>();
         try {
 
-            ToDB = new DBConnection(); //Have a connection to the DB
-            DBConn = ToDB.openConn();
+            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            Connection DBConn = ToDB.openConn();
             Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = '" + CustomerID + "'"
                     + " AND TransactionDate BETWEEN '" + before + "' AND '" + after + "'"
