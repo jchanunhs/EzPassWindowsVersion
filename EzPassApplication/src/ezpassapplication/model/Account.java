@@ -27,7 +27,6 @@ public class Account {
     }
 
     public String getName() {
-        String Name = "";
         try {
             DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();

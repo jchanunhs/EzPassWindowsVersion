@@ -302,51 +302,7 @@ public class Customer {
         return done;
     }
 
-    public boolean setData(String UName) { //fetch customer information based on username for customer profile
-        boolean done = false;
-        try {
-            if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
-                Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Account WHERE Username ='" + UName + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Use user name to find customer id
-                Rslt.next();
-                String Customer_ID = Rslt.getString("CustomerID");
-                SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + Customer_ID + "'";
-                Rslt = Stmt.executeQuery(SQL_Command); // use customer id to get information
-                Rslt.next();
-                CustomerID = Customer_ID;
-                Name = Rslt.getString("Name");
-                Street = Rslt.getString("Street");
-                City = Rslt.getString("City");
-                State = Rslt.getString("State");
-                Zip = Rslt.getString("Zip");
-                Phone = Rslt.getString("Phone");
-                Email = Rslt.getString("Email");
-                Balance = Rslt.getFloat("Balance");
-                Stmt.close();
-                ToDB.closeConn();
-                done = true;
-            }
-        } catch (java.sql.SQLException e) {
-            done = false;
-            System.out.println("SQLException: " + e);
-            while (e != null) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e = e.getNextException();
-                System.out.println("");
-            }
-        } catch (java.lang.Exception e) {
-            done = false;
-            System.out.println("Exception: " + e);
-            e.printStackTrace();
-        }
-        return done;
-
-    }
+    
 
     public boolean setData() { //fetch data from DB using CustomerID
         boolean done = false;

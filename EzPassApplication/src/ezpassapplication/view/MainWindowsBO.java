@@ -8,7 +8,7 @@ class MainWindowsPanel extends JPanel {
 
     //main windows to show customer informations
     public MainWindowsPanel(String UName, String CID) {
-        UserProfilePanel user = new UserProfilePanel(UName); //User Profile
+        UserProfilePanel user = new UserProfilePanel(CID); //User Profile
         VehiclePanel vehicle = new VehiclePanel(CID);  //Display Vehicles
         PayTollPanel paytoll = new PayTollPanel(CID); // PayToll
         EzTagPanel eztag = new EzTagPanel(CID); //EZ tag

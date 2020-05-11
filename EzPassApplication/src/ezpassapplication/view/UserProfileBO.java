@@ -12,7 +12,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
     private String Name, Street, City, State, Zip, Phone, Email, Balance, UName, CustomerID;
 
-    public UserProfilePanel(String UName) {
+    public UserProfilePanel(String CID) {
 
         /*
         When user login, all we know from them is their user name
@@ -21,9 +21,9 @@ class UserProfilePanel extends JPanel implements ActionListener {
         then we populate customer information
         Note: user will not be able to edit text field values
          */
-        cus = new Customer();
-        cus.setData(UName);
-        CustomerID = cus.getCustomerID();
+        cus = new Customer(CID);
+        cus.setData();
+        
 
         ChangePassword = new JButton("Change Password");
         Recharge = new JButton("Recharge");
