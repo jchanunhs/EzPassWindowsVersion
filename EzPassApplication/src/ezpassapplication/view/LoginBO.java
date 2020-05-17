@@ -81,7 +81,7 @@ public class LoginBO extends JFrame implements ActionListener
             //System.out.println("Name: "+arg);
             String Username = UsernameField.getText();
             String Password = PasswordField.getText();
-            LoginControl LoginC = new LoginControl(Username, Password);
+            LoginControl LoginC = new LoginControl(evt, Username, Password);
         }
     }
 

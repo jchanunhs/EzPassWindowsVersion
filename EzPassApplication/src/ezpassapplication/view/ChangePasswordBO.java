@@ -68,7 +68,7 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
             String newPW = NewPassword.getText();
             String newPW1 = Retype.getText();
             String UName = Username.getText();
-            ChangePasswordControl CP_CTRL = new ChangePasswordControl(UName, oldPW, newPW, newPW1);
+            ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, UName, oldPW, newPW, newPW1);
             }
         }
     }

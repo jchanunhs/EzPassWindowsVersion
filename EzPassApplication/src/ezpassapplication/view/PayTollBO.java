@@ -73,7 +73,7 @@ class PayTollPanel extends JPanel implements ActionListener {
             int intTollLaneNum = Integer.parseInt(String.valueOf(TollLaneNumber)); //Lane number in DB is int
             TollAmount = TollAmountField.getText();
             float TollAmt = Float.parseFloat(String.valueOf(TollAmount)); //Toll amount is float in DB
-            PayTollControl PT_CTRL = new PayTollControl(TagCode, TollPlaza, intTollLaneNum, TollAmt, CustomerID); //pass to control object
+            PayTollControl PT_CTRL = new PayTollControl(evt, TagCode, TollPlaza, intTollLaneNum, TollAmt, CustomerID); //pass to control object
 
         }
     }

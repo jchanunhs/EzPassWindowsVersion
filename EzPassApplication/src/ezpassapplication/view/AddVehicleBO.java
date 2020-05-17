@@ -91,7 +91,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
             Year = YearField.getText();
             Color = ColorField.getText();
             TagCode = TagCodeField.getText();
-            AddVehicleControl CP_CTRL = new AddVehicleControl(LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
+            AddVehicleControl CP_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
 
 
         }

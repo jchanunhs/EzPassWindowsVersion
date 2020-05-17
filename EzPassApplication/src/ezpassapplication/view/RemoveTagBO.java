@@ -57,7 +57,7 @@ class RemoveTagPanel extends JPanel implements ActionListener {
             TagCode = TagCodeField.getText();
             CustomerID = CustomerIDField.getText();
 
-            RemoveTagControl CP_CTRL = new RemoveTagControl(TagCode, CustomerID);
+            RemoveTagControl CP_CTRL = new RemoveTagControl(evt, TagCode, CustomerID);
 
         }
     }

@@ -74,7 +74,7 @@ class AddTagPanel extends JPanel implements ActionListener {
             IssueDate = IssueDateField.getText();
             CustomerID = CustomerIDField.getText();
 
-            AddTagControl CP_CTRL = new AddTagControl(TagCode, TagType, IssueDate, CustomerID);
+            AddTagControl CP_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
 
         }
     }

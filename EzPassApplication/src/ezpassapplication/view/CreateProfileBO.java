@@ -100,7 +100,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
             Email = EmailField.getText();
             Balance = BalanceField.getText();
             float Bal = Float.parseFloat(String.valueOf(Balance));
-            CreateProfileControl CP_CTRL = new CreateProfileControl(Name, Street, City, State, Zip, Phone, Email, Bal, UName);
+            CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, UName);
 
         }
     }

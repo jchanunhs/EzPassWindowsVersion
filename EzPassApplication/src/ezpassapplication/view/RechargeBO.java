@@ -137,7 +137,7 @@ class RechargePanel extends JPanel implements ActionListener {
             ExpirationDate = ExpField.getText();
             CVV = CVVField.getText();
             float add_bal = Float.parseFloat(AddBalField.getText()); //convert string to float
-            RechargeControl RC_CTRL = new RechargeControl(CustomerID, CardNumber, Name, ExpirationDate, CVV, add_bal);
+            RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, CardNumber, Name, ExpirationDate, CVV, add_bal);
         }
     }
 

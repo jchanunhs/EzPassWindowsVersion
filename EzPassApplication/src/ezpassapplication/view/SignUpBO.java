@@ -60,7 +60,7 @@ class SignUpPanel extends JPanel implements ActionListener {
             PsWord1 = PasswordField1.getText();
             Name = NameField.getText();
 
-            SignUpControl SU_CTRL = new SignUpControl(UName, PsWord, PsWord1, Name);
+            SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, PsWord1, Name);
         }
     }
 
