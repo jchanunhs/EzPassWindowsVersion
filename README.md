@@ -1,5 +1,5 @@
 # EzPassApplication
-EzPass simulation in Java Language and using MVC design patterns.
+Created an EzPass simulation in Java Language and using MVC design patterns.
 
 src folder contains their respective model,view,control objects
 
