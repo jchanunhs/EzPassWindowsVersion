@@ -1,6 +1,8 @@
 # EzPassApplication
 EzPass simulation in Java Language and using MVC design patterns.
 
+src folder contains their respective model,view,control objects
+
 Database name = TangClass
 
 Tables and attributes. 
