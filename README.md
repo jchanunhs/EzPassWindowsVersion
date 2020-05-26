@@ -62,18 +62,18 @@ Transaction
 When users first login, they are prompt to create their customer profile. After its created, their next login they will see the MainWindows. The MainWindowsBO contains 5 tabs.
 
 Profile
-- Shows customer information (Name, address, balance on account, etc.)
+- Shows customer information (Name, address, balance on account, etc.).
 - They are able to change their password, recharge their account using credit card information, logout.
 
 Vehicle
-- License plate is displayed in JList
-- User can select the license plate and click remove vehicle button to delete it
-- They can also add a vehicle to their account
+- License plate is displayed in JList.
+- User can select the license plate and click remove vehicle button to delete it.
+- They can also add a vehicle to their account.
 
 EZ Tags
 - Users can add ez tag or remove it.
 - Tag can only be removed if it was never used to pay tolls or not linked to a vehicle. 
-- When user adds a vehicle, they also have to specify the ez tag associated with their vehicle
+- When user adds a vehicle, they also have to specify the ez tag associated with their vehicle.
 
 Pay Toll
 - User can pay toll by entering their tag code, toll plaza, lane number and amount charged.
