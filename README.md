@@ -72,6 +72,7 @@ Vehicle
 
 EZ Tags
 - Users can add ez tag or remove it.
+- Tag can only be removed if it was never used to pay tolls. 
 - When user adds a vehicle, they also have to specify the ez tag associated with their vehicle
 
 Pay Toll
