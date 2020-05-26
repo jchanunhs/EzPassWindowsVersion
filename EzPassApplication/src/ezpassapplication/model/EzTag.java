@@ -114,7 +114,7 @@ public class EzTag {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
                 Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM EzTag WHERE TagCode ='" + TagCode + "'";
+                String SQL_Command = "SELECT * FROM EzTag WHERE CustomerID ='" + CustomerID + "'" + "AND TagCode ='" + TagCode + "'";
                 ResultSet Rslt = Stmt.executeQuery(SQL_Command); //check if tag code exist
                 done = Rslt.next(); //if yes, then we can remove tag if tag and customerid match in the db
                 if (done) {
