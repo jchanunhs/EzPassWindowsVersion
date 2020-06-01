@@ -1,0 +1,201 @@
+header, nav, main, footer { 
+display: block; 
+}
+
+header{
+background-color: lightblue;
+text-shadow: 2px 2px 2px gray;
+font-family: Arial, "Times New Roman", sans-serif;
+font-size: 30px;
+padding-top:20px;
+padding-bottom:20px;
+font-weight: bold;
+margin-bottom:5px;
+width: 1024px;
+text-align: center;
+}
+
+body{
+  background-image: url("../images/background.jpg");
+  background-repeat: repeat;
+  background-position: center; 
+  background-attachment: fixed;
+}
+
+aside {
+  height: 100%;
+  width: 160px;
+  top: 0;
+  left: 0;
+  background-color: cyan;
+  text-align: center;
+}
+
+aside a {
+  padding-top: 5px; 
+  padding-bottom: 5px;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: Arial, "Times New Roman", sans-serif;
+  color: black;
+  display: block;
+}
+
+.active-link{
+background-color: green;
+}
+
+aside a:hover {
+  background-color: lightblue;
+  text-decoration: underline;
+}
+
+.links{
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-decoration: underline;
+  font-size: 20px;
+  color: black;
+  display: block;
+  font-weight: bold;
+  font-family: Arial, "Times New Roman", sans-serif;
+  text-align: center;
+}
+
+main {
+  background-color: white;
+  font-family: Arial, "Times New Roman", sans-serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 859px;
+}
+
+footer{
+background-color: lightblue;
+font-family: Arial, "Times New Roman", sans-serif;
+margin-top: 5px;
+width: 1024px;
+text-align: center;
+}
+
+.flexVertical{
+display:flex;
+flex-direction:column;
+}
+
+.flexHorizontal{
+display: flex;
+flex-direction: row;
+}
+
+
+table {
+border-style: solid;
+border:2px;
+border-collapse: collapse;
+margin-left: auto;
+margin-right: auto;
+}
+
+td, th{
+padding: 10px;
+border: 1px;
+border-color: cyan;
+border-style: solid;
+text-align: center;
+}
+
+#wrapper { 
+           color: black;
+           width: 100%;
+           margin-right: auto;
+	   margin-left: auto;
+           min-width: 700px;
+           max-width: 1024px;
+}
+
+#date{
+padding-left: 5px;
+padding-top: 10px;
+}
+
+#space{
+margin-left:5px;
+}
+
+
+#message{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+input,select {
+margin-bottom: 10px;
+
+}
+
+form{
+text-align:center;
+padding-right: 205px;
+padding-left: 205px;
+padding-bottom: 80px;
+padding-top: 80px;
+}
+
+
+@media (max-width: 720px){
+
+body{
+
+  background-repeat: repeat;
+  background-position: center; 
+  background-attachment: fixed;
+}
+
+}
+
+.dropbtn {
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  width: 160px;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: cyan;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align:center;
+}
+
+.dropdown-content a:hover {background-color: lightblue;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: lightblue;
+}
