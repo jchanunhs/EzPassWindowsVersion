@@ -12,12 +12,13 @@ class AddVehiclePanel extends JPanel implements ActionListener {
     private String LicensePlate, Make, Model, Year, Color, TagCode, Email, Balance, CustomerID, Username;
 
     public AddVehiclePanel(String CID, String User) {
-        SubmitButton = new JButton("Submit"); //submit button
+
+        SubmitButton = new JButton("Submit");
         BackButton = new JButton("Back");
-        
         CustomerID = CID; //set customer id
         Username = User;
-        //set jtextfields. customer id will not be editable by user
+
+        //JTextFields
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
@@ -28,7 +29,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         ColorField = new JTextField(15);
         TagCodeField = new JTextField(15);
 
-        //labels for textfield
+        //JLabels
         JLabel CustomerIDLabel = new JLabel("Customer ID:");
         JLabel LicensePlateNumberLabel = new JLabel("License Plate:");
         JLabel MakeLabel = new JLabel("Make: ");
@@ -37,7 +38,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         JLabel ColorLabel = new JLabel("Color: ");
         JLabel TagCodeLabel = new JLabel("TagCode: ");
 
-        //each panel contains a label and a text field
+        //JPanels
         JPanel CustomerIDPanel = new JPanel();
         JPanel LicensePlateNumberPanel = new JPanel();
         JPanel MakePanel = new JPanel();
@@ -49,6 +50,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         JPanel BalancePanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
 
+        //Add Labels and TextFields to Panels
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
         LicensePlateNumberPanel.add(LicensePlateNumberLabel);
@@ -65,39 +67,36 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         TagCodePanel.add(TagCodeField);
         ButtonPanel.add(SubmitButton);
         ButtonPanel.add(BackButton);
-        
-        SubmitButton.addActionListener(this); //event listener registration
+
+        //register event listener
+        SubmitButton.addActionListener(this);
         BackButton.addActionListener(this);
-        
-        //The panels will be placed in the centerpanel to set it to the top of frame
-        Box CenterPanel = Box.createVerticalBox();
-        CenterPanel.add(CustomerIDPanel);
-        CenterPanel.add(LicensePlateNumberPanel);
-        CenterPanel.add(MakePanel);
-        CenterPanel.add(ModelPanel);
-        CenterPanel.add(YearPanel);
-        CenterPanel.add(ColorPanel);
-        CenterPanel.add(TagCodePanel);
-        CenterPanel.add(ButtonPanel);
+
+        //Vertical design 
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(CustomerIDPanel);
+        MainPanel.add(LicensePlateNumberPanel);
+        MainPanel.add(MakePanel);
+        MainPanel.add(ModelPanel);
+        MainPanel.add(YearPanel);
+        MainPanel.add(ColorPanel);
+        MainPanel.add(TagCodePanel);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.NORTH);
+        add(MainPanel, BorderLayout.NORTH);
     }
 
-    public void actionPerformed(ActionEvent evt) //event handling
-    {
-        //Object source = evt.getSource(); //get who generates this event
+    public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
-        if (arg.equals("Submit")) { //determine which button is clicked
-            //when clicked, get values input by textfield and pass it to control object
+        if (arg.equals("Submit")) {  //get inputs and forward to control
             LicensePlate = LicensePlateNumberField.getText();
             Make = MakeField.getText();
             Model = ModelField.getText();
             Year = YearField.getText();
             Color = ColorField.getText();
             TagCode = TagCodeField.getText();
-            AddVehicleControl CP_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
-
-        } else if (arg.equals("Back")) {
+            AddVehicleControl AV_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
+        } else if (arg.equals("Back")) { //return to main windows and close add vehicle window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
@@ -136,5 +135,3 @@ public class AddVehicleBO extends JFrame {
     }
 
 }
-
-

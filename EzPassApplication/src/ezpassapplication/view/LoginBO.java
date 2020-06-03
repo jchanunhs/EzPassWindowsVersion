@@ -70,7 +70,6 @@ public class LoginBO extends JFrame implements ActionListener
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-        //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
 
         if (arg.equals("Sign Up")) {
@@ -80,7 +79,6 @@ public class LoginBO extends JFrame implements ActionListener
             win.dispose();
         }
         if (arg.equals("Login")) {
-            //System.out.println("Name: "+arg);
             String Username = UsernameField.getText();
             String Password = PasswordField.getText();
             LoginControl LoginC = new LoginControl(evt, Username, Password);

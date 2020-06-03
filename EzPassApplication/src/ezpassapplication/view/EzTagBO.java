@@ -11,16 +11,16 @@ class EzTagPanel extends JPanel implements ActionListener {
     private String CustomerID, Username;
 
     public EzTagPanel(String CID, String User) {
-        //customerid is set to textfield. do not allow user to change it
-        //customer has option to add tag or remove tag
+
         AddButton = new JButton("Add Tag");
         RemoveButton = new JButton("Remove Tag");
         CustomerID = CID;
         Username = User;
+
+        //Display Customer ID
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
-
         JLabel CustomerIDLabel = new JLabel("CustomerID: ");
 
         JPanel CustomerIDPanel = new JPanel();
@@ -31,29 +31,29 @@ class EzTagPanel extends JPanel implements ActionListener {
         button.add(AddButton);
         button.add(RemoveButton);
 
+        //Register event listener
         AddButton.addActionListener(this);
-        RemoveButton.addActionListener(this); //event listener registration
+        RemoveButton.addActionListener(this);
 
-        JPanel CenterPanel = new JPanel();
-        CenterPanel.add(CustomerIDPanel);
-        CenterPanel.add(button);
+        //Center panel will contain all the other panels
+        JPanel MainPanel = new JPanel();
+        MainPanel.add(CustomerIDPanel);
+        MainPanel.add(button);
 
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
+        add(MainPanel, BorderLayout.CENTER);
 
     }
 
-    public void actionPerformed(ActionEvent evt) //event handling
-    {
-        //Object source = evt.getSource(); //get who generates this event
+    public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
-        if (arg.equals("Add Tag")) { //if user wants to add tag, declare an add tag BO
-            AddTagBO add = new AddTagBO(CustomerID,Username);
+        if (arg.equals("Add Tag")) { //open add tag window and close eztag window
+            AddTagBO add = new AddTagBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
-        } else if (arg.equals("Remove Tag")) { //if user wants to remove tag, declare an remove tag BO
-            RemoveTagBO remove = new RemoveTagBO(CustomerID,Username);
+        } else if (arg.equals("Remove Tag")) { //open remove tag window and close eztag window
+            RemoveTagBO remove = new RemoveTagBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
@@ -85,7 +85,7 @@ public class EzTagBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        ET_Panel = new EzTagPanel(CID,User);
+        ET_Panel = new EzTagPanel(CID, User);
         contentPane.add(ET_Panel);
         setVisible(true);
     }

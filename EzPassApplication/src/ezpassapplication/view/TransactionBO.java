@@ -15,7 +15,7 @@ class TransactionPanel extends JPanel implements ActionListener {
     private JButton getlist;
 
     private DefaultTableModel model = new DefaultTableModel();
-    private JTable table; //table
+    private JTable table; 
     private String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollPlaza", "TollLaneNumber", "TollAmount"};
 
     public TransactionPanel(String CID,String User) {
@@ -71,22 +71,22 @@ class TransactionPanel extends JPanel implements ActionListener {
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setPreferredSize(new Dimension(600, 600));
 
-        JLabel listLabel = new JLabel("Transaction List");
+        JLabel list_label = new JLabel("Transaction List");
+        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
+        label_pane.add(list_label);
 
-        JPanel p1 = new JPanel(); //contains the label only
-        JPanel p2 = new JPanel();//tables
+        JPanel transactionListPanel = new JPanel();
+        transactionListPanel.add(scroll);
 
-        p1.add(listLabel);
-        p2.add(scroll);
-
-        Box b = Box.createVerticalBox();
+        Box MainPanel = Box.createVerticalBox();
         //dates
-        b.add(beforepane);
-        b.add(afterpane);
+        MainPanel.add(beforepane);
+        MainPanel.add(afterpane);
         //transaction list
-        b.add(p1);
-        b.add(p2);
-        add(b);
+        MainPanel.add(label_pane); // list label will be on top of the transaction list 
+        MainPanel.add(transactionListPanel);
+        setLayout(new BorderLayout());
+        add(MainPanel, BorderLayout.NORTH);
 
     }
 

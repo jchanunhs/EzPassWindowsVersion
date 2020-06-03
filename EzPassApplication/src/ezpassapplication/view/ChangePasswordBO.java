@@ -12,32 +12,34 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
     private String CustomerID, Username;
 
     public ChangePasswordPanel(String CID, String User) {
-        ChangeButton = new JButton("Change"); //change button
-        BackButton = new JButton("Back"); //change button
-        CustomerID = CID;    //set customer id
+
+        ChangeButton = new JButton("Change");
+        BackButton = new JButton("Back");
+        CustomerID = CID;
         Username = User;
-        
-        //jlabels setup
+
+        //JLabels
         JLabel UsernameLabel = new JLabel("Username:");
         JLabel OldPWLabel = new JLabel("Enter Old Password:");
         JLabel NewPWLabel = new JLabel("Enter New Password:");
         JLabel REnterLabel = new JLabel("Re-Enter New Password:");
-        
-        //jtextfields, username was passed to BO so dont allow user to modify it
+
+        //JTextFields
         UsernameField = new JTextField(15);
         UsernameField.setText(Username);
         UsernameField.setEditable(false);
         OldPassword = new JTextField(15);
         NewPassword = new JTextField(15);
         Retype = new JTextField(15);
-        
-        //jpanel setup, each jpanel consist of label and textfield
+
+        //JPanels
         JPanel UserPane = new JPanel();
         JPanel Old = new JPanel();
         JPanel New = new JPanel();
         JPanel Re = new JPanel();
         JPanel ButtonPanel = new JPanel();
 
+        //Add Labels and TextFields to Panels
         UserPane.add(UsernameLabel);
         UserPane.add(UsernameField);
         Old.add(OldPWLabel);
@@ -48,43 +50,38 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
         Re.add(Retype);
         ButtonPanel.add(ChangeButton);
         ButtonPanel.add(BackButton);
-        
-        ChangeButton.addActionListener(this); //event listener registration
+
+        //register event listener
+        ChangeButton.addActionListener(this);
         BackButton.addActionListener(this);
-        
-        //layout to north
-        Box CenterPanel = Box.createVerticalBox();
-        CenterPanel.add(UserPane);
-        CenterPanel.add(Old);
-        CenterPanel.add(New);
-        CenterPanel.add(Re);
-        CenterPanel.add(ButtonPanel);
+
+        //Vertical design
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(UserPane);
+        MainPanel.add(Old);
+        MainPanel.add(New);
+        MainPanel.add(Re);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.NORTH);
-        
+        add(MainPanel, BorderLayout.NORTH);
+
     }
 
-    public void actionPerformed(ActionEvent evt) //event handling
-    {
-        //Object source = evt.getSource(); //get who generates this event
+    public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
-        if (arg.equals("Change")) { 
-            //get inputs and pass to change pass control
+        if (arg.equals("Change")) { //get inputs and pass to control
             String oldPW = OldPassword.getText();
             String newPW = NewPassword.getText();
             String newPW1 = Retype.getText();
             ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, oldPW, newPW, newPW1);
-            }
-        else if (arg.equals("Back")) {
+        } else if (arg.equals("Back")) { //return to mainwindows and close change password window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         }
-        }
     }
-
-
+}
 
 public class ChangePasswordBO extends JFrame {
 
@@ -114,5 +111,4 @@ public class ChangePasswordBO extends JFrame {
         setVisible(true);
     }
 
- 
 }

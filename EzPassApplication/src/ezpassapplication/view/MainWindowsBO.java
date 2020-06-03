@@ -13,17 +13,17 @@ class MainWindowsPanel extends JPanel {
         EzTagPanel eztag = new EzTagPanel(CID,User); //EZ tag
         PayTollPanel paytoll = new PayTollPanel(CID,User); // PayToll
         TransactionPanel trans = new TransactionPanel(CID,User); //View transactions
-        JTabbedPane mp = new JTabbedPane();
+        JTabbedPane MainPanel = new JTabbedPane();
 
         //add panels to tabs
-        mp.add("Profile", user);
-        mp.add("Vehicles", vehicle);
-        mp.add("Ez Tags", eztag);
-        mp.add("Pay Tolls", paytoll);
-        mp.add("Transaction", trans);
+        MainPanel.add("Profile", user);
+        MainPanel.add("Vehicles", vehicle);
+        MainPanel.add("Ez Tags", eztag);
+        MainPanel.add("Pay Tolls", paytoll);
+        MainPanel.add("Transaction", trans);
         //center the panel
         setLayout(new BorderLayout());
-        add(mp, BorderLayout.CENTER);
+        add(MainPanel, BorderLayout.CENTER);
 
     }
 

@@ -81,7 +81,7 @@ class RechargePanel extends JPanel implements ActionListener {
 
         RechargeButton.addActionListener(this); //event listener registration
         BackButton.addActionListener(this);
-        
+
         //populate table with all credit transactions as default
         model.setColumnIdentifiers(columnName); //column titles
         ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
@@ -106,43 +106,39 @@ class RechargePanel extends JPanel implements ActionListener {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setPreferredSize(new Dimension(600, 600));
-        JLabel listLabel = new JLabel("Credit List");
+        JLabel list_label = new JLabel("Credit List");
+        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
+        label_pane.add(list_label);
 
-        JPanel p1 = new JPanel(); //contains the label only
-        JPanel p2 = new JPanel();//tables
-
-        p1.add(listLabel);
-        p2.add(scroll);
+        JPanel credit_list = new JPanel();//tables for credit list
+        credit_list.add(scroll);
 
         //Credit card form in the top, show credit list in the bottom
-        Box b = Box.createVerticalBox();
-        b.add(CIDPane);
-        b.add(BalPane);
-        b.add(CardPane);
-        b.add(EXPPane);
-        b.add(CVVPane);
-        b.add(NamePane);
-        b.add(AddBalPane);
-        b.add(p1);
-        b.add(p2);
-        add(b);
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(CIDPane);
+        MainPanel.add(BalPane);
+        MainPanel.add(CardPane);
+        MainPanel.add(EXPPane);
+        MainPanel.add(CVVPane);
+        MainPanel.add(NamePane);
+        MainPanel.add(AddBalPane);
+        MainPanel.add(label_pane); // list label will be on top of the credit list
+        MainPanel.add(credit_list);
+        add(MainPanel);
 
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-        //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
-        if (arg.equals("Recharge")) {
-            //get input from user and send it to control object
+        if (arg.equals("Recharge")) {//get input from user and forward to control   
             CardNumber = CardField.getText();
             Name = NameField.getText();
             ExpirationDate = ExpField.getText();
             CVV = CVVField.getText();
             float add_bal = Float.parseFloat(AddBalField.getText()); //convert string to float
             RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, Username, CardNumber, Name, ExpirationDate, CVV, add_bal);
-        }
-        else if (arg.equals("Back")) {
+        } else if (arg.equals("Back")) { // open main window and close recharge window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);

@@ -14,18 +14,18 @@ public class PayTollControl {
     Transaction trans;
 
     public PayTollControl(ActionEvent evt, String TagCode, String TollPlaza, int intTollLaneNum, float TollAmt, String CID) {
-        Transaction trans = new Transaction(TagCode, TollAmt, TollPlaza, intTollLaneNum, CID); //transaction object
-        Customer cus = new Customer(CID); //customer object
+        Transaction trans = new Transaction(TagCode, TollAmt, TollPlaza, intTollLaneNum, CID); 
+        Customer cus = new Customer(CID); 
         cus.setData();
-        float oldBal = cus.getBalance();
-        float newBal = oldBal - TollAmt;
+        float oldBal = cus.getBalance(); //get current balance from customer
+        float newBal = oldBal - TollAmt; 
         EzTag tag = new EzTag(TagCode, CID);
         if (TagCode.equals("") || TollPlaza.equals("") || intTollLaneNum == 0 || TollAmt == 0) {
             JOptionPane.showMessageDialog(null, "Create transaction failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else if (tag.checkTag()) { // Prevent user from stealing someone elses tag code
+        } else if (tag.checkTag()) { //check if tag belongs to customer
             if (trans.recordTransaction() && cus.charge(newBal)) { //record transaction and charge account. 
                 JOptionPane.showMessageDialog(null, "Transaction successful! Your total amount: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                JComponent component = (JComponent) evt.getSource();
+                JComponent component = (JComponent) evt.getSource();//close window when customer is charged successfully
                 Window win = SwingUtilities.getWindowAncestor(component);
                 win.dispose();
             } else {

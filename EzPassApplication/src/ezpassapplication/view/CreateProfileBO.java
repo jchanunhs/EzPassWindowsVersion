@@ -7,17 +7,16 @@ import javax.swing.*;
 
 class CreateProfilePanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
+    private JButton CreateButton;
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
-    private String Name, Street, City, State, Zip, Phone, Email, Balance, UName;
+    private String Name, Street, City, State, Zip, Phone, Email, Balance, Username;
 
     public CreateProfilePanel(String UName, String NM) {
-        OpenButton = new JButton("Submit");
+        CreateButton = new JButton("Submit");
 
-        this.UName = UName;//set username, customer id does not exist right now
+        Username = UName;
 
-        //textfields to get user information
-        //user entered name during signup so we set name for user
+        //JTextFields
         NameField = new JTextField(15);
         NameField.setText(NM);
         NameField.setEditable(false);
@@ -30,7 +29,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         BalanceField = new JTextField(15);
         BalanceField.setText("0.0");
 
-        //Labels for the textfields
+        //JLabels
         JLabel NameLabel = new JLabel("Customer Name:");
         JLabel StreetLabel = new JLabel("Street: ");
         JLabel CityLabel = new JLabel("City: ");
@@ -40,7 +39,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         JLabel EmailLabel = new JLabel("Email: ");
         JLabel BalanceLabel = new JLabel("Opening Deposit:");
 
-        //the panels to place respective textfield and labels
+        //JPanels
         JPanel NamePanel = new JPanel();
         JPanel StreetPanel = new JPanel();
         JPanel CityPanel = new JPanel();
@@ -50,6 +49,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         JPanel EmailPanel = new JPanel();
         JPanel BalancePanel = new JPanel();
 
+        //Add JTextFields and Labels to panels
         NamePanel.add(NameLabel);
         NamePanel.add(NameField);
         StreetPanel.add(StreetLabel);
@@ -67,30 +67,28 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         BalancePanel.add(BalanceLabel);
         BalancePanel.add(BalanceField);
 
-        OpenButton.addActionListener(this); //event listener registration
+        //Register event listener
+        CreateButton.addActionListener(this);
 
-        //User another jpanel to center the design
-        JPanel CenterPanel = new JPanel();
-        CenterPanel.add(NamePanel);
-        CenterPanel.add(StreetPanel);
-        CenterPanel.add(CityPanel);
-        CenterPanel.add(StatePanel);
-        CenterPanel.add(ZipPanel);
-        CenterPanel.add(PhonePanel);
-        CenterPanel.add(EmailPanel);
-        CenterPanel.add(BalancePanel);
-        CenterPanel.add(OpenButton);
+        //Center panel will include all the other panels
+        JPanel MainPanel = new JPanel();
+        MainPanel.add(NamePanel);
+        MainPanel.add(StreetPanel);
+        MainPanel.add(CityPanel);
+        MainPanel.add(StatePanel);
+        MainPanel.add(ZipPanel);
+        MainPanel.add(PhonePanel);
+        MainPanel.add(EmailPanel);
+        MainPanel.add(BalancePanel);
+        MainPanel.add(CreateButton);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
-        //add(OpenButton, BorderLayout.SOUTH);//add the one button on to this panel
+        add(MainPanel, BorderLayout.CENTER);
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-        //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
-        if (arg.equals("Submit")) {
-            //get text input by user and pass to control
+        if (arg.equals("Submit")) { //get input from user and pass to control
             Name = NameField.getText();
             Street = StreetField.getText();
             City = CityField.getText();
@@ -100,11 +98,9 @@ class CreateProfilePanel extends JPanel implements ActionListener {
             Email = EmailField.getText();
             Balance = BalanceField.getText();
             float Bal = Float.parseFloat(String.valueOf(Balance));
-            CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, UName);
-
+            CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, Username);
         }
     }
-
 }
 
 public class CreateProfileBO extends JFrame {

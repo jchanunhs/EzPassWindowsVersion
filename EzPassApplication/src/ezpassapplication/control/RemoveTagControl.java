@@ -7,15 +7,13 @@ import javax.swing.JOptionPane;
 public class RemoveTagControl {
 
     public RemoveTagControl(ActionEvent evt, String TC, String CID) {
-        EzTag tag = new EzTag(TC, CID); //ez tag object contains the tag code and customer ID
+        EzTag tag = new EzTag(TC, CID);
 
-        //Remove tag and check if tag belongs to customer
-        //Note: tag will not remove unless tag code cid = current customer cid, aka owner owns this tag code
-        if (TC.isEmpty()) {
+        if (TC.equals("")) {
             JOptionPane.showMessageDialog(null, "Remove tag failed! Plese enter a tag code!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else if (tag.removeTag()) {
+        } else if (tag.removeTag()) {//attempt to remove tag
             JOptionPane.showMessageDialog(null, "Remove Tag is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-        } else if (!tag.checkTag()) {
+        } else if (!tag.checkTag()) { //check if tag code is valid
             JOptionPane.showMessageDialog(null, "Error: The tag code you entered is invalid", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else { //Remove tag fails if user already used it to pay tolls or tag is currently associated with a vehicle
             JOptionPane.showMessageDialog(null, "Error: Unable to remove tag code. This error occurs when: \n"

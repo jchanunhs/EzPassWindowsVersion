@@ -11,7 +11,7 @@ import javax.swing.*;
 public class LoginControl {
 
     public LoginControl(ActionEvent evt, String Username, String Password) {
-        Account Acct = new Account(Username, Password); //Account object with user name and password
+        Account Acct = new Account(Username, Password); 
         Customer Cust = new Customer(Acct.getCustomerID()); //customer with username
         Cust.setData(); //set data based on username
         String CID = Cust.getCustomerID(); // get the customer id 

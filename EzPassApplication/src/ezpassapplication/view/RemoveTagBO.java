@@ -12,60 +12,62 @@ class RemoveTagPanel extends JPanel implements ActionListener {
     private String TagCode, CustomerID, Username;
 
     public RemoveTagPanel(String CID, String User) {
-        RemoveButton = new JButton("Remove"); //remove tag
+
+        RemoveButton = new JButton("Remove");
         BackButton = new JButton("Back");
-        
-        CustomerID = CID; //set cid
+        CustomerID = CID;
         Username = User;
-        //user can enter tag code that they want removed
+
+        //JTextFields
         TagCodeField = new JTextField(15);
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false); //customer id not allowed to be changed
 
+        //JLabels
         JLabel TagCodeLabel = new JLabel("Tag Code to remove: ");
         JLabel CustomerIDLabel = new JLabel("CustomerID: ");
 
-        //set up panels
+        //JPanels
         JPanel TagCodePanel = new JPanel();
         JPanel CustomerIDPanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
-        
-        //add labels and textfields
+
+        //Add TextField and Labels to panel
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
         ButtonPanel.add(RemoveButton);
         ButtonPanel.add(BackButton);
-        
-        RemoveButton.addActionListener(this); //event listener registration
+
+        //register event listener
+        RemoveButton.addActionListener(this);
         BackButton.addActionListener(this);
-        
-        Box CenterPanel = Box.createVerticalBox();
-        CenterPanel.add(CustomerIDPanel);
-        CenterPanel.add(TagCodePanel);
-        CenterPanel.add(ButtonPanel);
+
+        //vertical design
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(CustomerIDPanel);
+        MainPanel.add(TagCodePanel);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.NORTH); //center the jpanel
+        add(MainPanel, BorderLayout.NORTH);
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
         //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
-        if (arg.equals("Remove")) {
-            //take user input for tag code and send to control object
+        if (arg.equals("Remove")) {//takes user input and forward to control
             TagCode = TagCodeField.getText();
-            RemoveTagControl CP_CTRL = new RemoveTagControl(evt, TagCode, CustomerID);
-        } else if (arg.equals("Back")) {
+            RemoveTagControl RT_CTRL = new RemoveTagControl(evt, TagCode, CustomerID);
+        } else if (arg.equals("Back")) { // open main windows and close remove tag window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         }
     }
-
 }
 
 public class RemoveTagBO extends JFrame {

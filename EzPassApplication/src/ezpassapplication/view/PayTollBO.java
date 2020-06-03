@@ -3,8 +3,6 @@ package ezpassapplication.view;
 import ezpassapplication.control.PayTollControl;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 class PayTollPanel extends JPanel implements ActionListener {
@@ -13,32 +11,30 @@ class PayTollPanel extends JPanel implements ActionListener {
     private JTextField TagCodeField, TollPlazaField, TollLaneNumberField, TollAmountField;
     private String TagCode, TollPlaza, TollLaneNumber, TollAmount, CustomerID, Username;
 
-    public PayTollPanel(String CID,String User) {
-        CustomerID = CID; //set customer id
+    public PayTollPanel(String CID, String User) {
+        CustomerID = CID;
         Username = User;
         SubmitButton = new JButton("Submit"); //submit button
 
-        //textfields
+        //JTextFields
         TagCodeField = new JTextField(15);
         TollPlazaField = new JTextField(15);
         TollLaneNumberField = new JTextField(15);
         TollAmountField = new JTextField(15);
 
-        //labels
+        //JLabels
         JLabel TagCodeLabel = new JLabel("Tag Code: ");
         JLabel TollPlazaLabel = new JLabel("Toll Plaza: ");
         JLabel TollLaneNumberLabel = new JLabel("Toll Lane: ");
         JLabel TollAmountLabel = new JLabel("Toll Amount: ");
-       
 
-        //panels
+        //JPanels
         JPanel TagCodePanel = new JPanel();
         JPanel TollPlazaPanel = new JPanel();
         JPanel TollLaneNumberPanel = new JPanel();
         JPanel TollAmountPanel = new JPanel();
-        
 
-        //add labels and textfields to their respective panels
+        //Add TextField and Label to panel
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
         TollPlazaPanel.add(TollPlazaLabel);
@@ -48,26 +44,25 @@ class PayTollPanel extends JPanel implements ActionListener {
         TollAmountPanel.add(TollAmountLabel);
         TollAmountPanel.add(TollAmountField);
 
+        //register event listener
         SubmitButton.addActionListener(this);
 
         //vertical box
-        Box NorthPanel = Box.createVerticalBox();
-        NorthPanel.add(TagCodePanel);
-        NorthPanel.add(TollPlazaPanel);
-        NorthPanel.add(TollLaneNumberPanel);
-        NorthPanel.add(TollAmountPanel);
-        NorthPanel.add(SubmitButton);
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(TagCodePanel);
+        MainPanel.add(TollPlazaPanel);
+        MainPanel.add(TollLaneNumberPanel);
+        MainPanel.add(TollAmountPanel);
+        MainPanel.add(SubmitButton);
         setLayout(new BorderLayout());
-        add(NorthPanel, BorderLayout.NORTH);
-       
+        add(MainPanel, BorderLayout.NORTH);
+
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-        //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
-        if (arg.equals("Submit")) {
-            //get user inputs 
+        if (arg.equals("Submit")) { //get user input and pass to control
             TagCode = TagCodeField.getText();
             TollPlaza = TollPlazaField.getText();
             TollLaneNumber = TollLaneNumberField.getText();
@@ -78,14 +73,13 @@ class PayTollPanel extends JPanel implements ActionListener {
 
         }
     }
-
 }
 
 public class PayTollBO extends JFrame {
 
     private PayTollPanel PT_Panel;
 
-    public PayTollBO(String CID,String User) {
+    public PayTollBO(String CID, String User) {
         setTitle("Pay Toll");
         setSize(450, 450);
 
@@ -104,7 +98,7 @@ public class PayTollBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        PT_Panel = new PayTollPanel(CID,User);
+        PT_Panel = new PayTollPanel(CID, User);
         contentPane.add(PT_Panel);
         setVisible(true);
     }

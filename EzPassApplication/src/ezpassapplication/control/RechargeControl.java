@@ -16,17 +16,15 @@ public class RechargeControl {
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
         cus.setData();
         float oldBal = cus.getBalance();
-        float newBal = oldBal + AddBal; //add the balance together
+        float newBal = oldBal + AddBal; 
         if (CNumber.equals("") || NM.equals("") || EXPDate.equals("") || CVV.equals("")) {
             JOptionPane.showMessageDialog(null, "Recharge failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else if (card.addCreditCard()) { //add card to table, then we charge account if successful
-            if (cus.recharge(newBal)) {
-                JOptionPane.showMessageDialog(null, "Recharge successful! New balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows
-                JComponent component = (JComponent) evt.getSource();
-                Window win = SwingUtilities.getWindowAncestor(component);
-                win.dispose();
-            }
+        } else if (card.addCreditCard() && cus.recharge(newBal)) { //add card information, and recharge account with money
+            JOptionPane.showMessageDialog(null, "Recharge successful! New balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows and close recharge window
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Recharge failed unexpectedly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }

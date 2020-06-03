@@ -14,35 +14,38 @@ class AddTagPanel extends JPanel implements ActionListener {
     private String TagCode, TagType, IssueDate, CustomerID, Username;
 
     public AddTagPanel(String CID, String User) {
-        SubmitButton = new JButton("Submit"); //submit button
-        BackButton = new JButton("Back"); //return to mainwindows
-        CustomerID = CID; //set customer id
+
+        SubmitButton = new JButton("Submit");
+        BackButton = new JButton("Back");
+        CustomerID = CID;
         Username = User;
 
-        //Set up textfields
-        //CustomerID passed to BO and IssueDate is set by date method so dont allow users to edit 
+        //JTextFields
         TagCodeField = new JTextField(15);
         TagTypeField = new JTextField(15);
         IssueDateField = new JTextField(15);
         IssueDateField.setEditable(false);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        IssueDateField.setText(formatter.format(date));
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
 
+        //JLabels
         JLabel TagCodeLabel = new JLabel("Tag Code: ");
         JLabel TagTypeLabel = new JLabel("Tag Type: ");
         JLabel IssueDateLabel = new JLabel("IssueDate: ");
         JLabel CustomerIDLabel = new JLabel("CustomerID: ");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //date
-        Date date = new Date(System.currentTimeMillis()); //get current time
-        IssueDateField.setText(formatter.format(date)); //format and set text for textfield
 
+        //JPanels
         JPanel TagCodePanel = new JPanel();
         JPanel TagTypePanel = new JPanel();
         JPanel IssueDatePanel = new JPanel();
         JPanel CustomerIDPanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
 
+        //Add Labels and TextFields to Panels
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
         IssueDatePanel.add(IssueDateLabel);
@@ -54,38 +57,37 @@ class AddTagPanel extends JPanel implements ActionListener {
         ButtonPanel.add(SubmitButton);
         ButtonPanel.add(BackButton);
 
-        SubmitButton.addActionListener(this); //event listener registration
+        //register event listener
+        SubmitButton.addActionListener(this);
         BackButton.addActionListener(this);
 
-        Box CenterPanel = Box.createVerticalBox();
-        CenterPanel.add(CustomerIDPanel);
-        CenterPanel.add(IssueDatePanel);
-        CenterPanel.add(TagCodePanel);
-        CenterPanel.add(TagTypePanel);
-        CenterPanel.add(ButtonPanel);
+        //Vertical box
+        Box MainPanel = Box.createVerticalBox();
+        MainPanel.add(CustomerIDPanel);
+        MainPanel.add(IssueDatePanel);
+        MainPanel.add(TagCodePanel);
+        MainPanel.add(TagTypePanel);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.NORTH);
+        add(MainPanel, BorderLayout.NORTH);
 
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-
         String arg = evt.getActionCommand();
-        if (arg.equals("Submit")) {
-            //get inputs and pass to tag control
+        if (arg.equals("Submit")) { //get inputs and forward to control
             TagCode = TagCodeField.getText();
             TagType = TagTypeField.getText();
             IssueDate = IssueDateField.getText();
-            AddTagControl CP_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
-        } else if (arg.equals("Back")) {
+            AddTagControl AT_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
+        } else if (arg.equals("Back")) { //return to mainwindows and close add tag window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         }
     }
-
 }
 
 public class AddTagBO extends JFrame {
