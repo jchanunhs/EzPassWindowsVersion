@@ -9,15 +9,16 @@ import javax.swing.*;
 
 class AddTagPanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
+    private JButton SubmitButton, BackButton;
     private JTextField TagCodeField, TagTypeField, IssueDateField, CustomerIDField;
-    private String TagCode, TagType, IssueDate, CustomerID;
+    private String TagCode, TagType, IssueDate, CustomerID, Username;
 
-    public AddTagPanel(String CID) {
-        OpenButton = new JButton("Submit"); //submit button
-
+    public AddTagPanel(String CID, String User) {
+        SubmitButton = new JButton("Submit"); //submit button
+        BackButton = new JButton("Back"); //return to mainwindows
         CustomerID = CID; //set customer id
-        
+        Username = User;
+
         //Set up textfields
         //CustomerID passed to BO and IssueDate is set by date method so dont allow users to edit 
         TagCodeField = new JTextField(15);
@@ -40,6 +41,7 @@ class AddTagPanel extends JPanel implements ActionListener {
         JPanel TagTypePanel = new JPanel();
         JPanel IssueDatePanel = new JPanel();
         JPanel CustomerIDPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
 
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
@@ -49,33 +51,38 @@ class AddTagPanel extends JPanel implements ActionListener {
         TagCodePanel.add(TagCodeField);
         TagTypePanel.add(TagTypeLabel);
         TagTypePanel.add(TagTypeField);
+        ButtonPanel.add(SubmitButton);
+        ButtonPanel.add(BackButton);
 
-        OpenButton.addActionListener(this); //event listener registration
+        SubmitButton.addActionListener(this); //event listener registration
+        BackButton.addActionListener(this);
 
-        JPanel CenterPanel = new JPanel();
+        Box CenterPanel = Box.createVerticalBox();
         CenterPanel.add(CustomerIDPanel);
         CenterPanel.add(IssueDatePanel);
         CenterPanel.add(TagCodePanel);
         CenterPanel.add(TagTypePanel);
-        CenterPanel.add(OpenButton);
+        CenterPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
-       
+        add(CenterPanel, BorderLayout.NORTH);
+
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
-        
+
         String arg = evt.getActionCommand();
-        if (arg.equals("Submit")) { 
+        if (arg.equals("Submit")) {
             //get inputs and pass to tag control
             TagCode = TagCodeField.getText();
             TagType = TagTypeField.getText();
             IssueDate = IssueDateField.getText();
-            CustomerID = CustomerIDField.getText();
-
             AddTagControl CP_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
-
+        } else if (arg.equals("Back")) {
+            MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
     }
 
@@ -83,9 +90,9 @@ class AddTagPanel extends JPanel implements ActionListener {
 
 public class AddTagBO extends JFrame {
 
-    private AddTagPanel CP_Panel;
+    private AddTagPanel AT_Panel;
 
-    public AddTagBO(String CID) {
+    public AddTagBO(String CID, String User) {
         setTitle("Add Tag");
         setSize(450, 450);
 
@@ -104,10 +111,9 @@ public class AddTagBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new AddTagPanel(CID);
-        contentPane.add(CP_Panel);
-        show();
+        AT_Panel = new AddTagPanel(CID, User);
+        contentPane.add(AT_Panel);
+        setVisible(true);
     }
 
-  
 }

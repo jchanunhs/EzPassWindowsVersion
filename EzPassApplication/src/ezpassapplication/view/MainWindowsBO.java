@@ -7,12 +7,12 @@ import javax.swing.*;
 class MainWindowsPanel extends JPanel {
 
     //main windows to show customer informations
-    public MainWindowsPanel(String UName, String CID) {
-        UserProfilePanel user = new UserProfilePanel(CID); //User Profile
-        VehiclePanel vehicle = new VehiclePanel(CID);  //Display Vehicles
-        PayTollPanel paytoll = new PayTollPanel(CID); // PayToll
-        EzTagPanel eztag = new EzTagPanel(CID); //EZ tag
-        TransactionPanel trans = new TransactionPanel(CID); //View transactions
+    public MainWindowsPanel(String CID,String User) {
+        UserProfilePanel user = new UserProfilePanel(CID,User); //User Profile
+        VehiclePanel vehicle = new VehiclePanel(CID,User);  //Display Vehicles
+        EzTagPanel eztag = new EzTagPanel(CID,User); //EZ tag
+        PayTollPanel paytoll = new PayTollPanel(CID,User); // PayToll
+        TransactionPanel trans = new TransactionPanel(CID,User); //View transactions
         JTabbedPane mp = new JTabbedPane();
 
         //add panels to tabs
@@ -31,11 +31,11 @@ class MainWindowsPanel extends JPanel {
 
 public class MainWindowsBO extends JFrame {
 
-    private MainWindowsPanel CP_Panel;
+    private MainWindowsPanel MW_Panel;
 
-    public MainWindowsBO(String UName, String CID) {
+    public MainWindowsBO(String CID,String User) {
         setTitle("Main Windows");
-        setSize(720, 720);
+        setSize(630, 800);
 
         setVisible(true);
 
@@ -54,9 +54,9 @@ public class MainWindowsBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new MainWindowsPanel(UName, CID);
-        contentPane.add(CP_Panel);
-        show();
+        MW_Panel = new MainWindowsPanel(CID,User);
+        contentPane.add(MW_Panel);
+        setVisible(true);
     }
 
 }

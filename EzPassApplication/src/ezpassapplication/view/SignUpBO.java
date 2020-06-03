@@ -8,7 +8,7 @@ import javax.swing.*;
 
 class SignUpPanel extends JPanel implements ActionListener {
 
-    private JButton RegisterButton;
+    private JButton RegisterButton,LoginButton;
     private JTextField UsernameField, NameField;
     private JPasswordField PasswordField, PasswordField1;
     private String UName, PsWord, PsWord1, Name;
@@ -59,7 +59,6 @@ class SignUpPanel extends JPanel implements ActionListener {
             PsWord = PasswordField.getText();
             PsWord1 = PasswordField1.getText();
             Name = NameField.getText();
-
             SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, PsWord1, Name);
         }
     }
@@ -91,7 +90,7 @@ public class SignUpBO extends JFrame {
         Container contentPane = getContentPane(); //add a panel to a frame
         SU_Panel = new SignUpPanel();
         contentPane.add(SU_Panel);
-        show();
+        setVisible(true);
     }
 
 }

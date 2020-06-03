@@ -9,13 +9,14 @@ import javax.swing.*;
 
 class PayTollPanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
+    private JButton SubmitButton;
     private JTextField TagCodeField, TollPlazaField, TollLaneNumberField, TollAmountField;
-    private String TagCode, TollPlaza, TollLaneNumber, TollAmount, CustomerID;
+    private String TagCode, TollPlaza, TollLaneNumber, TollAmount, CustomerID, Username;
 
-    public PayTollPanel(String CID) {
+    public PayTollPanel(String CID,String User) {
         CustomerID = CID; //set customer id
-        OpenButton = new JButton("Submit"); //submit button
+        Username = User;
+        SubmitButton = new JButton("Submit"); //submit button
 
         //textfields
         TagCodeField = new JTextField(15);
@@ -47,18 +48,18 @@ class PayTollPanel extends JPanel implements ActionListener {
         TollAmountPanel.add(TollAmountLabel);
         TollAmountPanel.add(TollAmountField);
 
-        OpenButton.addActionListener(this);
+        SubmitButton.addActionListener(this);
 
-        //center it to the middle
-        JPanel TollPanelCenter = new JPanel();
-        TollPanelCenter.add(TagCodePanel);
-        TollPanelCenter.add(TollPlazaPanel);
-        TollPanelCenter.add(TollLaneNumberPanel);
-        TollPanelCenter.add(TollAmountPanel);
-        TollPanelCenter.add(OpenButton);
+        //vertical box
+        Box NorthPanel = Box.createVerticalBox();
+        NorthPanel.add(TagCodePanel);
+        NorthPanel.add(TollPlazaPanel);
+        NorthPanel.add(TollLaneNumberPanel);
+        NorthPanel.add(TollAmountPanel);
+        NorthPanel.add(SubmitButton);
         setLayout(new BorderLayout());
-        add(TollPanelCenter, BorderLayout.CENTER);
-        //add(OpenButton, BorderLayout.SOUTH);//add the one button on to this panel
+        add(NorthPanel, BorderLayout.NORTH);
+       
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
@@ -82,9 +83,9 @@ class PayTollPanel extends JPanel implements ActionListener {
 
 public class PayTollBO extends JFrame {
 
-    private PayTollPanel CP_Panel;
+    private PayTollPanel PT_Panel;
 
-    public PayTollBO(String CID) {
+    public PayTollBO(String CID,String User) {
         setTitle("Pay Toll");
         setSize(450, 450);
 
@@ -103,9 +104,9 @@ public class PayTollBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new PayTollPanel(CID);
-        contentPane.add(CP_Panel);
-        show();
+        PT_Panel = new PayTollPanel(CID,User);
+        contentPane.add(PT_Panel);
+        setVisible(true);
     }
 
 }

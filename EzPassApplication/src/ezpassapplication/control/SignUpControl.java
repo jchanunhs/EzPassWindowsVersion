@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.model.Account;
+import ezpassapplication.view.LoginBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
@@ -17,13 +18,17 @@ public class SignUpControl {
             JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (PsWord.equals(PsWord1) && Acct.signUp()) { //if passwords match 
             JOptionPane.showMessageDialog(null, "Account has been created!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            LoginBO login = new LoginBO(); //display login screen and close sign up
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else if (Acct.UsernameTaken()) {
             JOptionPane.showMessageDialog(null, "Username is taken!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else {
+        } else if(!PsWord.equals(PsWord1)) {
             JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Account creation failed unexpectly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

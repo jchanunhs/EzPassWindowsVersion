@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 class TransactionPanel extends JPanel implements ActionListener {
 
     Transaction transaction;
-    private String CustomerID;
+    private String CustomerID, Username;
     private JTextField before, after;
     private JButton getlist;
 
@@ -18,8 +18,9 @@ class TransactionPanel extends JPanel implements ActionListener {
     private JTable table; //table
     private String[] columnName = {"TransactionID", "TagCode", "TransactionDate", "TransactionTime", "TollPlaza", "TollLaneNumber", "TollAmount"};
 
-    public TransactionPanel(String CID) {
+    public TransactionPanel(String CID,String User) {
         CustomerID = CID;
+        Username = User;
         transaction = new Transaction(CustomerID);
 
         getlist = new JButton("Populate list"); //button
@@ -89,41 +90,62 @@ class TransactionPanel extends JPanel implements ActionListener {
 
     }
 
-//private JList swingComponentList;
+
     @Override
     public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
         model.setRowCount(0); //clear the table
         if (arg.equals("Populate list")) { //populate list based on date
-            ArrayList<String> TID_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionID");
-            ArrayList<String> TC_list = transaction.getTransactions(before.getText(), after.getText(), "TagCode");
-            ArrayList<String> TD_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionDate");
-            ArrayList<String> TT_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionTime");
-            ArrayList<String> TP_list = transaction.getTransactions(before.getText(), after.getText(), "TollPlaza");
-            ArrayList<String> TLN_list = transaction.getTransactions(before.getText(), after.getText(), "TollLaneNumber");
-            ArrayList<String> TA_list = transaction.getTransactions(before.getText(), after.getText(), "TollAmount");
+            if (!before.getText().isEmpty() || !after.getText().isEmpty()) {
+                ArrayList<String> TID_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionID");
+                ArrayList<String> TC_list = transaction.getTransactions(before.getText(), after.getText(), "TagCode");
+                ArrayList<String> TD_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionDate");
+                ArrayList<String> TT_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionTime");
+                ArrayList<String> TP_list = transaction.getTransactions(before.getText(), after.getText(), "TollPlaza");
+                ArrayList<String> TLN_list = transaction.getTransactions(before.getText(), after.getText(), "TollLaneNumber");
+                ArrayList<String> TA_list = transaction.getTransactions(before.getText(), after.getText(), "TollAmount");
 
-            for (int i = 0; i < TID_list.size(); i++) {
-                String TID = TID_list.get(i);
-                String TC = TC_list.get(i);
-                String TDate = TD_list.get(i);
-                String TTime = TT_list.get(i);
-                String TP = TP_list.get(i);
-                String TLN = TLN_list.get(i);
-                String TAmt = "-" + TA_list.get(i);
-                model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
+                for (int i = 0; i < TID_list.size(); i++) {
+                    String TID = TID_list.get(i);
+                    String TC = TC_list.get(i);
+                    String TDate = TD_list.get(i);
+                    String TTime = TT_list.get(i);
+                    String TP = TP_list.get(i);
+                    String TLN = TLN_list.get(i);
+                    String TAmt = "-" + TA_list.get(i);
+                    model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
 
+                }
+            } else { //if the user enters empty before and after text, populate with original data
+                ArrayList<String> TID_list = transaction.getAllTransactions("TransactionID");
+                ArrayList<String> TC_list = transaction.getAllTransactions("TagCode");
+                ArrayList<String> TD_list = transaction.getAllTransactions("TransactionDate");
+                ArrayList<String> TT_list = transaction.getAllTransactions("TransactionTime");
+                ArrayList<String> TP_list = transaction.getAllTransactions("TollPlaza");
+                ArrayList<String> TLN_list = transaction.getAllTransactions("TollLaneNumber");
+                ArrayList<String> TA_list = transaction.getAllTransactions("TollAmount");
+                for (int i = 0; i < TID_list.size(); i++) {
+                    String TID = TID_list.get(i);
+                    String TC = TC_list.get(i);
+                    String TDate = TD_list.get(i);
+                    String TTime = TT_list.get(i);
+                    String TP = TP_list.get(i);
+                    String TLN = TLN_list.get(i);
+                    String TAmt = "-" + TA_list.get(i);
+                    model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
+
+                }
             }
-
         }
     }
 }
 
-class TransactionFrame extends JFrame {
-
-    public TransactionFrame(String CID) {
+public class TransactionBO extends JFrame {
+TransactionPanel Trans_Panel;
+    public TransactionBO(String CID, String User) {
         setTitle("Your Transactions");
-        setSize(480, 240);
+        Trans_Panel = new TransactionPanel(CID,User);
+        setSize(650, 650);
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension d = tk.getScreenSize();
@@ -137,9 +159,10 @@ class TransactionFrame extends JFrame {
                 System.exit(0);
             }
         });
-        JPanel testTransactionPanel = new TransactionPanel(CID);
+
         Container contentPane = getContentPane(); //add a panel to a frame
-        contentPane.add(testTransactionPanel);
+        contentPane.add(Trans_Panel);
+        setVisible(true);
     }
 
 }

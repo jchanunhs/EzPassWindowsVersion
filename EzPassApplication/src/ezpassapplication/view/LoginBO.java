@@ -65,7 +65,7 @@ public class LoginBO extends JFrame implements ActionListener
 
         Container contentPane = getContentPane(); //add a panel to a frame
         contentPane.add(LoginPanel);
-
+        setVisible(true);
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
@@ -74,8 +74,10 @@ public class LoginBO extends JFrame implements ActionListener
         String arg = evt.getActionCommand();
 
         if (arg.equals("Sign Up")) {
-
-            SignUpBO SUC = new SignUpBO();
+            SignUpBO SUC = new SignUpBO();//open signup and close login
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
         if (arg.equals("Login")) {
             //System.out.println("Name: "+arg);
@@ -87,6 +89,5 @@ public class LoginBO extends JFrame implements ActionListener
 
     public static void main(String[] args) {
         JFrame frame = new LoginBO(); //initialize a JFrame object
-        frame.show(); //display the frame
     }
 }

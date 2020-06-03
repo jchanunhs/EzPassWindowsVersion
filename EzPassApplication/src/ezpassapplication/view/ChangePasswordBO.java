@@ -7,54 +7,60 @@ import javax.swing.*;
 
 class ChangePasswordPanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
-    private JTextField Username, OldPassword, NewPassword, Retype;
-    private String CustomerID;
+    private JButton ChangeButton, BackButton;
+    private JTextField UsernameField, OldPassword, NewPassword, Retype;
+    private String CustomerID, Username;
 
-    public ChangePasswordPanel(String CID, String UName) {
-        OpenButton = new JButton("Change"); //change button
+    public ChangePasswordPanel(String CID, String User) {
+        ChangeButton = new JButton("Change"); //change button
+        BackButton = new JButton("Back"); //change button
         CustomerID = CID;    //set customer id
+        Username = User;
         
         //jlabels setup
-        JLabel UNameLabel = new JLabel("Username:");
+        JLabel UsernameLabel = new JLabel("Username:");
         JLabel OldPWLabel = new JLabel("Enter Old Password:");
         JLabel NewPWLabel = new JLabel("Enter New Password:");
         JLabel REnterLabel = new JLabel("Re-Enter New Password:");
         
         //jtextfields, username was passed to BO so dont allow user to modify it
-        Username = new JTextField(15);
-        Username.setText(UName);
-        Username.setEditable(false);
+        UsernameField = new JTextField(15);
+        UsernameField.setText(Username);
+        UsernameField.setEditable(false);
         OldPassword = new JTextField(15);
         NewPassword = new JTextField(15);
         Retype = new JTextField(15);
         
         //jpanel setup, each jpanel consist of label and textfield
-        JPanel User = new JPanel();
+        JPanel UserPane = new JPanel();
         JPanel Old = new JPanel();
         JPanel New = new JPanel();
         JPanel Re = new JPanel();
+        JPanel ButtonPanel = new JPanel();
 
-        User.add(UNameLabel);
-        User.add(Username);
+        UserPane.add(UsernameLabel);
+        UserPane.add(UsernameField);
         Old.add(OldPWLabel);
         Old.add(OldPassword);
         New.add(NewPWLabel);
         New.add(NewPassword);
         Re.add(REnterLabel);
         Re.add(Retype);
-
-        OpenButton.addActionListener(this); //event listener registration
+        ButtonPanel.add(ChangeButton);
+        ButtonPanel.add(BackButton);
         
-        //layout to center 
-        JPanel CenterPanel = new JPanel();
-        CenterPanel.add(User);
+        ChangeButton.addActionListener(this); //event listener registration
+        BackButton.addActionListener(this);
+        
+        //layout to north
+        Box CenterPanel = Box.createVerticalBox();
+        CenterPanel.add(UserPane);
         CenterPanel.add(Old);
         CenterPanel.add(New);
         CenterPanel.add(Re);
-        CenterPanel.add(OpenButton);
+        CenterPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
+        add(CenterPanel, BorderLayout.NORTH);
         
     }
 
@@ -67,9 +73,14 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
             String oldPW = OldPassword.getText();
             String newPW = NewPassword.getText();
             String newPW1 = Retype.getText();
-            String UName = Username.getText();
-            ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, UName, oldPW, newPW, newPW1);
+            ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, oldPW, newPW, newPW1);
             }
+        else if (arg.equals("Back")) {
+            MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
+        }
         }
     }
 
@@ -79,7 +90,7 @@ public class ChangePasswordBO extends JFrame {
 
     private ChangePasswordPanel CP_Panel;
 
-    public ChangePasswordBO(String CID, String UName) {
+    public ChangePasswordBO(String CID, String Username) {
         setTitle("Change Password");
         setSize(450, 450);
 
@@ -98,9 +109,9 @@ public class ChangePasswordBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new ChangePasswordPanel(CID, UName);
+        CP_Panel = new ChangePasswordPanel(CID, Username);
         contentPane.add(CP_Panel);
-        show();
+        setVisible(true);
     }
 
  

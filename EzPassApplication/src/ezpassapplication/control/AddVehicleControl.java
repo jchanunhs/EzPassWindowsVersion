@@ -2,11 +2,8 @@ package ezpassapplication.control;
 
 import ezpassapplication.model.EzTag;
 import ezpassapplication.model.Vehicle;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 public class AddVehicleControl {
 
@@ -18,9 +15,6 @@ public class AddVehicleControl {
         } else if (ez.checkTag()) { //add vehicle to db and check if tag code belongs to this customer
             if (vehicle.addVehicle()) {
                 JOptionPane.showMessageDialog(null, "Add vehicle is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                JComponent component = (JComponent) evt.getSource();
-                Window win = SwingUtilities.getWindowAncestor(component);
-                win.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Add vehicle failed! Vehicle is already in the database", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }

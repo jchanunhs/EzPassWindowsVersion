@@ -10,21 +10,17 @@ class UserProfilePanel extends JPanel implements ActionListener {
     Customer cus;
     private JButton ChangePassword, Recharge, LogOut;
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
-    private String Name, Street, City, State, Zip, Phone, Email, Balance, UName, CustomerID;
+    private String Name, Street, City, State, Zip, Phone, Email, Balance, Username, CustomerID;
 
-    public UserProfilePanel(String CID) {
+    public UserProfilePanel(String CID,String User) {
 
-        /*
-        When user login, all we know from them is their user name
-        created a customer object with user name
-        then we use user name to get customer id, customer id to get customer information
-        then we populate customer information
-        Note: user will not be able to edit text field values
-         */
+        //create customer object and get their data
         cus = new Customer(CID);
         cus.setData();
         
-
+        CustomerID = CID;
+        Username = User;
+        
         ChangePassword = new JButton("Change Password");
         Recharge = new JButton("Recharge");
         LogOut = new JButton("LogOut");
@@ -32,7 +28,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         Recharge.addActionListener(this);
         LogOut.addActionListener(this);
 
-        this.UName = UName;
+     
         NameField = new JTextField(15);
         NameField.setText(cus.getName());
         NameField.setEditable(false);
@@ -105,20 +101,19 @@ class UserProfilePanel extends JPanel implements ActionListener {
         ButtonPanel.add(Recharge);
         ButtonPanel.add(LogOut);
 
-        JPanel CenterPanel = new JPanel();
-        CenterPanel.add(NamePanel);
-        CenterPanel.add(StreetPanel);
-        CenterPanel.add(CityPanel);
-        CenterPanel.add(StatePanel);
-        CenterPanel.add(ZipPanel);
-        CenterPanel.add(PhonePanel);
-        CenterPanel.add(EmailPanel);
-        CenterPanel.add(BalancePanel);
-        CenterPanel.add(ButtonPanel);
-
+        Box NorthPanel = Box.createVerticalBox();
+        NorthPanel.add(NamePanel);
+        NorthPanel.add(StreetPanel);
+        NorthPanel.add(CityPanel);
+        NorthPanel.add(StatePanel);
+        NorthPanel.add(ZipPanel);
+        NorthPanel.add(PhonePanel);
+        NorthPanel.add(EmailPanel);
+        NorthPanel.add(BalancePanel);
+        NorthPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
-        //add(OpenButton, BorderLayout.SOUTH);//add the one button on to this panel
+        add(NorthPanel, BorderLayout.NORTH);
+        
     }
 
     //If user logout, then we exit program
@@ -128,12 +123,16 @@ class UserProfilePanel extends JPanel implements ActionListener {
         float Bal = Float.parseFloat(BalanceField.getText());
         String arg = evt.getActionCommand();
         if (arg.equals("Change Password")) {
-            ChangePasswordBO CPBO = new ChangePasswordBO(CustomerID, UName);
-
+            ChangePasswordBO CPBO = new ChangePasswordBO(CustomerID, Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
         if (arg.equals("Recharge")) {
-            RechargeBO RCBO = new RechargeBO(CustomerID, Bal);
-
+            RechargeBO RCBO = new RechargeBO(CustomerID, Username, Bal);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
         if (arg.equals("LogOut")) {
             System.exit(0);
@@ -145,9 +144,9 @@ class UserProfilePanel extends JPanel implements ActionListener {
 
 public class UserProfileBO extends JFrame {
 
-    private UserProfilePanel CP_Panel;
+    private UserProfilePanel UP_Panel;
 
-    public UserProfileBO(String UName) {
+    public UserProfileBO(String CID, String User) {
         setTitle("Personal Profile");
         setSize(450, 450);
 
@@ -166,9 +165,9 @@ public class UserProfileBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new UserProfilePanel(UName);
-        contentPane.add(CP_Panel);
-        show();
+        UP_Panel = new UserProfilePanel(CID,User);
+        contentPane.add(UP_Panel);
+        setVisible(true);
     }
 
 }

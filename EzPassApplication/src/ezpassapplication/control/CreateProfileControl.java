@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.model.Customer;
+import ezpassapplication.view.LoginBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
@@ -15,11 +16,12 @@ public class CreateProfileControl {
             JOptionPane.showMessageDialog(null, "Create profile failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (cus.createProfile()) { //create the profile 
             JOptionPane.showMessageDialog(null, "Create profile is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            LoginBO login = new LoginBO();
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Create profile failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Create profile failed unexpectly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

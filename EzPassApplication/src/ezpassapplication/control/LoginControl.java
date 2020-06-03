@@ -19,7 +19,7 @@ public class LoginControl {
             JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } //if customer profile already made and user sign in successfully, pass to main windows
         else if (Cust.checkExist(Username) && Acct.signIn()) {
-            MainWindowsBO main = new MainWindowsBO(Username, CID);
+            MainWindowsBO main = new MainWindowsBO(CID,Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();

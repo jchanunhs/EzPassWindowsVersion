@@ -2,6 +2,7 @@ package ezpassapplication.control;
 
 import ezpassapplication.model.CreditCard;
 import ezpassapplication.model.Customer;
+import ezpassapplication.view.MainWindowsBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
@@ -10,7 +11,7 @@ import javax.swing.SwingUtilities;
 
 public class RechargeControl {
 
-    public RechargeControl(ActionEvent evt, String CID, String CNumber, String NM, String EXPDate, String CVV, float AddBal) {
+    public RechargeControl(ActionEvent evt, String CID, String User, String CNumber, String NM, String EXPDate, String CVV, float AddBal) {
         Customer cus = new Customer(CID);
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
         cus.setData();
@@ -21,12 +22,13 @@ public class RechargeControl {
         } else if (card.addCreditCard()) { //add card to table, then we charge account if successful
             if (cus.recharge(newBal)) {
                 JOptionPane.showMessageDialog(null, "Recharge successful! New balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows
                 JComponent component = (JComponent) evt.getSource();
                 Window win = SwingUtilities.getWindowAncestor(component);
                 win.dispose();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Recharge failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Recharge failed unexpectedly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
 
     }

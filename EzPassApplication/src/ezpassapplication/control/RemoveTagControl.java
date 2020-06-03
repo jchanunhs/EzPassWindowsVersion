@@ -1,11 +1,8 @@
 package ezpassapplication.control;
 
 import ezpassapplication.model.EzTag;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 public class RemoveTagControl {
 
@@ -14,11 +11,10 @@ public class RemoveTagControl {
 
         //Remove tag and check if tag belongs to customer
         //Note: tag will not remove unless tag code cid = current customer cid, aka owner owns this tag code
-        if (tag.removeTag()) {
+        if (TC.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Remove tag failed! Plese enter a tag code!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+        } else if (tag.removeTag()) {
             JOptionPane.showMessageDialog(null, "Remove Tag is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            JComponent component = (JComponent) evt.getSource();
-            Window win = SwingUtilities.getWindowAncestor(component);
-            win.dispose();
         } else if (!tag.checkTag()) {
             JOptionPane.showMessageDialog(null, "Error: The tag code you entered is invalid", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else { //Remove tag fails if user already used it to pay tolls or tag is currently associated with a vehicle

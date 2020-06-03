@@ -10,17 +10,19 @@ import javax.swing.table.DefaultTableModel;
 
 class RechargePanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
+    private JButton RechargeButton, BackButton;
     private JTextField CIDField, CardField, NameField, ExpField, CVVField, CurrentBalField, AddBalField;
-    private String CustomerID, CurrentBalance, CardNumber, ExpirationDate, CVV, Name, AddBalance;
+    private String CustomerID, CurrentBalance, CardNumber, ExpirationDate, CVV, Name, AddBalance, Username;
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
     private String[] columnName = {"CreditID", "CardNumber", "Date", "Time", "CreditAmount"};
     private CreditCard credit;
 
-    public RechargePanel(String CID, float Bal) {
-        OpenButton = new JButton("Recharge"); //recharge button
+    public RechargePanel(String CID, String User, float Bal) {
+        RechargeButton = new JButton("Recharge"); //recharge button
+        BackButton = new JButton("Back");
         CustomerID = CID;
+        Username = User;
         credit = new CreditCard(CustomerID);
         CurrentBalance = String.valueOf(Bal); //show current balance
 
@@ -61,7 +63,8 @@ class RechargePanel extends JPanel implements ActionListener {
         JPanel AddBalPane = new JPanel();
         AddBalPane.add(AddBalLabel);
         AddBalPane.add(AddBalField);
-        AddBalPane.add(OpenButton); // Last panel for form so we put button next to addbalance
+        AddBalPane.add(RechargeButton); // Last panel for form so we put button next to addbalance
+        AddBalPane.add(BackButton);
         JPanel CardPane = new JPanel();
         CardPane.add(CardLabel);
         CardPane.add(CardField);
@@ -76,8 +79,9 @@ class RechargePanel extends JPanel implements ActionListener {
         CVVPane.add(CVVLabel);
         CVVPane.add(CVVField);
 
-        OpenButton.addActionListener(this); //event listener registration
-
+        RechargeButton.addActionListener(this); //event listener registration
+        BackButton.addActionListener(this);
+        
         //populate table with all credit transactions as default
         model.setColumnIdentifiers(columnName); //column titles
         ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
@@ -94,8 +98,7 @@ class RechargePanel extends JPanel implements ActionListener {
             model.addRow(new Object[]{Credit_ID, Card_Number, Date, Time, Credit_AMT});
         }
 
-    
-         //initializing a table and scroll pane
+        //initializing a table and scroll pane
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFillsViewportHeight(true);
@@ -110,7 +113,7 @@ class RechargePanel extends JPanel implements ActionListener {
 
         p1.add(listLabel);
         p2.add(scroll);
-        
+
         //Credit card form in the top, show credit list in the bottom
         Box b = Box.createVerticalBox();
         b.add(CIDPane);
@@ -137,7 +140,13 @@ class RechargePanel extends JPanel implements ActionListener {
             ExpirationDate = ExpField.getText();
             CVV = CVVField.getText();
             float add_bal = Float.parseFloat(AddBalField.getText()); //convert string to float
-            RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, CardNumber, Name, ExpirationDate, CVV, add_bal);
+            RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, Username, CardNumber, Name, ExpirationDate, CVV, add_bal);
+        }
+        else if (arg.equals("Back")) {
+            MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
     }
 
@@ -147,7 +156,7 @@ public class RechargeBO extends JFrame {
 
     private RechargePanel CP_Panel;
 
-    public RechargeBO(String CID, float Bal) {
+    public RechargeBO(String CID, String User, float Bal) {
         setTitle("Recharge");
         setSize(800, 800);
 
@@ -166,9 +175,9 @@ public class RechargeBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new RechargePanel(CID, Bal);
+        CP_Panel = new RechargePanel(CID, User, Bal);
         contentPane.add(CP_Panel);
-        show();
+        setVisible(true);
     }
 
 }

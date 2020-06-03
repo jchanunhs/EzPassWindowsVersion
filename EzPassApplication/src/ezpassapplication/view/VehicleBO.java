@@ -8,12 +8,14 @@ import javax.swing.event.*;
 
 class VehiclePanel extends JPanel implements ListSelectionListener, ActionListener {
 
-    Vehicle vehicle;
-    private String CustomerID, clickedString;
+    private Vehicle vehicle;
+    private String CustomerID, clickedString,Username;
+    private int clickedInt;
 
-    public VehiclePanel(String CID) {
+    public VehiclePanel(String CID,String User) {
         CustomerID = CID; //set Customer ID
-        selectedVehicle = new JTextField(14);
+        Username = User;
+        selectedVehicle = new JTextField(15);
         selectedVehicle.setEditable(false);
         JLabel textFieldLabel = new JLabel("Selected Vehicle:");
         //p1 contains label and textfield for selected vehicle
@@ -33,6 +35,7 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
 
         //declare and initialize a SCROLL PANE
         JScrollPane listScroll = new JScrollPane(VehicleList);
+        listScroll.setPreferredSize(new Dimension(110, 200));
         p2.add(listScroll);
 
         //Buttons for either adding vehicle or removing them from the table
@@ -56,7 +59,9 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
     public void valueChanged(ListSelectionEvent evt) {
         JList source = (JList) evt.getSource();
         String tempString = (String) source.getSelectedValue();
+        int tempInt = source.getSelectedIndex();
         clickedString = tempString;
+        clickedInt = tempInt;
         selectedVehicle.setText(tempString);
     }
 
@@ -67,11 +72,17 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
     public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
         if (arg.equals("Add Vehicle")) { //pass to AddVehicleBO to add vehicles
-            AddVehicleBO user = new AddVehicleBO(CustomerID);
+            AddVehicleBO user = new AddVehicleBO(CustomerID,Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
+
         } else if (arg.equals("Remove Vehicle")) { //remove vehicle based on what user clicked
             Vehicle vehicle = new Vehicle(CustomerID, clickedString);
             if (vehicle.removeVehicle()) {
                 JOptionPane.showMessageDialog(null, "Remove vehicle success. Please logout to see changes!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                ((DefaultListModel) VehicleList.getModel()).remove(clickedInt);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Remove vehicle failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }
@@ -79,9 +90,9 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
     }
 }
 
-class VehicleFrame extends JFrame {
+public class VehicleBO extends JFrame {
 
-    public VehicleFrame(String CID) {
+    public VehicleBO(String CID,String User) {
         setTitle("Your Vehicles");
         setSize(480, 240);
         //get screen size and set the location of the frame
@@ -97,7 +108,7 @@ class VehicleFrame extends JFrame {
                 System.exit(0);
             }
         });
-        JPanel testVehiclePanel = new VehiclePanel(CID);
+        JPanel testVehiclePanel = new VehiclePanel(CID,User);
         Container contentPane = getContentPane(); //add a panel to a frame
         contentPane.add(testVehiclePanel);
     }

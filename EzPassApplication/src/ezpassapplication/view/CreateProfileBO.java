@@ -132,7 +132,7 @@ public class CreateProfileBO extends JFrame {
         Container contentPane = getContentPane(); //add a panel to a frame
         CP_Panel = new CreateProfilePanel(UName, NM);
         contentPane.add(CP_Panel);
-        show();
+        setVisible(true);
     }
 
 }

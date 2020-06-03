@@ -7,14 +7,16 @@ import javax.swing.*;
 
 class AddVehiclePanel extends JPanel implements ActionListener {
 
-    private JButton OpenButton;
+    private JButton SubmitButton, BackButton;
     private JTextField LicensePlateNumberField, MakeField, ModelField, YearField, ColorField, TagCodeField, CustomerIDField;
-    private String LicensePlate, Make, Model, Year, Color, TagCode, Email, Balance, CustomerID;
+    private String LicensePlate, Make, Model, Year, Color, TagCode, Email, Balance, CustomerID, Username;
 
-    public AddVehiclePanel(String CID) {
-        OpenButton = new JButton("Submit"); //submit button
-        CustomerID = CID; //set customer id
+    public AddVehiclePanel(String CID, String User) {
+        SubmitButton = new JButton("Submit"); //submit button
+        BackButton = new JButton("Back");
         
+        CustomerID = CID; //set customer id
+        Username = User;
         //set jtextfields. customer id will not be editable by user
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
@@ -25,7 +27,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         YearField = new JTextField(15);
         ColorField = new JTextField(15);
         TagCodeField = new JTextField(15);
-        
+
         //labels for textfield
         JLabel CustomerIDLabel = new JLabel("Customer ID:");
         JLabel LicensePlateNumberLabel = new JLabel("License Plate:");
@@ -34,7 +36,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         JLabel YearLabel = new JLabel("Year: ");
         JLabel ColorLabel = new JLabel("Color: ");
         JLabel TagCodeLabel = new JLabel("TagCode: ");
-        
+
         //each panel contains a label and a text field
         JPanel CustomerIDPanel = new JPanel();
         JPanel LicensePlateNumberPanel = new JPanel();
@@ -45,6 +47,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         JPanel TagCodePanel = new JPanel();
         JPanel EmailPanel = new JPanel();
         JPanel BalancePanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
 
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
@@ -60,11 +63,14 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         ColorPanel.add(ColorField);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
-
-        OpenButton.addActionListener(this); //event listener registration
+        ButtonPanel.add(SubmitButton);
+        ButtonPanel.add(BackButton);
         
-        //The panels will be placed in the centerpanel to set it to the center of windows
-        JPanel CenterPanel = new JPanel();
+        SubmitButton.addActionListener(this); //event listener registration
+        BackButton.addActionListener(this);
+        
+        //The panels will be placed in the centerpanel to set it to the top of frame
+        Box CenterPanel = Box.createVerticalBox();
         CenterPanel.add(CustomerIDPanel);
         CenterPanel.add(LicensePlateNumberPanel);
         CenterPanel.add(MakePanel);
@@ -72,11 +78,9 @@ class AddVehiclePanel extends JPanel implements ActionListener {
         CenterPanel.add(YearPanel);
         CenterPanel.add(ColorPanel);
         CenterPanel.add(TagCodePanel);
-        ;
-        CenterPanel.add(OpenButton);
+        CenterPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
-        add(CenterPanel, BorderLayout.CENTER);
-        //add(OpenButton, BorderLayout.SOUTH);//add the one button on to this panel
+        add(CenterPanel, BorderLayout.NORTH);
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
@@ -93,7 +97,11 @@ class AddVehiclePanel extends JPanel implements ActionListener {
             TagCode = TagCodeField.getText();
             AddVehicleControl CP_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
 
-
+        } else if (arg.equals("Back")) {
+            MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
+            JComponent component = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(component);
+            win.dispose();
         }
     }
 
@@ -101,9 +109,9 @@ class AddVehiclePanel extends JPanel implements ActionListener {
 
 public class AddVehicleBO extends JFrame {
 
-    private AddVehiclePanel CP_Panel;
+    private AddVehiclePanel AV_Panel;
 
-    public AddVehicleBO(String CID) {
+    public AddVehicleBO(String CID, String User) {
         setTitle("Add Vehicle");
         setSize(450, 450);
 
@@ -122,10 +130,11 @@ public class AddVehicleBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new AddVehiclePanel(CID);
-        contentPane.add(CP_Panel);
-        show();
+        AV_Panel = new AddVehiclePanel(CID, User);
+        contentPane.add(AV_Panel);
+        setVisible(true);
     }
 
-  
 }
+
+
