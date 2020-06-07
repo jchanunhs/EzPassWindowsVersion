@@ -3,7 +3,7 @@ package ezpassapplication.model;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.DefaultListModel;
+import java.util.ArrayList;
 
 public class Vehicle {
 
@@ -108,19 +108,18 @@ public class Vehicle {
         return done;
     }
 
-    public DefaultListModel getVehicles() { //populate list with vehicles
-        DefaultListModel model = new DefaultListModel();
-        String holder = "";
+    public ArrayList<String> getVehicles() { //populate list with vehicles
+        ArrayList<String> vehicles = new ArrayList<String>();
+
         try {
 
             DBConnection ToDB = new DBConnection(); //Have a connection to the DB
             Connection DBConn = ToDB.openConn();
             Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM Vehicle WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the license plate number exist
+            String SQL_Command = "SELECT * FROM Vehicle WHERE CustomerID ='" + CustomerID + "'"; //fetch all license plate numbers 
+            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
             while (Rslt.next()) {
-                holder = Rslt.getString("LicensePlateNumber");
-                model.addElement(holder); //add license plate number to model
+                vehicles.add(Rslt.getString("LicensePlateNumber"));
             }
 
             Stmt.close();
@@ -140,6 +139,6 @@ public class Vehicle {
             System.out.println("Exception: " + e);
             e.printStackTrace();
         }
-        return model;
+        return vehicles;
     }
 }

@@ -75,42 +75,35 @@ public class CreditCard {
         }
         return done;
     }
-    
-      public ArrayList<String> getAllTransactions(String column_name) { //populate list with credit transactions
-    ArrayList<String> list = new ArrayList<String>();
-     
+
+    public ArrayList<String> getAllTransactions(String column_name) { //populate list with credit transactions
+        ArrayList<String> list = new ArrayList<String>();
+
         try {
 
             DBConnection ToDB = new DBConnection(); //Have a connection to the DB
             Connection DBConn = ToDB.openConn();
             Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM [TangClass].[dbo].[CreditCard] WHERE CustomerID = '" + CustomerID + "' ORDER BY 'Date','Time' ASC";
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command); 
+            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
             while (Rslt.next()) {
-               if(column_name.equals("CardNumber")){
-                  list.add(Rslt.getString("CardNumber"));
-               }
-               else if(column_name.equals("Name")){
-                   list.add(Rslt.getString("Name"));
-               }
-               else if(column_name.equals("ExpirationDate")){
-                   list.add(Rslt.getString("ExpirationDate"));
-               }
-               else if(column_name.equals("CVV")){
-                   list.add(Rslt.getString("CVV"));
-               }
-               else if(column_name.equals("Date")){
-                   list.add(Rslt.getString("Date"));
-               }
-               else if(column_name.equals("Time")){
-                   list.add(Rslt.getString("Time"));
-               }
-               else if(column_name.equals("CreditAmount")){
-                   list.add(Rslt.getString("CreditAmount"));
-               }
-               else if(column_name.equals("CreditID")){
-                   list.add(Rslt.getString("CreditID"));
-               }
+                if (column_name.equals("CardNumber")) {
+                    list.add(Rslt.getString("CardNumber"));
+                } else if (column_name.equals("Name")) {
+                    list.add(Rslt.getString("Name"));
+                } else if (column_name.equals("ExpirationDate")) {
+                    list.add(Rslt.getString("ExpirationDate"));
+                } else if (column_name.equals("CVV")) {
+                    list.add(Rslt.getString("CVV"));
+                } else if (column_name.equals("Date")) {
+                    list.add(Rslt.getString("Date"));
+                } else if (column_name.equals("Time")) {
+                    list.add(Rslt.getString("Time"));
+                } else if (column_name.equals("CreditAmount")) {
+                    list.add(Rslt.getString("CreditAmount"));
+                } else if (column_name.equals("CreditID")) {
+                    list.add(Rslt.getString("CreditID"));
+                }
             }
 
             Stmt.close();

@@ -3,6 +3,7 @@ package ezpassapplication.view;
 import ezpassapplication.model.Vehicle;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -11,6 +12,9 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
     private Vehicle vehicle;
     private String CustomerID, clickedString, Username;
     private int clickedInt;
+    private JTextField selectedVehicle;
+    private JList VehicleList;
+    private DefaultListModel list_model; //list model for VehicleList
 
     public VehiclePanel(String CID, String User) {
         CustomerID = CID;
@@ -24,12 +28,17 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         selectedVehiclePanel.add(selectedVehicle);
 
         vehicle = new Vehicle(CustomerID); //vehicle can get information from CID
+        ArrayList<String> list_getVehicle = vehicle.getVehicles();
+        list_model = new DefaultListModel();
+        for (String object : list_getVehicle) { //add all vehicles to list model
+            list_model.addElement(object);
+        }
         //initializing a list
-        VehicleList = new JList(vehicle.getVehicles()); //jlist contains vehicle list from Vehicle Object 
+        VehicleList = new JList(list_model); //jlist contains list model that recieved all license number
         VehicleList.setVisibleRowCount(5); //set the visible rows
         VehicleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         VehicleList.addListSelectionListener(this);
-        
+
         JPanel vehicleListPanel = new JPanel();
         vehicleListPanel.add(VehicleList);
 
@@ -46,7 +55,7 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         remove.addActionListener(this);
         ButtonPanel.add(add);
         ButtonPanel.add(remove);
-        
+
         JLabel list_label = new JLabel("Vehicle List");
         JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
         label_pane.add(list_label);
@@ -71,9 +80,6 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         selectedVehicle.setText(tempString);
     }
 
-    private JTextField selectedVehicle;
-    private JList VehicleList;
-
     @Override
     public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
@@ -86,7 +92,8 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
             Vehicle vehicle = new Vehicle(CustomerID, clickedString);
             if (vehicle.removeVehicle()) {
                 JOptionPane.showMessageDialog(null, "Remove vehicle success. Please logout to see changes!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                ((DefaultListModel) VehicleList.getModel()).remove(clickedInt);
+                list_model.remove(clickedInt);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Remove vehicle failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }

@@ -302,8 +302,6 @@ public class Customer {
         return done;
     }
 
-    
-
     public boolean setData() { //fetch data from DB using CustomerID
         boolean done = false;
         try {

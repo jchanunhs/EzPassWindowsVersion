@@ -1,6 +1,5 @@
 package ezpassapplication.model;
 
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,9 +25,9 @@ public class EzTag {
         CustomerID = CID;
         TagCode = TC;
     }
-   
+
     //to get all tags based on CustomerID
-    public EzTag(String CID){
+    public EzTag(String CID) {
         CustomerID = CID;
     }
 
@@ -141,17 +140,17 @@ public class EzTag {
         }
         return done;
     }
-    
-        public ArrayList<String> getTags() { //populate list with tags
-    ArrayList<String> tags = new ArrayList<String>();
-     
+
+    public ArrayList<String> getTags() { //populate list with tags
+        ArrayList<String> tags = new ArrayList<String>();
+
         try {
 
             DBConnection ToDB = new DBConnection(); //Have a connection to the DB
             Connection DBConn = ToDB.openConn();
             Statement Stmt = DBConn.createStatement();
             String SQL_Command = "SELECT * FROM EzTag WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command); 
+            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
             while (Rslt.next()) {
                 tags.add(Rslt.getString("TagCode"));
             }
