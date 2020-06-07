@@ -48,7 +48,7 @@ public class CreditCard {
                 formatter = new SimpleDateFormat("HH:mm:ss");
                 date = new Date(System.currentTimeMillis());
                 Time = formatter.format(date);
-                
+
                 Statement Stmt = DBConn.createStatement();
                 //add credit card to db
                 String SQL_Command = "INSERT INTO CreditCard(CardNumber, Name, ExpirationDate, CVV, CustomerID, Date, Time, CreditAmount, CreditID)"
