@@ -81,7 +81,7 @@ public class PayTollBO extends JFrame {
 
     public PayTollBO(String CID, String User) {
         setTitle("Pay Toll");
-        setSize(450, 450);
+        setSize(800, 800);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

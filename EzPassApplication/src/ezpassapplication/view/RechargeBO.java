@@ -105,7 +105,7 @@ class RechargePanel extends JPanel implements ActionListener {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setPreferredSize(new Dimension(600, 600));
+        scroll.setPreferredSize(new Dimension(600, 500));
         JLabel list_label = new JLabel("Credit List");
         JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
         label_pane.add(list_label);
@@ -124,7 +124,8 @@ class RechargePanel extends JPanel implements ActionListener {
         MainPanel.add(AddBalPane);
         MainPanel.add(label_pane); // list label will be on top of the credit list
         MainPanel.add(credit_list);
-        add(MainPanel);
+        setLayout(new BorderLayout());
+        add(MainPanel, BorderLayout.NORTH);
 
     }
 

@@ -76,7 +76,7 @@ public class RemoveTagBO extends JFrame {
 
     public RemoveTagBO(String CID, String User) {
         setTitle("Renove Tag");
-        setSize(450, 450);
+        setSize(800, 800);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

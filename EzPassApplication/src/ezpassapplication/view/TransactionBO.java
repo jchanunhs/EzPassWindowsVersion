@@ -69,7 +69,7 @@ class TransactionPanel extends JPanel implements ActionListener {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setPreferredSize(new Dimension(600, 600));
+        scroll.setPreferredSize(new Dimension(600, 500));
 
         JLabel list_label = new JLabel("Transaction List");
         JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
@@ -145,7 +145,7 @@ TransactionPanel Trans_Panel;
     public TransactionBO(String CID, String User) {
         setTitle("Your Transactions");
         Trans_Panel = new TransactionPanel(CID,User);
-        setSize(650, 650);
+        setSize(800, 800);
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension d = tk.getScreenSize();

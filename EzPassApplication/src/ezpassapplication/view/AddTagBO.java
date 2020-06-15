@@ -96,7 +96,7 @@ public class AddTagBO extends JFrame {
 
     public AddTagBO(String CID, String User) {
         setTitle("Add Tag");
-        setSize(450, 450);
+        setSize(800, 800);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

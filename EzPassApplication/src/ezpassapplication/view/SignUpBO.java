@@ -71,7 +71,7 @@ public class SignUpBO extends JFrame {
 
     public SignUpBO() {
         setTitle("Sign Up");
-        setSize(340, 210);
+        setSize(800, 800);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

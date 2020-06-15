@@ -105,7 +105,7 @@ public class VehicleBO extends JFrame {
 
     public VehicleBO(String CID, String User) {
         setTitle("Your Vehicles");
-        setSize(480, 240);
+        setSize(800, 800);
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension d = tk.getScreenSize();

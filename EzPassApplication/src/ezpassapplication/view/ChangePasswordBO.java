@@ -89,7 +89,7 @@ public class ChangePasswordBO extends JFrame {
 
     public ChangePasswordBO(String CID, String Username) {
         setTitle("Change Password");
-        setSize(450, 450);
+        setSize(800, 800);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

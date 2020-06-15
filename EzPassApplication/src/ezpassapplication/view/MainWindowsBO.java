@@ -35,7 +35,7 @@ public class MainWindowsBO extends JFrame {
 
     public MainWindowsBO(String CID,String User) {
         setTitle("Main Windows");
-        setSize(630, 800);
+        setSize(800, 800);
 
         setVisible(true);
 
