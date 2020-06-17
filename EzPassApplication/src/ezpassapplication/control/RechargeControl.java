@@ -26,7 +26,7 @@ public class RechargeControl {
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Recharge failed unexpectedly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Recharge failed unexpectly! If this occurs multiple times, please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
 
     }

@@ -15,17 +15,17 @@ public class SignUpControl {
         if (UName.equals("") || PsWord.equals("") || PsWord1.equals("") || Name.equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (PsWord.equals(PsWord1) && Acct.signUp()) { //check if password match and attempt to sign up
-            JOptionPane.showMessageDialog(null, "Account has been created!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Account creation was successful! Please login to your new account!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             LoginBO login = new LoginBO(); //display login screen and close sign up
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else if (Acct.UsernameTaken()) { // check if username is taken
-            JOptionPane.showMessageDialog(null, "Username is taken!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Username is taken. Please try another username.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (!PsWord.equals(PsWord1)) { //check for invalid password matchup
-            JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Account creation failed unexpectly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Signup failed unexpectedly. If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

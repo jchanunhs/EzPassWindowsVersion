@@ -12,7 +12,7 @@ public class RemoveTagControl {
         if (TC.equals("")) {
             JOptionPane.showMessageDialog(null, "Remove tag failed! Plese enter a tag code!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (tag.removeTag()) {//attempt to remove tag
-            JOptionPane.showMessageDialog(null, "Remove Tag is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "EzTag was removed successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
         } else if (!tag.checkTag()) { //check if tag code is valid
             JOptionPane.showMessageDialog(null, "Error: The tag code you entered is invalid", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else { //Remove tag fails if user already used it to pay tolls or tag is currently associated with a vehicle

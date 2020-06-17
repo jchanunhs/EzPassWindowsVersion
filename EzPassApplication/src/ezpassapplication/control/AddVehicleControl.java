@@ -14,12 +14,12 @@ public class AddVehicleControl {
             JOptionPane.showMessageDialog(null, "Add vehicle failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (ez.checkTag()) { //check if tag belongs to user
             if (vehicle.addVehicle()) { //attempt to add vehicle
-                JOptionPane.showMessageDialog(null, "Add vehicle is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Vehicle was added successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Add vehicle failed! Vehicle is already in the database", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: Add vehicle failed! Vehicle already exist in our database!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Add vehicle failed! Tag code is invalid", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Add vehicle failed! Tag code is invalid!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

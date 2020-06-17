@@ -11,9 +11,9 @@ public class AddTagControl {
         if (TC.equals("") || TT.equals("") || IssueD.equals("")) {
             JOptionPane.showMessageDialog(null, "Add Tag failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (tag.addTag()) {
-            JOptionPane.showMessageDialog(null, "Add Tag is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ez Tag was added successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Add Tag failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: The Ez Tag that you entered is invalid. Please try again.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -24,15 +24,15 @@ public class PayTollControl {
             JOptionPane.showMessageDialog(null, "Create transaction failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else if (tag.checkTag()) { //check if tag belongs to customer
             if (trans.recordTransaction() && cus.charge(newBal)) { //record transaction and charge account. 
-                JOptionPane.showMessageDialog(null, "Transaction successful! Your total amount: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Pay toll was successful! Your new balance is: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 JComponent component = (JComponent) evt.getSource();//close window when customer is charged successfully
                 Window win = SwingUtilities.getWindowAncestor(component);
                 win.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Create transaction failed unexpectly!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: Unable to process payments at this time. If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Create transaction failed due to invalid tag code", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Pay toll failed because Tag Code was invalid!", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 
