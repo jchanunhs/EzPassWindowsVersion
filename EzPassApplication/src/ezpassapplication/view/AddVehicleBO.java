@@ -95,7 +95,12 @@ class AddVehiclePanel extends JPanel implements ActionListener {
             Year = YearField.getText();
             Color = ColorField.getText();
             TagCode = TagCodeField.getText();
-            AddVehicleControl AV_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
+            if (LicensePlate.equals("") || Make.equals("") || Model.equals("") || Year.equals("") || Color.equals("") || TagCode.equals("")) {
+                JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                AddVehicleControl AV_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);
+            }
+
         } else if (arg.equals("Back")) { //return to main windows and close add vehicle window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();

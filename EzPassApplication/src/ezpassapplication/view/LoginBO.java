@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class LoginBO extends JFrame implements ActionListener 
-{
+public class LoginBO extends JFrame implements ActionListener {
 
     private JButton SignUpButton, LoginButton;  //Instance variables
     private JTextField UsernameField;
@@ -71,7 +70,6 @@ public class LoginBO extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent evt) //event handling
     {
         String arg = evt.getActionCommand();
-
         if (arg.equals("Sign Up")) {
             SignUpBO SUC = new SignUpBO();//open signup and close login
             JComponent component = (JComponent) evt.getSource();
@@ -81,10 +79,14 @@ public class LoginBO extends JFrame implements ActionListener
         if (arg.equals("Login")) {
             String Username = UsernameField.getText();
             String Password = PasswordField.getText();
-            LoginControl LoginC = new LoginControl(evt, Username, Password);
+            if (Username.equals("") || Password.equals("")) {
+                JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                LoginControl LoginC = new LoginControl(evt, Username, Password);
+            }
         }
     }
-
+    
     public static void main(String[] args) {
         JFrame frame = new LoginBO(); //initialize a JFrame object
     }

@@ -89,16 +89,25 @@ class CreateProfilePanel extends JPanel implements ActionListener {
     {
         String arg = evt.getActionCommand();
         if (arg.equals("Submit")) { //get input from user and pass to control
-            Name = NameField.getText();
-            Street = StreetField.getText();
-            City = CityField.getText();
-            State = StateField.getText();
-            Zip = ZipField.getText();
-            Phone = PhoneField.getText();
-            Email = EmailField.getText();
-            Balance = BalanceField.getText();
-            float Bal = Float.parseFloat(String.valueOf(Balance));
-            CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, Username);
+            try {
+                Name = NameField.getText();
+                Street = StreetField.getText();
+                City = CityField.getText();
+                State = StateField.getText();
+                Zip = ZipField.getText();
+                Phone = PhoneField.getText();
+                Email = EmailField.getText();
+                Balance = BalanceField.getText();
+                if (Name.equals("") || Street.equals("") || City.equals("") || State.equals("") || Zip.equals("") || Phone.equals("") || Email.equals("") || Balance.equals("")) {
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    float Bal = Float.parseFloat(String.valueOf(Balance));
+                    CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, Username);
+                }
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Balance must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

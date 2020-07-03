@@ -10,9 +10,7 @@ public class AddVehicleControl {
     public AddVehicleControl(ActionEvent evt, String LicensePlate, String Make, String Model, String Year, String Color, String TagCode, String CID) {
         EzTag ez = new EzTag(TagCode, CID);
         Vehicle vehicle = new Vehicle(LicensePlate, Make, Model, Year, Color, TagCode, CID);
-        if (LicensePlate.equals("") || Make.equals("") || Model.equals("") || Year.equals("") || Color.equals("") || TagCode.equals("")) {
-            JOptionPane.showMessageDialog(null, "Add vehicle failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else if (ez.checkTag()) { //check if tag belongs to user
+        if (ez.checkTag()) { //check if tag belongs to user
             if (vehicle.addVehicle()) { //attempt to add vehicle
                 JOptionPane.showMessageDialog(null, "Vehicle was added successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             } else {

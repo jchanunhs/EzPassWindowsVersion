@@ -80,7 +80,11 @@ class AddTagPanel extends JPanel implements ActionListener {
             TagCode = TagCodeField.getText();
             TagType = TagTypeField.getText();
             IssueDate = IssueDateField.getText();
-            AddTagControl AT_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
+            if (TagCode.equals("") || TagType.equals("") || IssueDate.equals("")) {
+                JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                AddTagControl AT_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
+            }
         } else if (arg.equals("Back")) { //return to mainwindows and close add tag window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();

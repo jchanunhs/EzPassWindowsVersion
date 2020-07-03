@@ -16,10 +16,8 @@ public class RechargeControl {
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
         cus.setData();
         float oldBal = cus.getBalance();
-        float newBal = oldBal + AddBal; 
-        if (CNumber.equals("") || NM.equals("") || EXPDate.equals("") || CVV.equals("")) {
-            JOptionPane.showMessageDialog(null, "Recharge failed! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-        } else if (card.addCreditCard() && cus.recharge(newBal)) { //add card information, and recharge account with money
+        float newBal = oldBal + AddBal;
+        if (card.addCreditCard() && cus.recharge(newBal)) { //add card information, and recharge account with money
             JOptionPane.showMessageDialog(null, "Recharge successful! New balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows and close recharge window
             JComponent component = (JComponent) evt.getSource();

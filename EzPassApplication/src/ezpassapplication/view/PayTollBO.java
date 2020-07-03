@@ -63,13 +63,21 @@ class PayTollPanel extends JPanel implements ActionListener {
     {
         String arg = evt.getActionCommand();
         if (arg.equals("Submit")) { //get user input and pass to control
-            TagCode = TagCodeField.getText();
-            TollPlaza = TollPlazaField.getText();
-            TollLaneNumber = TollLaneNumberField.getText();
-            int intTollLaneNum = Integer.parseInt(String.valueOf(TollLaneNumber)); //Lane number in DB is int
-            TollAmount = TollAmountField.getText();
-            float TollAmt = Float.parseFloat(String.valueOf(TollAmount)); //Toll amount is float in DB
-            PayTollControl PT_CTRL = new PayTollControl(evt, TagCode, TollPlaza, intTollLaneNum, TollAmt, CustomerID); //pass to control object
+            try {
+                TagCode = TagCodeField.getText();
+                TollPlaza = TollPlazaField.getText();
+                TollLaneNumber = TollLaneNumberField.getText();
+                TollAmount = TollAmountField.getText();
+                if (TagCode.equals("") || TollPlaza.equals("") || TollLaneNumber.equals("") || TollAmount.equals("")) {
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int intTollLaneNum = Integer.parseInt(String.valueOf(TollLaneNumber)); //Lane number in DB is int
+                    float TollAmt = Float.parseFloat(String.valueOf(TollAmount)); //Toll amount is float in DB
+                    PayTollControl PT_CTRL = new PayTollControl(evt, TagCode, TollPlaza, intTollLaneNum, TollAmt, CustomerID); //pass to control object
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Toll Lane and Toll Amount must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            }
 
         }
     }

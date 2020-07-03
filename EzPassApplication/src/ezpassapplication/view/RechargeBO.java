@@ -133,12 +133,22 @@ class RechargePanel extends JPanel implements ActionListener {
     {
         String arg = evt.getActionCommand();
         if (arg.equals("Recharge")) {//get input from user and forward to control   
-            CardNumber = CardField.getText();
-            Name = NameField.getText();
-            ExpirationDate = ExpField.getText();
-            CVV = CVVField.getText();
-            float add_bal = Float.parseFloat(AddBalField.getText()); //convert string to float
-            RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, Username, CardNumber, Name, ExpirationDate, CVV, add_bal);
+            try {
+                CardNumber = CardField.getText();
+                Name = NameField.getText();
+                ExpirationDate = ExpField.getText();
+                CVV = CVVField.getText();
+                AddBalance = AddBalField.getText();
+                if (CardNumber.equals("") || Name.equals("") || ExpirationDate.equals("") || CVV.equals("") || AddBalance.equals("")) {
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    float add_bal = Float.parseFloat(AddBalance); //convert string to float
+                    RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, Username, CardNumber, Name, ExpirationDate, CVV, add_bal);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Balance must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else if (arg.equals("Back")) { // open main window and close recharge window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();

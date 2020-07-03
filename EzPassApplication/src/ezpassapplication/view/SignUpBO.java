@@ -8,7 +8,7 @@ import javax.swing.*;
 
 class SignUpPanel extends JPanel implements ActionListener {
 
-    private JButton RegisterButton,LoginButton;
+    private JButton RegisterButton, LoginButton;
     private JTextField UsernameField, NameField;
     private JPasswordField PasswordField, PasswordField1;
     private String UName, PsWord, PsWord1, Name;
@@ -59,7 +59,14 @@ class SignUpPanel extends JPanel implements ActionListener {
             PsWord = PasswordField.getText();
             PsWord1 = PasswordField1.getText();
             Name = NameField.getText();
-            SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, PsWord1, Name);
+            if (UName.equals("") || PsWord.equals("") || PsWord1.equals("") || Name.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else if (!PsWord.equals(PsWord1)) { //check for invalid password matchup
+                JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, PsWord1, Name);
+            }
+
         }
     }
 
@@ -71,7 +78,7 @@ public class SignUpBO extends JFrame {
 
     public SignUpBO() {
         setTitle("Sign Up");
-        setSize(800, 800);
+        setSize(400, 400);
 
         //get screen size and set the location of the frame
         Toolkit tk = Toolkit.getDefaultToolkit();

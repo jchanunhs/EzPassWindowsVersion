@@ -73,7 +73,13 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
             String oldPW = OldPassword.getText();
             String newPW = NewPassword.getText();
             String newPW1 = Retype.getText();
-            ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, oldPW, newPW, newPW1);
+            if (oldPW.equals("") || newPW.equals("") || newPW1.equals("")) {
+                JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else if (!newPW.equals(newPW1)) { //check if password match
+                JOptionPane.showMessageDialog(null, "Error: Unmatched new password!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, oldPW, newPW);
+            }
         } else if (arg.equals("Back")) { //return to mainwindows and close change password window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
