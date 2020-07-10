@@ -20,7 +20,7 @@ public class PayTollControl {
         EzTag tag = new EzTag(TagCode, CID);
         if (tag.checkTag()) { //check if tag belongs to customer
             if (trans.recordTransaction() && cus.updateBalance(newBal)) { //record transaction and charge account. 
-                JOptionPane.showMessageDialog(null, "Pay toll was successful! Your new balance is: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Pay toll was successful! Your Transaction ID is "+ trans.getTransactionID() + " and your new balance is: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 JComponent component = (JComponent) evt.getSource();//close window when customer is charged successfully
                 Window win = SwingUtilities.getWindowAncestor(component);
                 win.dispose();

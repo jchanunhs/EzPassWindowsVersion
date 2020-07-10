@@ -175,5 +175,9 @@ public class Transaction {
         }
         return list; //returns the list
     }
+    
+    public String getTransactionID(){
+        return TransactionID;
+    }
 
 }

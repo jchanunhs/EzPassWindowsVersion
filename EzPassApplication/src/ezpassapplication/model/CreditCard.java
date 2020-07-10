@@ -125,5 +125,9 @@ public class CreditCard {
         }
         return list;
     }
+    
+    public String getCreditID(){
+        return CreditID;
+    }
 
 }

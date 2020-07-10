@@ -18,7 +18,7 @@ public class RechargeControl {
         float oldBal = cus.getBalance();
         float newBal = oldBal + AddBal;
         if (card.addCreditCard() && cus.updateBalance(newBal)) { //add card information, and recharge account with money
-            JOptionPane.showMessageDialog(null, "Recharge successful! New balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Recharge successful! Your Transaction ID is " + card.getCreditID() + " and your new balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows and close recharge window
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
