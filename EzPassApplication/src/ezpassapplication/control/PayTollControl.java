@@ -19,7 +19,7 @@ public class PayTollControl {
         float newBal = oldBal - TollAmt;
         EzTag tag = new EzTag(TagCode, CID);
         if (tag.checkTag()) { //check if tag belongs to customer
-            if (trans.recordTransaction() && cus.charge(newBal)) { //record transaction and charge account. 
+            if (trans.recordTransaction() && cus.updateBalance(newBal)) { //record transaction and charge account. 
                 JOptionPane.showMessageDialog(null, "Pay toll was successful! Your new balance is: " + newBal + ". Have a nice trip!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 JComponent component = (JComponent) evt.getSource();//close window when customer is charged successfully
                 Window win = SwingUtilities.getWindowAncestor(component);
