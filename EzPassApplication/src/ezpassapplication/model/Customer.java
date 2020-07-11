@@ -17,10 +17,6 @@ public class Customer {
     private float Balance;
     private String UName;
 
-    public Customer() {
-
-    }
-
     //Add customer to DB
     public Customer(String NM, String ST, String CT, String STE, String ZP, String PN, String EM, float Bal, String UName) {
         this.Name = NM;
@@ -36,6 +32,7 @@ public class Customer {
 
     public Customer(String CID) {
         CustomerID = CID;
+        this.setData();
     }
 
     public boolean createProfile() {

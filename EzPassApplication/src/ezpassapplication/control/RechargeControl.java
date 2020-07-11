@@ -14,7 +14,6 @@ public class RechargeControl {
     public RechargeControl(ActionEvent evt, String CID, String User, String CNumber, String NM, String EXPDate, String CVV, float AddBal) {
         Customer cus = new Customer(CID);
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
-        cus.setData();
         float oldBal = cus.getBalance();
         float newBal = oldBal + AddBal;
         if (card.addCreditCard() && cus.updateBalance(newBal)) { //add card information, and recharge account with money

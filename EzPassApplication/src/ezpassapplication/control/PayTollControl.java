@@ -14,7 +14,6 @@ public class PayTollControl {
     public PayTollControl(ActionEvent evt, String TagCode, String TollPlaza, int intTollLaneNum, float TollAmt, String CID) {
         Transaction trans = new Transaction(TagCode, TollAmt, TollPlaza, intTollLaneNum, CID);
         Customer cus = new Customer(CID);
-        cus.setData();
         float oldBal = cus.getBalance(); //get current balance from customer
         float newBal = oldBal - TollAmt;
         EzTag tag = new EzTag(TagCode, CID);

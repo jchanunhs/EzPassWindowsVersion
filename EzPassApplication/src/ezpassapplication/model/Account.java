@@ -26,11 +26,6 @@ public class Account {
         CustomerID = CID;
     }
 
-    //default constructor
-    public Account() {
-
-    }
-
     public String getName() {
         try {
             DBConnection ToDB = new DBConnection();
