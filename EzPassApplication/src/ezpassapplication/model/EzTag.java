@@ -3,7 +3,9 @@ package ezpassapplication.model;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EzTag {
 
@@ -13,10 +15,9 @@ public class EzTag {
     private String CustomerID;
 
     //add tag constructor
-    public EzTag(String TC, String TT, String IssueD, String CID) {
+    public EzTag(String TC, String TT, String CID) {
         TagCode = TC;
         TagType = TT;
-        IssueDate = IssueD;
         CustomerID = CID;
     }
 
@@ -77,6 +78,9 @@ public class EzTag {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
                 Statement Stmt = DBConn.createStatement();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date(System.currentTimeMillis());
+                IssueDate = formatter.format(date);
                 String SQL_Command = "SELECT * FROM EzTag WHERE TagCode ='" + TagCode + "'"; //SQL query command
                 ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if tag code exist
                 done = !Rslt.next(); //if not, insert tag to db

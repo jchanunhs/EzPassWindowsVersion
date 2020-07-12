@@ -6,8 +6,8 @@ import javax.swing.JOptionPane;
 
 public class AddTagControl {
 
-    public AddTagControl(ActionEvent evt, String TC, String TT, String IssueD, String CID) {
-        EzTag tag = new EzTag(TC, TT, IssueD, CID);
+    public AddTagControl(ActionEvent evt, String TC, String TT, String CID) {
+        EzTag tag = new EzTag(TC, TT, CID);
         if (tag.addTag()) {
             JOptionPane.showMessageDialog(null, "Ez Tag was added successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
         } else {

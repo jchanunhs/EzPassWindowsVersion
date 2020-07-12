@@ -15,7 +15,7 @@ class RechargePanel extends JPanel implements ActionListener {
     private String CustomerID, CurrentBalance, CardNumber, ExpirationDate, CVV, Name, AddBalance, Username;
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
-    private String[] columnName = {"CreditID", "CardNumber", "Date", "Time", "CreditAmount"};
+    private String[] columnName = {"CreditID", "Date", "Time", "CreditAmount"};
     private CreditCard credit;
 
     public RechargePanel(String CID, String User, float Bal) {
@@ -85,17 +85,15 @@ class RechargePanel extends JPanel implements ActionListener {
         //populate table with all credit transactions as default
         model.setColumnIdentifiers(columnName); //column titles
         ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
-        ArrayList<String> CN_list = credit.getAllTransactions("CardNumber");
         ArrayList<String> date_list = credit.getAllTransactions("Date");
         ArrayList<String> time_list = credit.getAllTransactions("Time");
         ArrayList<String> CDAmt_list = credit.getAllTransactions("CreditAmount");
         for (int i = 0; i < CreditID_list.size(); i++) {
             String Credit_ID = CreditID_list.get(i);
-            String Card_Number = CN_list.get(i);
             String Date = date_list.get(i);
             String Time = time_list.get(i);
             String Credit_AMT = CDAmt_list.get(i);
-            model.addRow(new Object[]{Credit_ID, Card_Number, Date, Time, Credit_AMT});
+            model.addRow(new Object[]{Credit_ID, Date, Time, Credit_AMT});
         }
 
         //initializing a table and scroll pane

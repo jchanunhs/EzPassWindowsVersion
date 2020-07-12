@@ -10,8 +10,8 @@ import javax.swing.*;
 class AddTagPanel extends JPanel implements ActionListener {
 
     private JButton SubmitButton, BackButton;
-    private JTextField TagCodeField, TagTypeField, IssueDateField, CustomerIDField;
-    private String TagCode, TagType, IssueDate, CustomerID, Username;
+    private JTextField TagCodeField, TagTypeField, CustomerIDField;
+    private String TagCode, TagType, CustomerID, Username;
 
     public AddTagPanel(String CID, String User) {
 
@@ -23,11 +23,6 @@ class AddTagPanel extends JPanel implements ActionListener {
         //JTextFields
         TagCodeField = new JTextField(15);
         TagTypeField = new JTextField(15);
-        IssueDateField = new JTextField(15);
-        IssueDateField.setEditable(false);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(System.currentTimeMillis());
-        IssueDateField.setText(formatter.format(date));
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
@@ -35,21 +30,17 @@ class AddTagPanel extends JPanel implements ActionListener {
         //JLabels
         JLabel TagCodeLabel = new JLabel("Tag Code: ");
         JLabel TagTypeLabel = new JLabel("Tag Type: ");
-        JLabel IssueDateLabel = new JLabel("IssueDate: ");
         JLabel CustomerIDLabel = new JLabel("CustomerID: ");
 
         //JPanels
         JPanel TagCodePanel = new JPanel();
         JPanel TagTypePanel = new JPanel();
-        JPanel IssueDatePanel = new JPanel();
         JPanel CustomerIDPanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
 
         //Add Labels and TextFields to Panels
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
-        IssueDatePanel.add(IssueDateLabel);
-        IssueDatePanel.add(IssueDateField);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
         TagTypePanel.add(TagTypeLabel);
@@ -64,7 +55,6 @@ class AddTagPanel extends JPanel implements ActionListener {
         //Vertical box
         Box MainPanel = Box.createVerticalBox();
         MainPanel.add(CustomerIDPanel);
-        MainPanel.add(IssueDatePanel);
         MainPanel.add(TagCodePanel);
         MainPanel.add(TagTypePanel);
         MainPanel.add(ButtonPanel);
@@ -79,11 +69,10 @@ class AddTagPanel extends JPanel implements ActionListener {
         if (arg.equals("Submit")) { //get inputs and forward to control
             TagCode = TagCodeField.getText();
             TagType = TagTypeField.getText();
-            IssueDate = IssueDateField.getText();
-            if (TagCode.equals("") || TagType.equals("") || IssueDate.equals("")) {
+            if (TagCode.equals("") || TagType.equals("")) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
-                AddTagControl AT_CTRL = new AddTagControl(evt, TagCode, TagType, IssueDate, CustomerID);
+                AddTagControl AT_CTRL = new AddTagControl(evt, TagCode, TagType, CustomerID);
             }
         } else if (arg.equals("Back")) { //return to mainwindows and close add tag window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);
