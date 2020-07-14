@@ -18,7 +18,7 @@ public class CreateProfileControl {
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
-        } else {
+        } else { //create profile fails if the generated customer id is already taken.
             JOptionPane.showMessageDialog(null, "Error: Created profile failed unexpectly! If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }

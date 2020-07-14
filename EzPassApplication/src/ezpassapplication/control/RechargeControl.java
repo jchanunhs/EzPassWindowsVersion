@@ -16,13 +16,16 @@ public class RechargeControl {
         CreditCard card = new CreditCard(CNumber, NM, EXPDate, CVV, CID, AddBal);
         float oldBal = cus.getBalance();
         float newBal = oldBal + AddBal;
-        if (card.addCreditCard() && cus.updateBalance(newBal)) { //add card information, and recharge account with money
-            JOptionPane.showMessageDialog(null, "Recharge successful! Your Transaction ID is " + card.getCreditID() + " and your new balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows and close recharge window
-            JComponent component = (JComponent) evt.getSource();
-            Window win = SwingUtilities.getWindowAncestor(component);
-            win.dispose();
-        } else {
+
+        if (card.addCreditCard()) { //add credit card transaction first
+            if (cus.updateBalance(newBal)) {
+                JOptionPane.showMessageDialog(null, "Recharge successful! Your Transaction ID is " + card.getCreditID() + " and your new balance is: " + newBal, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                MainWindowsBO main = new MainWindowsBO(CID, User); //redirect to main windows and close recharge window
+                JComponent component = (JComponent) evt.getSource();
+                Window win = SwingUtilities.getWindowAncestor(component);
+                win.dispose();
+            }
+        } else { //add credit card will fail if generated credit id is taken
             JOptionPane.showMessageDialog(null, "Error: Recharge failed unexpectly! If this occurs multiple times, please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
 
