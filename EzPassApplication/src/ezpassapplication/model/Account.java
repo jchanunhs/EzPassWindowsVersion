@@ -119,38 +119,6 @@ public class Account {
         return done;
     }
 
-    public boolean UsernameTaken() { //Check if username is taken
-        boolean done = !Username.equals("") && !Password.equals("") && !Password1.equals("") && Password.equals(Password1);
-        try {
-            if (done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
-                Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT Username FROM Account WHERE Username ='" + Username + "'"; //SQL query command to check if username already taken
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command);
-                done = Rslt.next();
-
-                Stmt.close();
-                ToDB.closeConn();
-            }
-        } catch (java.sql.SQLException e) {
-            done = false;
-            System.out.println("SQLException: " + e);
-            while (e != null) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e = e.getNextException();
-                System.out.println("");
-            }
-        } catch (java.lang.Exception e) {
-            done = false;
-            System.out.println("Exception: " + e);
-            e.printStackTrace();
-        }
-        return done;
-    }
-
     public boolean changePassword(String NewPassword) {
         boolean done = false;
         try {

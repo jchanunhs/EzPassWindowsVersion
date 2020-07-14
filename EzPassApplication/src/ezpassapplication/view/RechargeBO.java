@@ -144,7 +144,7 @@ class RechargePanel extends JPanel implements ActionListener {
                     RechargeControl RC_CTRL = new RechargeControl(evt, CustomerID, Username, CardNumber, Name, ExpirationDate, CVV, add_bal);
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Balance must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Add Balance must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }
 
         } else if (arg.equals("Back")) { // open main window and close recharge window

@@ -89,7 +89,7 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else if (arg.equals("Remove Vehicle")) { //remove vehicle based on what user clicked from list
-            Vehicle vehicle = new Vehicle(CustomerID, clickedString);
+            Vehicle vehicle = new Vehicle(clickedString, CustomerID);
             if (vehicle.removeVehicle()) {
                 JOptionPane.showMessageDialog(null, "Vehicle was removed successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 list_model.remove(clickedInt);

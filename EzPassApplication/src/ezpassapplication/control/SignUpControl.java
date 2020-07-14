@@ -18,10 +18,8 @@ public class SignUpControl {
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
-        } else if (Acct.UsernameTaken()) { // check if username is taken
-            JOptionPane.showMessageDialog(null, "Error: Username is taken. Please try another username.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Error: Signup failed unexpectedly. If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Username is taken. Please try another username.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -32,7 +32,7 @@ public class Vehicle {
     }
 
     //Constructor to remove vehicle
-    public Vehicle(String CID, String LicensePlate) {
+    public Vehicle(String LicensePlate, String CID) {
         LicensePlateNumber = LicensePlate;
         CustomerID = CID;
     }
