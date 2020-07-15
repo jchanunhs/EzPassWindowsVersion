@@ -36,6 +36,46 @@ public class Vehicle {
         LicensePlateNumber = LicensePlate;
         CustomerID = CID;
     }
+    
+    //Constructor to check vehicle
+    public Vehicle(String LicensePlate, String tagCode, String CID) {
+        LicensePlateNumber = LicensePlate;
+        TagCode = tagCode;
+        CustomerID = CID;
+    }
+    
+    //check if vehicle belongs to customer and matches tag code
+    public boolean checkVehicle() {
+        boolean done = false;
+        try {
+            if (!done) {
+                DBConnection ToDB = new DBConnection();
+                Connection DBConn = ToDB.openConn();
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Vehicle WHERE CustomerID = ? AND TagCode = ? AND LicensePlateNumber = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, TagCode);
+                Stmt.setString(3, LicensePlateNumber);
+                ResultSet Rslt = Stmt.executeQuery(); //if there is a row, that means tag code and customer id are a match
+                done = Rslt.next();
+                Stmt.close();
+                ToDB.closeConn();
+            }
+        } catch (java.sql.SQLException e) {
+            done = false;
+            System.out.println("SQLException: " + e);
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e = e.getNextException();
+                System.out.println("");
+            }
+        } catch (java.lang.Exception e) {
+            done = false;
+            System.out.println("Exception: " + e);
+        }
+        return done;
+    }
 
     public boolean addVehicle() {
         boolean done = false;
