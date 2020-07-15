@@ -2,8 +2,8 @@ package ezpassapplication.model;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -34,11 +34,11 @@ public class CreditCard {
         CustomerID = CID;
     }
 
-    public boolean addCreditCard() {
+    public boolean addCreditCardTransaction() {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
                 int credit_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 CreditID = String.valueOf(credit_id);
@@ -48,13 +48,22 @@ public class CreditCard {
                 formatter = new SimpleDateFormat("HH:mm:ss");
                 date = new Date(System.currentTimeMillis());
                 Time = formatter.format(date);
-
-                Statement Stmt = DBConn.createStatement();
-                //add credit card to db
-                String SQL_Command = "INSERT INTO CreditCard(CardNumber, Name, ExpirationDate, CVV, CustomerID, Date, Time, CreditAmount, CreditID)"
-                        + " VALUES ('" + CardNumber + "', '" + Name + "', '" + ExpirationDate + "', '" + CVV + "', '" + CustomerID + "', '" + Date + "', '" + Time + "', " + CreditAmount + ", '" + CreditID + "' )";
-                Stmt.executeUpdate(SQL_Command);
-                done = true;
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM CreditCard WHERE CreditID = ?");
+                Stmt.setString(1, CreditID);
+                ResultSet Rslt = Stmt.executeQuery();
+                done = !Rslt.next(); //credit id is useable
+                if (done) {
+                    Stmt = DBConn.prepareStatement("INSERT into CreditCard (CardNumber, Name, ExpirationDate, CVV, CustomerID, Date, Time, CreditAmount, CreditID) VALUES(?,?,?,?,?,?,?,?,?)");
+                    Stmt.setString(1, CardNumber);
+                    Stmt.setString(2, Name);
+                    Stmt.setString(3, ExpirationDate);
+                    Stmt.setString(4, CVV);
+                    Stmt.setString(5, CustomerID);
+                    Stmt.setString(6, Date);
+                    Stmt.setString(7, Time);
+                    Stmt.setFloat(8, CreditAmount);
+                    Stmt.setString(9, CreditID);
+                }
                 Stmt.close();
                 ToDB.closeConn();
             }
@@ -71,45 +80,51 @@ public class CreditCard {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
     public ArrayList<String> getAllTransactions(String column_name) { //populate list with credit transactions
-        ArrayList<String> list = new ArrayList<String>();
-
+        ArrayList<String> list = new ArrayList<>();
         try {
-
-            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();
-            Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM [TangClass].[dbo].[CreditCard] WHERE CustomerID = '" + CustomerID + "' ORDER BY 'Date','Time' ASC";
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM CreditCard WHERE CustomerID = ? ORDER BY 'Date','Time' ASC");
+            Stmt.setString(1, CustomerID);
+            ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
-                if (column_name.equals("CardNumber")) {
-                    list.add(Rslt.getString("CardNumber"));
-                } else if (column_name.equals("Name")) {
-                    list.add(Rslt.getString("Name"));
-                } else if (column_name.equals("ExpirationDate")) {
-                    list.add(Rslt.getString("ExpirationDate"));
-                } else if (column_name.equals("CVV")) {
-                    list.add(Rslt.getString("CVV"));
-                } else if (column_name.equals("Date")) {
-                    list.add(Rslt.getString("Date"));
-                } else if (column_name.equals("Time")) {
-                    list.add(Rslt.getString("Time"));
-                } else if (column_name.equals("CreditAmount")) {
-                    list.add(Rslt.getString("CreditAmount"));
-                } else if (column_name.equals("CreditID")) {
-                    list.add(Rslt.getString("CreditID"));
+                switch (column_name) {
+                    case "CardNumber":
+                        list.add(Rslt.getString("CardNumber"));
+                        break;
+                    case "Name":
+                        list.add(Rslt.getString("Name"));
+                        break;
+                    case "ExpirationDate":
+                        list.add(Rslt.getString("ExpirationDate"));
+                        break;
+                    case "CVV":
+                        list.add(Rslt.getString("CVV"));
+                        break;
+                    case "Date":
+                        list.add(Rslt.getString("Date"));
+                        break;
+                    case "Time":
+                        list.add(Rslt.getString("Time"));
+                        break;
+                    case "CreditAmount":
+                        list.add(Rslt.getString("CreditAmount"));
+                        break;
+                    case "CreditID":
+                        list.add(Rslt.getString("CreditID"));
+                        break;
+                    default:
+                        break;
                 }
             }
-
             Stmt.close();
             ToDB.closeConn();
         } catch (java.sql.SQLException e) {
-
             System.out.println("SQLException: " + e);
             while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
@@ -119,14 +134,13 @@ public class CreditCard {
                 System.out.println("");
             }
         } catch (java.lang.Exception e) {
-
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return list;
     }
-    
-    public String getCreditID(){
+
+    //return credit id when user recharges account
+    public String getCreditID() {
         return CreditID;
     }
 

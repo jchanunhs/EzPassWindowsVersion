@@ -2,8 +2,8 @@ package ezpassapplication.model;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -36,9 +36,8 @@ public class Transaction {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
                 int trans_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 TransactionID = String.valueOf(trans_id);
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,15 +46,21 @@ public class Transaction {
                 formatter = new SimpleDateFormat("HH:mm:ss");
                 date = new Date(System.currentTimeMillis());
                 TransactionTime = formatter.format(date);
-
-                String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE TransactionID = '" + TransactionID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //if transaction id does not exist, we are safe to add them to db
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM [TangClass].[dbo].[Transaction] WHERE TransactionID = ?");
+                Stmt.setString(1, TransactionID);
+                ResultSet Rslt = Stmt.executeQuery(); //if transaction id does not exist, we are safe to add them to db
                 done = !Rslt.next();
                 if (done) {
-                    SQL_Command = "INSERT INTO [TangClass].[dbo].[Transaction](TransactionID, TagCode, TransactionDate, TransactionTime, TollAmount, TollPlaza, TollLaneNumber, CustomerID)"
-                            + " VALUES ('" + TransactionID + "', '" + TagCode + "', '" + TransactionDate + "', '" + TransactionTime + "', " + TollAmount + ", '" + TollPlaza + "', " + TollLaneNumber + ", '" + CustomerID + "'" + ")";
-
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("INSERT INTO [TangClass].[dbo].[Transaction](TransactionID, TagCode, TransactionDate, TransactionTime, TollAmount, TollPlaza, TollLaneNumber, CustomerID) VALUES (?,?,?,?,?,?,?,?)");
+                    Stmt.setString(1, TransactionID);
+                    Stmt.setString(2, TagCode);
+                    Stmt.setString(3, TransactionDate);
+                    Stmt.setString(4, TransactionTime);
+                    Stmt.setFloat(5, TollAmount);
+                    Stmt.setString(6, TollPlaza);
+                    Stmt.setInt(7, TollLaneNumber);
+                    Stmt.setString(8, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -73,21 +78,18 @@ public class Transaction {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
     public ArrayList<String> getAllTransactions(String column_name) { //populate list with credit transactions
         ArrayList<String> list = new ArrayList<String>();
-
         try {
-
-            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();
-            Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = '" + CustomerID + "' ORDER BY 'TransactionDate','TransactionTime' ASC";
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = ?");
+            Stmt.setString(1, CustomerID);
+            ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
                 if (column_name.equals("TransactionID")) {
                     list.add(Rslt.getString("TransactionID"));
@@ -105,11 +107,9 @@ public class Transaction {
                     list.add(Rslt.getString("TollAmount"));
                 }
             }
-
             Stmt.close();
             ToDB.closeConn();
         } catch (java.sql.SQLException e) {
-
             System.out.println("SQLException: " + e);
             while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
@@ -119,9 +119,7 @@ public class Transaction {
                 System.out.println("");
             }
         } catch (java.lang.Exception e) {
-
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return list; //return list
     }
@@ -129,14 +127,13 @@ public class Transaction {
     public ArrayList<String> getTransactions(String before, String after, String column_name) {
         ArrayList<String> list = new ArrayList<String>();
         try {
-
             DBConnection ToDB = new DBConnection(); //Have a connection to the DB
             Connection DBConn = ToDB.openConn();
-            Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = '" + CustomerID + "'"
-                    + " AND TransactionDate BETWEEN '" + before + "' AND '" + after + "'"
-                    + "ORDER BY 'TransactionDate','TransactionTime' ASC";
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command); //execute query to get transaction based on dates
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = ? AND TransactionDate BETWEEN ? AND ? ORDER BY 'TransactionDate','TransactionTime' ASC");
+            Stmt.setString(1, CustomerID);
+            Stmt.setString(2, before);
+            Stmt.setString(3, after);
+            ResultSet Rslt = Stmt.executeQuery(); //execute query to get transaction based on dates
             while (Rslt.next()) {
                 if (column_name.equals("TransactionID")) {
                     list.add(Rslt.getString("TransactionID"));
@@ -154,12 +151,9 @@ public class Transaction {
                     list.add(Rslt.getString("TollAmount"));
                 }
             }
-
             Stmt.close();
             ToDB.closeConn();
-
         } catch (java.sql.SQLException e) {
-
             System.out.println("SQLException: " + e);
             while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
@@ -171,12 +165,12 @@ public class Transaction {
         } catch (java.lang.Exception e) {
 
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return list; //returns the list
     }
-    
-    public String getTransactionID(){
+
+    //return transaction id when user pays toll
+    public String getTransactionID() {
         return TransactionID;
     }
 

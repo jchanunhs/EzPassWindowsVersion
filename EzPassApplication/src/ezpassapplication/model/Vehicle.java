@@ -1,8 +1,8 @@
 package ezpassapplication.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Vehicle {
@@ -41,16 +41,22 @@ public class Vehicle {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Vehicle WHERE LicensePlateNumber ='" + LicensePlateNumber + "'";
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the license plate exist
-                done = !Rslt.next(); //if not, insert vehicle into DB
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Vehicle WHERE LicensePlateNumber = ?");
+                Stmt.setString(1, LicensePlateNumber);
+                ResultSet Rslt = Stmt.executeQuery();
+                done = !Rslt.next(); //if license plate number does not exist, add it to table
                 if (done) {
-                    SQL_Command = "INSERT INTO Vehicle(LicensePlateNumber, Make, Model, Year, Color, TagCode, CustomerID)"
-                            + " VALUES ('" + LicensePlateNumber + "', '" + Make + "', '" + Model + "', '" + Year + "', '" + Color + "', '" + TagCode + "', '" + CustomerID + "'" + ")";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("INSERT INTO Vehicle(LicensePlateNumber, Make, Model, Year, Color, TagCode, CustomerID) VALUES (?,?,?,?,?,?,?)");
+                    Stmt.setString(1, LicensePlateNumber);
+                    Stmt.setString(2, Make);
+                    Stmt.setString(3, Model);
+                    Stmt.setString(4, Year);
+                    Stmt.setString(5, Color);
+                    Stmt.setString(6, TagCode);
+                    Stmt.setString(7, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -77,15 +83,18 @@ public class Vehicle {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Vehicle WHERE LicensePlateNumber ='" + LicensePlateNumber + "' AND CustomerID = '" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the license plate number exist for customer
-                done = Rslt.next(); //if it does, then delete vehicle from DB
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Vehicle WHERE CustomerID = ? AND LicensePlateNumber = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, LicensePlateNumber);
+                ResultSet Rslt = Stmt.executeQuery();
+                done = Rslt.next(); //if vehicle exist, delete vehicle
                 if (done) {
-                    SQL_Command = "DELETE FROM Vehicle WHERE LicensePlateNumber ='" + LicensePlateNumber + "' AND CustomerID = '" + CustomerID + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("DELETE FROM Vehicle WHERE CustomerID = ? AND LicensePlateNumber = ?");
+                    Stmt.setString(1, CustomerID);
+                    Stmt.setString(2, LicensePlateNumber);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -110,18 +119,15 @@ public class Vehicle {
 
     public ArrayList<String> getVehicles() { //populate list with vehicles
         ArrayList<String> vehicles = new ArrayList<String>();
-
         try {
-
             DBConnection ToDB = new DBConnection(); //Have a connection to the DB
             Connection DBConn = ToDB.openConn();
-            Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM Vehicle WHERE CustomerID ='" + CustomerID + "'"; //fetch all license plate numbers 
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Vehicle WHERE CustomerID = ?");
+            Stmt.setString(1, CustomerID);
+            ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
                 vehicles.add(Rslt.getString("LicensePlateNumber"));
             }
-
             Stmt.close();
             ToDB.closeConn();
         } catch (java.sql.SQLException e) {

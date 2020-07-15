@@ -1,8 +1,8 @@
 package ezpassapplication.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,19 +37,13 @@ public class EzTag {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String CID = "";
-                String SQL_Command = "SELECT * FROM EzTag WHERE TagCode ='" + TagCode + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //get the tag code
-                Rslt.next();
-                CID = Rslt.getString("CustomerID"); //get the customer id
-                if (CustomerID.equals(CID)) { //if the customer id string is same as the customerid in the database, then tag belongs to customer
-                    done = true;
-                } else {
-                    done = false;
-                }
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, TagCode);
+                ResultSet Rslt = Stmt.executeQuery(); //if there is a row, that means tag code and customer id are a match
+                done = Rslt.next();
                 Stmt.close();
                 ToDB.closeConn();
             }
@@ -66,7 +60,6 @@ public class EzTag {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
@@ -75,19 +68,22 @@ public class EzTag {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date(System.currentTimeMillis());
                 IssueDate = formatter.format(date);
-                String SQL_Command = "SELECT * FROM EzTag WHERE TagCode ='" + TagCode + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if tag code exist
-                done = !Rslt.next(); //if not, insert tag to db
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE TagCode = ?");
+                Stmt.setString(1, TagCode);
+                ResultSet Rslt = Stmt.executeQuery();
+                done = !Rslt.next(); //if tag code not taken, insert row
                 if (done) {
-                    SQL_Command = "INSERT INTO EzTag(TagCode, TagType, IssueDate, CustomerID)"
-                            + " VALUES ('" + TagCode + "', '" + TagType + "', '" + IssueDate + "', '" + CustomerID + "')";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("INSERT INTO EzTag(TagCode, TagType, IssueDate, CustomerID) VALUES (?,?,?,?)");
+                    Stmt.setString(1, TagCode);
+                    Stmt.setString(2, TagType);
+                    Stmt.setString(3, IssueDate);
+                    Stmt.setString(4, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -105,7 +101,6 @@ public class EzTag {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
@@ -114,15 +109,18 @@ public class EzTag {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM EzTag WHERE CustomerID ='" + CustomerID + "'" + "AND TagCode ='" + TagCode + "'";
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //check if tag code exist
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, TagCode);
+                ResultSet Rslt = Stmt.executeQuery(); //check if tag code exist
                 done = Rslt.next(); //if yes, then we can remove tag if tag and customerid match in the db
                 if (done) {
-                    SQL_Command = "DELETE FROM EzTag WHERE CustomerID ='" + CustomerID + "'" + "AND TagCode ='" + TagCode + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("DELETE FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
+                    Stmt.setString(1, CustomerID);
+                    Stmt.setString(2, TagCode);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -140,7 +138,83 @@ public class EzTag {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
+        }
+        return done;
+    }
+
+    //DB Is configured to update tables associated with this tag code
+    public boolean updateTagCode(String NewTag) {
+        boolean done = false;
+        try {
+            if (!done) {
+                DBConnection ToDB = new DBConnection();
+                Connection DBConn = ToDB.openConn();
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, TagCode);
+                ResultSet Rslt = Stmt.executeQuery(); //check if tag code exist
+                done = Rslt.next(); //if yes, then we can update tag code
+                if (done) {
+                    Stmt = DBConn.prepareStatement("UPDATE EzTag SET TagCode = ? WHERE TagCode = ? AND CustomerID = ?");
+                    Stmt.setString(1, NewTag);
+                    Stmt.setString(2, TagCode);
+                    Stmt.setString(3, CustomerID);
+                    Stmt.executeUpdate();
+                }
+                Stmt.close();
+                ToDB.closeConn();
+            }
+        } catch (java.sql.SQLException e) {
+            done = false;
+            System.out.println("SQLException: " + e);
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e = e.getNextException();
+                System.out.println("");
+            }
+        } catch (java.lang.Exception e) {
+            done = false;
+            System.out.println("Exception: " + e);
+        }
+        return done;
+    }
+
+    public boolean updateTagType(String NewTagType) {
+        boolean done = false;
+        try {
+            if (!done) {
+                DBConnection ToDB = new DBConnection();
+                Connection DBConn = ToDB.openConn();
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
+                Stmt.setString(1, CustomerID);
+                Stmt.setString(2, TagCode);
+                ResultSet Rslt = Stmt.executeQuery(); //check if tag code exist
+                done = Rslt.next(); //if yes, then we can update tag type
+                if (done) {
+                    Stmt = DBConn.prepareStatement("UPDATE EzTag SET TagType = ? WHERE TagCode = ? AND CustomerID = ?");
+                    Stmt.setString(1, NewTagType);
+                    Stmt.setString(2, TagCode);
+                    Stmt.setString(3, CustomerID);
+                    Stmt.executeUpdate();
+                }
+                Stmt.close();
+                ToDB.closeConn();
+            }
+        } catch (java.sql.SQLException e) {
+            done = false;
+            System.out.println("SQLException: " + e);
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e = e.getNextException();
+                System.out.println("");
+            }
+        } catch (java.lang.Exception e) {
+            done = false;
+            System.out.println("Exception: " + e);
         }
         return done;
     }
@@ -150,18 +224,17 @@ public class EzTag {
 
         try {
 
-            DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+            DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();
-            Statement Stmt = DBConn.createStatement();
-            String SQL_Command = "SELECT * FROM EzTag WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-            ResultSet Rslt = Stmt.executeQuery(SQL_Command);
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ?");
+            Stmt.setString(1, CustomerID);
+            ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
                 tags.add(Rslt.getString("TagCode"));
             }
             Stmt.close();
             ToDB.closeConn();
         } catch (java.sql.SQLException e) {
-
             System.out.println("SQLException: " + e);
             while (e != null) {
                 System.out.println("SQLState: " + e.getSQLState());
@@ -171,9 +244,7 @@ public class EzTag {
                 System.out.println("");
             }
         } catch (java.lang.Exception e) {
-
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return tags;
     }

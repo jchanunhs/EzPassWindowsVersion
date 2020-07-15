@@ -1,8 +1,8 @@
 package ezpassapplication.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Customer {
 
@@ -15,7 +15,7 @@ public class Customer {
     private String Phone;
     private String Email;
     private float Balance;
-    private String UName;
+    private String Username;
 
     //Add customer to DB
     public Customer(String NM, String ST, String CT, String STE, String ZP, String PN, String EM, float Bal, String UName) {
@@ -27,7 +27,7 @@ public class Customer {
         this.Phone = PN;
         this.Email = EM;
         this.Balance = Bal;
-        this.UName = UName;
+        this.Username = UName;
     }
 
     public Customer(String CID) {
@@ -39,20 +39,30 @@ public class Customer {
         boolean done = false;
         try {
             if (!done) {
-                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
                 int cus_id = (int) (Math.random() * 1000000) + 1000000; //Id is 7 digits long
                 CustomerID = String.valueOf(cus_id);
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the customerid already exist.
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 done = !Rslt.next(); //if not exist, insert customer info into db and  update the account with his new customerID
                 if (done) {
-                    SQL_Command = "INSERT INTO Customer(CustomerID, Name, Street, City, State, Zip, Phone, Email, Balance)"
-                            + " VALUES ('" + CustomerID + "', '" + Name + "', '" + Street + "', '" + City + "', '" + State + "', '" + Zip + "', '" + Phone + "', '" + Email + "', " + Balance + ")";
-                    Stmt.executeUpdate(SQL_Command);
-                    SQL_Command = "UPDATE Account Set CustomerID = '" + CustomerID + "' WHERE Username = '" + UName + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("INSERT INTO Customer(CustomerID, Name, Street, City, State, Zip, Phone, Email, Balance) VALUES (?,?,?,?,?,?,?,?,?)");
+                    Stmt.setString(1, CustomerID);
+                    Stmt.setString(2, Name);
+                    Stmt.setString(3, Street);
+                    Stmt.setString(4, City);
+                    Stmt.setString(5, State);
+                    Stmt.setString(6, Zip);
+                    Stmt.setString(7, Phone);
+                    Stmt.setString(8, Email);
+                    Stmt.setFloat(9, Balance);
+                    Stmt.executeUpdate();
+                    Stmt = DBConn.prepareStatement("UPDATE Account SET CustomerID = ? Where Username = ?");
+                    Stmt.setString(1, CustomerID);
+                    Stmt.setString(2, Username);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -70,26 +80,28 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
-    public boolean updateAddress() {
+    public boolean updateAddress(String ST, String CT, String STE, String ZP) {
         boolean done = false;
         try {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the customerid exist
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");  //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 done = Rslt.next(); //if it does exist, then update customer address
                 if (done) {
-                    SQL_Command = "UPDATE Customer "
-                            + "SET Street = '" + Street + "', " + "City = '" + City + "', " + "State = '" + State + "', " + "Zip = '" + Zip + "' "
-                            + "WHERE CustomerID ='" + CustomerID + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("UPDATE Customer SET Street = ?, City = ?, State = ?, ZIP = ? WHERE CustomerID = ?");
+                    Stmt.setString(1, ST);
+                    Stmt.setString(2, CT);
+                    Stmt.setString(3, STE);
+                    Stmt.setString(4, ZP);
+                    Stmt.setString(5, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -107,26 +119,25 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
-    public boolean updatePhone() {
+    public boolean updatePhone(String PN) {
         boolean done = false;
         try {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the customerid exist
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");   //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 done = Rslt.next(); //if does exist, then update phone number based on id
                 if (done) {
-                    SQL_Command = "UPDATE Customer "
-                            + "SET Phone = '" + Phone + "'"
-                            + "WHERE CustomerID ='" + CustomerID + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("UPDATE Customer SET Phone = ? WHERE CustomerID = ?");
+                    Stmt.setString(1, PN);
+                    Stmt.setString(2, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -144,26 +155,25 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
-    public boolean updateEmail() {
+    public boolean updateEmail(String EM) {
         boolean done = false;
         try {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the customerid exist
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");   //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 done = Rslt.next(); //if it does exist, then update email
                 if (done) {
-                    SQL_Command = "UPDATE Customer "
-                            + "SET Email = '" + Email + "' "
-                            + "WHERE CustomerID ='" + CustomerID + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("UPDATE Customer SET Email = ? WHERE CustomerID = ?");
+                    Stmt.setString(1, EM);
+                    Stmt.setString(2, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -181,27 +191,25 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
     }
 
     public boolean updateBalance(float amount) {
-        float newBal = amount; //add the amount to the balance. newBal calculated in RechargeControl
         boolean done = false;
         try {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'"; //SQL query command
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); //Inquire if the Customer exist
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");   //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 done = Rslt.next(); //update new account balance
                 if (done) {
-                    SQL_Command = "UPDATE Customer "
-                            + "SET Balance = " + newBal + ""
-                            + "WHERE CustomerID ='" + CustomerID + "'";
-                    Stmt.executeUpdate(SQL_Command);
+                    Stmt = DBConn.prepareStatement("UPDATE Customer SET Balance = ? WHERE CustomerID = ?");
+                    Stmt.setFloat(1, amount);
+                    Stmt.setString(2, CustomerID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
@@ -219,7 +227,42 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
+        }
+        return done;
+    }
+
+    //DB is configured to delete all customer information when we delete the row with their respective customer id  
+    public boolean deleteCustomer() {
+        boolean done = false;
+        try {
+            if (!done) {
+                DBConnection ToDB = new DBConnection(); //Have a connection to the DB
+                Connection DBConn = ToDB.openConn();
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");   //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
+                done = Rslt.next(); //if yes, then we can remove tag if tag and customerid match in the db
+                if (done) {
+                    Stmt = DBConn.prepareStatement("DELETE FROM Customer WHERE CustomerID = ?");
+                    Stmt.setString(1, CustomerID);
+                    Stmt.executeUpdate();
+                }
+                Stmt.close();
+                ToDB.closeConn();
+            }
+        } catch (java.sql.SQLException e) {
+            done = false;
+            System.out.println("SQLException: " + e);
+            while (e != null) {
+                System.out.println("SQLState: " + e.getSQLState());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Vendor: " + e.getErrorCode());
+                e = e.getNextException();
+                System.out.println("");
+            }
+        } catch (java.lang.Exception e) {
+            done = false;
+            System.out.println("Exception: " + e);
         }
         return done;
     }
@@ -230,9 +273,9 @@ public class Customer {
             if (!done) {
                 DBConnection ToDB = new DBConnection(); //Have a connection to the DB
                 Connection DBConn = ToDB.openConn();
-                Statement Stmt = DBConn.createStatement();
-                String SQL_Command = "SELECT * FROM Customer WHERE CustomerID ='" + CustomerID + "'";
-                ResultSet Rslt = Stmt.executeQuery(SQL_Command); // use customer id to get customer information
+                PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Customer WHERE CustomerID = ?");   //check if customer exist
+                Stmt.setString(1, CustomerID);
+                ResultSet Rslt = Stmt.executeQuery();
                 Rslt.next();
                 Name = Rslt.getString("Name");
                 Street = Rslt.getString("Street");
@@ -259,10 +302,8 @@ public class Customer {
         } catch (java.lang.Exception e) {
             done = false;
             System.out.println("Exception: " + e);
-            e.printStackTrace();
         }
         return done;
-
     }
 
     //return information after setData was executed
