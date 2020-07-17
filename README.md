@@ -1,20 +1,22 @@
 # EzPassApplication
-Created an EzPass simulation in Java Language and using MVC design patterns.
-- Used SQL Server JDBC Driver for application to communicate with database.
+
+Created an EzPass simulation using MVC design patterns and Java 8.
+- Microsoft SQL Server was used to store customer information.
 - GUI was created using Java Swing.
-- Control objects process user input.
-- Model object controls database access.
+- Control objects handles user input submissions.
+- Model object contains connection to database and queries to add/modify contents in tables.
 
 When user first signs up and logs in, they will see a CreateProfile panel that must be filled out to get customer information. After they fill out the form and relog, they will now see the main windows. The Main windows contains 5 tabs
 
 Profile
 - Shows customer information (Name, address, balance on account, etc.).
 - They are able to change their password, recharge their account using credit card information, logout.
+- Transactions related to account recharge is displayed in a JTable.
 
 Vehicle
 - License plate is displayed in JList.
-- User can select the license plate and click remove vehicle button to delete it.
-- They can also add a vehicle to their account.
+- Users add a vehicle to their account.
+- User can select the license plate from the JList and click remove vehicle button to delete the vehicle from their account.
 
 EZ Tags
 - Users can add ez tag or remove it.
@@ -22,8 +24,7 @@ EZ Tags
 - When user adds a vehicle, they also have to specify the ez tag associated with their vehicle.
 
 Pay Toll
-- User can pay toll by entering their tag code, toll plaza, lane number and amount charged. 
-- It will be time stamped and transaction will be saved.
+- User can pay toll by entering their tag code, toll plaza, lane number and amount charged.
 
 Transaction
 - Transactions are displayed in a JTable.
