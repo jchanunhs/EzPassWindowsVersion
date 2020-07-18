@@ -8,7 +8,8 @@ import javax.swing.*;
 class ChangePasswordPanel extends JPanel implements ActionListener {
 
     private JButton ChangeButton, BackButton;
-    private JTextField UsernameField, OldPassword, NewPassword, Retype;
+    private JTextField UsernameField;
+    private JPasswordField OldPassword, NewPassword, Retype;
     private String CustomerID, Username;
 
     public ChangePasswordPanel(String CID, String User) {
@@ -28,9 +29,9 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
         UsernameField = new JTextField(15);
         UsernameField.setText(Username);
         UsernameField.setEditable(false);
-        OldPassword = new JTextField(15);
-        NewPassword = new JTextField(15);
-        Retype = new JTextField(15);
+        OldPassword = new JPasswordField(15);
+        NewPassword = new JPasswordField(15);
+        Retype = new JPasswordField(15);
 
         //JPanels
         JPanel UserPane = new JPanel();

@@ -8,8 +8,8 @@ import javax.swing.*;
 class CreateProfilePanel extends JPanel implements ActionListener {
 
     private JButton CreateButton;
-    private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
-    private String Name, Street, City, State, Zip, Phone, Email, Balance, Username;
+    private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField;
+    private String Name, Street, City, State, Zip, Phone, Email, Username;
 
     public CreateProfilePanel(String UName, String NM) {
         CreateButton = new JButton("Submit");
@@ -26,8 +26,6 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         ZipField = new JTextField(15);
         PhoneField = new JTextField(15);
         EmailField = new JTextField(15);
-        BalanceField = new JTextField(15);
-        BalanceField.setText("0.0");
 
         //JLabels
         JLabel NameLabel = new JLabel("Customer Name:");
@@ -37,7 +35,6 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         JLabel ZipLabel = new JLabel("Zip: ");
         JLabel PhoneLabel = new JLabel("Phone: ");
         JLabel EmailLabel = new JLabel("Email: ");
-        JLabel BalanceLabel = new JLabel("Opening Deposit:");
 
         //JPanels
         JPanel NamePanel = new JPanel();
@@ -47,7 +44,6 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         JPanel ZipPanel = new JPanel();
         JPanel PhonePanel = new JPanel();
         JPanel EmailPanel = new JPanel();
-        JPanel BalancePanel = new JPanel();
 
         //Add JTextFields and Labels to panels
         NamePanel.add(NameLabel);
@@ -64,14 +60,12 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         PhonePanel.add(PhoneField);
         EmailPanel.add(EmailLabel);
         EmailPanel.add(EmailField);
-        BalancePanel.add(BalanceLabel);
-        BalancePanel.add(BalanceField);
 
         //Register event listener
         CreateButton.addActionListener(this);
 
-        //Center panel will include all the other panels
-        JPanel MainPanel = new JPanel();
+        //Main Panel 
+        Box MainPanel = Box.createVerticalBox();
         MainPanel.add(NamePanel);
         MainPanel.add(StreetPanel);
         MainPanel.add(CityPanel);
@@ -79,35 +73,30 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         MainPanel.add(ZipPanel);
         MainPanel.add(PhonePanel);
         MainPanel.add(EmailPanel);
-        MainPanel.add(BalancePanel);
         MainPanel.add(CreateButton);
         setLayout(new BorderLayout());
-        add(MainPanel, BorderLayout.CENTER);
+        add(MainPanel, BorderLayout.NORTH);
     }
 
     public void actionPerformed(ActionEvent evt) //event handling
     {
         String arg = evt.getActionCommand();
         if (arg.equals("Submit")) { //get input from user and pass to control
-            try {
-                Name = NameField.getText();
-                Street = StreetField.getText();
-                City = CityField.getText();
-                State = StateField.getText();
-                Zip = ZipField.getText();
-                Phone = PhoneField.getText();
-                Email = EmailField.getText();
-                Balance = BalanceField.getText();
-                if (Name.equals("") || Street.equals("") || City.equals("") || State.equals("") || Zip.equals("") || Phone.equals("") || Email.equals("") || Balance.equals("")) {
-                    JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    float Bal = Float.parseFloat(String.valueOf(Balance));
-                    CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Bal, Username);
-                }
+
+            Name = NameField.getText();
+            Street = StreetField.getText();
+            City = CityField.getText();
+            State = StateField.getText();
+            Zip = ZipField.getText();
+            Phone = PhoneField.getText();
+            Email = EmailField.getText();
+
+            if (Name.equals("") || Street.equals("") || City.equals("") || State.equals("") || Zip.equals("") || Phone.equals("") || Email.equals("")) {
+                JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            } else {
+                CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Username);
             }
-            catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Balance must be a number!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-            }
+
         }
     }
 }

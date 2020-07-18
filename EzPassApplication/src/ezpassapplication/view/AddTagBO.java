@@ -3,8 +3,6 @@ package ezpassapplication.view;
 import ezpassapplication.control.AddTagControl;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 class AddTagPanel extends JPanel implements ActionListener {

@@ -44,6 +44,9 @@ public class EzTag {
                 Stmt.setString(2, TagCode);
                 ResultSet Rslt = Stmt.executeQuery(); //if there is a row, that means tag code and customer id are a match
                 done = Rslt.next();
+                if (Rslt.getString("TagType").equals("invalid")) { //if tag type is invalid, that means tag is invalid and return false.
+                    done = false;
+                }
                 Stmt.close();
                 ToDB.closeConn();
             }
@@ -230,7 +233,9 @@ public class EzTag {
             Stmt.setString(1, CustomerID);
             ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
-                tags.add(Rslt.getString("TagCode"));
+                if (!Rslt.getString("TagType").equals("invalid")) { //if tag type is not invalid, add the tag code to array list
+                    tags.add(Rslt.getString("TagCode"));
+                }
             }
             Stmt.close();
             ToDB.closeConn();

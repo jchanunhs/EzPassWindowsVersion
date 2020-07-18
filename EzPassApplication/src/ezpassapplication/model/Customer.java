@@ -18,15 +18,15 @@ public class Customer {
     private String Username;
 
     //Add customer to DB
-    public Customer(String NM, String ST, String CT, String STE, String ZP, String PN, String EM, float Bal, String UName) {
-        this.Name = NM;
-        this.Street = ST;
-        this.City = CT;
-        this.State = STE;
-        this.Zip = ZP;
-        this.Phone = PN;
-        this.Email = EM;
-        this.Balance = Bal;
+    public Customer(String NM, String ST, String CT, String STE, String ZP, String PN, String EM, String UName) {
+        Name = NM;
+        Street = ST;
+        City = CT;
+        State = STE;
+        Zip = ZP;
+        Phone = PN;
+        Email = EM;
+        Balance = 0; //default value when creating profile
         this.Username = UName;
     }
 
