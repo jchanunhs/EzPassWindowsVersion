@@ -8,9 +8,9 @@ import javax.swing.*;
 class AddTagPanel extends JPanel implements ActionListener {
 
     private JButton SubmitButton, BackButton;
-    private JTextField TagCodeField, TagTypeField, CustomerIDField;
+    private JTextField TagCodeField, CustomerIDField;
     private String TagCode, TagType, CustomerID, Username;
-
+    private JComboBox TagTypeGroup;
     public AddTagPanel(String CID, String User) {
 
         SubmitButton = new JButton("Submit");
@@ -19,11 +19,14 @@ class AddTagPanel extends JPanel implements ActionListener {
         Username = User;
 
         //JTextFields
-        TagCodeField = new JTextField(15);
-        TagTypeField = new JTextField(15);
+        TagCodeField = new JTextField(15);        
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
+        
+        String[]Options = {"Normal", "Express", "BancPass"};
+        TagTypeGroup = new JComboBox(Options); //ComboBox for tag type
+
 
         //JLabels
         JLabel TagCodeLabel = new JLabel("Tag Code: ");
@@ -42,7 +45,7 @@ class AddTagPanel extends JPanel implements ActionListener {
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
         TagTypePanel.add(TagTypeLabel);
-        TagTypePanel.add(TagTypeField);
+        TagTypePanel.add(TagTypeGroup);
         ButtonPanel.add(SubmitButton);
         ButtonPanel.add(BackButton);
 
@@ -66,7 +69,7 @@ class AddTagPanel extends JPanel implements ActionListener {
         String arg = evt.getActionCommand();
         if (arg.equals("Submit")) { //get inputs and forward to control
             TagCode = TagCodeField.getText();
-            TagType = TagTypeField.getText();
+            TagType = (String)TagTypeGroup.getSelectedItem();
             if (TagCode.equals("") || TagType.equals("")) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
