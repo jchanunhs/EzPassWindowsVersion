@@ -2,7 +2,7 @@
 
 Created an EzPass simulation using MVC design patterns and Java 8.
 - Microsoft SQL Server was used to store customer information.
-- GUI was created using Java Swing.
+- GUI was created using Java Swing (JTables, JList, JLabels, JTextFields/PasswordFields, Verticle Box Panels, JPanels, JFrame).
 - Control objects handles user input submissions.
 - Model object contains connection to database and queries to add/modify contents in tables.
 
@@ -24,7 +24,7 @@ EZ Tags
 - When user adds a vehicle, they also have to specify the ez tag associated with their vehicle.
 
 Pay Toll
-- User can pay toll by entering their tag code, toll plaza, lane number and amount charged.
+- User can pay toll by entering their license plate, tag code, toll plaza, lane number and amount charged.
 
 Transaction
 - Transactions are displayed in a JTable.
