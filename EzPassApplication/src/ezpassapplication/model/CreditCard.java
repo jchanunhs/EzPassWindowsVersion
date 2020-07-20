@@ -63,6 +63,7 @@ public class CreditCard {
                     Stmt.setString(7, Time);
                     Stmt.setFloat(8, CreditAmount);
                     Stmt.setString(9, CreditID);
+                    Stmt.executeUpdate();
                 }
                 Stmt.close();
                 ToDB.closeConn();
