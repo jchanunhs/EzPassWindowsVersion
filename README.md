@@ -19,7 +19,9 @@ Vehicle
 - User can select the license plate from the JList and click remove vehicle button to delete the vehicle from their account.
 
 EZ Tags
+- Tag code is displayed in JList.
 - Users can add ez tag or remove it.
+- JComboBox used for customer to select their tag type.
 - Tag code can only be removed if it's not linked to a vehicle or never used to pay a toll.
 - When user adds a vehicle, they also have to specify the ez tag associated with their vehicle.
 
