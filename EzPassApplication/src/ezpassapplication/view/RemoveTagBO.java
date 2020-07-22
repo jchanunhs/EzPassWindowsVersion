@@ -12,40 +12,31 @@ class RemoveTagPanel extends JPanel implements ActionListener {
     private String TagCode, CustomerID, Username;
 
     public RemoveTagPanel(String CID, String User) {
-
-        RemoveButton = new JButton("Remove");
-        BackButton = new JButton("Back");
         CustomerID = CID;
         Username = User;
 
-        //JTextFields
-        TagCodeField = new JTextField(15);
+        JPanel CustomerIDPanel = new JPanel();
+        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
-        CustomerIDField.setEditable(false); //customer id not allowed to be changed
-
-        //JLabels
-        JLabel TagCodeLabel = new JLabel("Tag Code to remove: ");
-        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
-
-        //JPanels
-        JPanel TagCodePanel = new JPanel();
-        JPanel CustomerIDPanel = new JPanel();
-        JPanel ButtonPanel = new JPanel();
-
-        //Add TextField and Labels to panel
+        CustomerIDField.setEditable(false);
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
+
+        JPanel TagCodePanel = new JPanel();
+        JLabel TagCodeLabel = new JLabel("Tag Code to remove: ");
+        TagCodeField = new JTextField(15);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
+
+        JPanel ButtonPanel = new JPanel();
+        RemoveButton = new JButton("Remove");
+        BackButton = new JButton("Back");
+        RemoveButton.addActionListener(this);
+        BackButton.addActionListener(this);
         ButtonPanel.add(RemoveButton);
         ButtonPanel.add(BackButton);
 
-        //register event listener
-        RemoveButton.addActionListener(this);
-        BackButton.addActionListener(this);
-
-        //vertical design
         Box MainPanel = Box.createVerticalBox();
         MainPanel.add(CustomerIDPanel);
         MainPanel.add(TagCodePanel);

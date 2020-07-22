@@ -7,98 +7,88 @@ import javax.swing.*;
 
 class UserProfilePanel extends JPanel implements ActionListener {
 
-    Customer cus;
+    private Customer cus;
     private JButton ChangePassword, Recharge, LogOut;
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
     private String Name, Street, City, State, Zip, Phone, Email, Balance, Username, CustomerID;
 
     public UserProfilePanel(String CID, String User) {
-
-        //create customer object and get their data
-        cus = new Customer(CID);
-        cus.setData();
-
         CustomerID = CID;
         Username = User;
+        //create customer object and get their data
+        cus = new Customer(CustomerID);
 
+        JPanel NamePanel = new JPanel();
+        JLabel NameLabel = new JLabel("Customer Name:");
+        NameField = new JTextField(15);
+        NameField.setText(cus.getName());
+        NameField.setEditable(false);
+        NamePanel.add(NameLabel);
+        NamePanel.add(NameField);
+
+        JPanel StreetPanel = new JPanel();
+        JLabel StreetLabel = new JLabel("Street: ");
+        StreetField = new JTextField(15);
+        StreetField.setText(cus.getStreet());
+        StreetField.setEditable(false);
+        StreetPanel.add(StreetLabel);
+        StreetPanel.add(StreetField);
+
+        JPanel CityPanel = new JPanel();
+        JLabel CityLabel = new JLabel("City: ");
+        CityField = new JTextField(15);
+        CityField.setText(cus.getCity());
+        CityField.setEditable(false);
+        CityPanel.add(CityLabel);
+        CityPanel.add(CityField);
+
+        JPanel StatePanel = new JPanel();
+        JLabel StateLabel = new JLabel("State: ");
+        StateField = new JTextField(15);
+        StateField.setText(cus.getState());
+        StateField.setEditable(false);
+        StatePanel.add(StateLabel);
+        StatePanel.add(StateField);
+
+        JPanel ZipPanel = new JPanel();
+        JLabel ZipLabel = new JLabel("Zip: ");
+        ZipField = new JTextField(15);
+        ZipField.setText(cus.getZip());
+        ZipField.setEditable(false);
+        ZipPanel.add(ZipLabel);
+        ZipPanel.add(ZipField);
+
+        JPanel PhonePanel = new JPanel();
+        JLabel PhoneLabel = new JLabel("Phone: ");
+        PhoneField = new JTextField(15);
+        PhoneField.setText(cus.getPhone());
+        PhoneField.setEditable(false);
+        PhonePanel.add(PhoneLabel);
+        PhonePanel.add(PhoneField);
+
+        JPanel EmailPanel = new JPanel();
+        JLabel EmailLabel = new JLabel("Email: ");
+        EmailField = new JTextField(15);
+        EmailField.setText(cus.getEmail());
+        EmailField.setEditable(false);
+        EmailPanel.add(EmailLabel);
+        EmailPanel.add(EmailField);
+
+        JPanel BalancePanel = new JPanel();
+        JLabel BalanceLabel = new JLabel("Balance:");
+        BalanceField = new JTextField(15);
+        BalanceField.setText(String.valueOf(cus.getBalance()));
+        BalanceField.setEditable(false);
+        BalancePanel.add(BalanceLabel);
+        BalancePanel.add(BalanceField);
+
+        JPanel ButtonPanel = new JPanel();
         ChangePassword = new JButton("Change Password");
         Recharge = new JButton("Recharge");
         LogOut = new JButton("LogOut");
         ChangePassword.addActionListener(this);
         Recharge.addActionListener(this);
         LogOut.addActionListener(this);
-
-        //JTextFields
-        NameField = new JTextField(15);
-        NameField.setText(cus.getName());
-        NameField.setEditable(false);
-
-        StreetField = new JTextField(15);
-        StreetField.setText(cus.getStreet());
-        StreetField.setEditable(false);
-
-        CityField = new JTextField(15);
-        CityField.setText(cus.getCity());
-        CityField.setEditable(false);
-
-        StateField = new JTextField(15);
-        StateField.setText(cus.getState());
-        StateField.setEditable(false);
-
-        ZipField = new JTextField(15);
-        ZipField.setText(cus.getZip());
-        ZipField.setEditable(false);
-
-        PhoneField = new JTextField(15);
-        PhoneField.setText(cus.getPhone());
-        PhoneField.setEditable(false);
-
-        EmailField = new JTextField(15);
-        EmailField.setText(cus.getEmail());
-        EmailField.setEditable(false);
-
-        BalanceField = new JTextField(15);
-        BalanceField.setText(String.valueOf(cus.getBalance()));
-        BalanceField.setEditable(false);
-
-        //JLabels
-        JLabel NameLabel = new JLabel("Customer Name:");
-        JLabel StreetLabel = new JLabel("Street: ");
-        JLabel CityLabel = new JLabel("City: ");
-        JLabel StateLabel = new JLabel("State: ");
-        JLabel ZipLabel = new JLabel("Zip: ");
-        JLabel PhoneLabel = new JLabel("Phone: ");
-        JLabel EmailLabel = new JLabel("Email: ");
-        JLabel BalanceLabel = new JLabel("Opening Deposit:");
-
-        //JPanels
-        JPanel NamePanel = new JPanel();
-        JPanel StreetPanel = new JPanel();
-        JPanel CityPanel = new JPanel();
-        JPanel StatePanel = new JPanel();
-        JPanel ZipPanel = new JPanel();
-        JPanel PhonePanel = new JPanel();
-        JPanel EmailPanel = new JPanel();
-        JPanel BalancePanel = new JPanel();
-        JPanel ButtonPanel = new JPanel();
-
-        //Add TextField and Label to panel
-        NamePanel.add(NameLabel);
-        NamePanel.add(NameField);
-        StreetPanel.add(StreetLabel);
-        StreetPanel.add(StreetField);
-        CityPanel.add(CityLabel);
-        CityPanel.add(CityField);
-        StatePanel.add(StateLabel);
-        StatePanel.add(StateField);
-        ZipPanel.add(ZipLabel);
-        ZipPanel.add(ZipField);
-        PhonePanel.add(PhoneLabel);
-        PhonePanel.add(PhoneField);
-        EmailPanel.add(EmailLabel);
-        EmailPanel.add(EmailField);
-        BalancePanel.add(BalanceLabel);
-        BalancePanel.add(BalanceField);
         ButtonPanel.add(ChangePassword);
         ButtonPanel.add(Recharge);
         ButtonPanel.add(LogOut);
@@ -130,7 +120,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
             win.dispose();
         }
         if (arg.equals("Recharge")) {// close user profile window and open recharge window
-            RechargeBO RCBO = new RechargeBO(CustomerID, Username, Bal);
+            RechargeBO RCBO = new RechargeBO(CustomerID, Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();

@@ -14,43 +14,41 @@ class PayTollPanel extends JPanel implements ActionListener {
     public PayTollPanel(String CID, String User) {
         CustomerID = CID;
         Username = User;
-        SubmitButton = new JButton("Submit"); //submit button
 
-        //JTextFields
-        LicensePlateField = new JTextField(15);
-        TagCodeField = new JTextField(15);
-        TollPlazaField = new JTextField(15);
-        TollLaneNumberField = new JTextField(15);
-        TollAmountField = new JTextField(15);
-
-        //JLabels
-        JLabel LicensePlateLabel= new JLabel("License Plate Number: ");
-        JLabel TagCodeLabel = new JLabel("Tag Code: ");
-        JLabel TollPlazaLabel = new JLabel("Toll Plaza: ");
-        JLabel TollLaneNumberLabel = new JLabel("Toll Lane: ");
-        JLabel TollAmountLabel = new JLabel("Toll Amount: ");
-
-        //JPanels
         JPanel LicensePlatePanel = new JPanel();
-        JPanel TagCodePanel = new JPanel();
-        JPanel TollPlazaPanel = new JPanel();
-        JPanel TollLaneNumberPanel = new JPanel();
-        JPanel TollAmountPanel = new JPanel();
-
-        //Add TextField and Label to panel
+        JLabel LicensePlateLabel = new JLabel("License Plate Number: ");
+        LicensePlateField = new JTextField(15);
         LicensePlatePanel.add(LicensePlateLabel);
         LicensePlatePanel.add(LicensePlateField);
+
+        JPanel TagCodePanel = new JPanel();
+        JLabel TagCodeLabel = new JLabel("Tag Code: ");
+        TagCodeField = new JTextField(15);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
+
+        JPanel TollPlazaPanel = new JPanel();
+        JLabel TollPlazaLabel = new JLabel("Toll Plaza: ");
+        TollPlazaField = new JTextField(15);
         TollPlazaPanel.add(TollPlazaLabel);
         TollPlazaPanel.add(TollPlazaField);
+
+        JPanel TollLaneNumberPanel = new JPanel();
+        JLabel TollLaneNumberLabel = new JLabel("Toll Lane Number: ");
+        TollLaneNumberField = new JTextField(15);
         TollLaneNumberPanel.add(TollLaneNumberLabel);
         TollLaneNumberPanel.add(TollLaneNumberField);
+
+        JPanel TollAmountPanel = new JPanel();
+        JLabel TollAmountLabel = new JLabel("Toll Amount: ");
+        TollAmountField = new JTextField(15);
         TollAmountPanel.add(TollAmountLabel);
         TollAmountPanel.add(TollAmountField);
 
-        //register event listener
+        JPanel ButtonPanel = new JPanel();
+        SubmitButton = new JButton("Submit");
         SubmitButton.addActionListener(this);
+        ButtonPanel.add(SubmitButton);
 
         //vertical box
         Box MainPanel = Box.createVerticalBox();
@@ -59,7 +57,7 @@ class PayTollPanel extends JPanel implements ActionListener {
         MainPanel.add(TollPlazaPanel);
         MainPanel.add(TollLaneNumberPanel);
         MainPanel.add(TollAmountPanel);
-        MainPanel.add(SubmitButton);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
 

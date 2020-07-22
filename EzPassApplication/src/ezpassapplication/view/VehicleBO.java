@@ -12,21 +12,26 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
     private Vehicle vehicle;
     private String CustomerID, clickedString, Username;
     private int clickedInt;
-    private JTextField selectedVehicle;
+    private JTextField SelectedVehicle;
     private JList VehicleList;
     private DefaultListModel list_model; //list model for VehicleList
 
     public VehiclePanel(String CID, String User) {
         CustomerID = CID;
         Username = User;
-        selectedVehicle = new JTextField(15);
-        selectedVehicle.setEditable(false);
-        JLabel textFieldLabel = new JLabel("Selected Vehicle:");
-        //selectedVehiclePanel contains label and textfield for selected vehicle
-        JPanel selectedVehiclePanel = new JPanel();
-        selectedVehiclePanel.add(textFieldLabel);
-        selectedVehiclePanel.add(selectedVehicle);
 
+        JPanel SelectedVehiclePanel = new JPanel();
+        JLabel SelectedVehicleLabel = new JLabel("Selected Vehicle:");
+        SelectedVehicle = new JTextField(15);
+        SelectedVehicle.setEditable(false);
+        SelectedVehiclePanel.add(SelectedVehicleLabel);
+        SelectedVehiclePanel.add(SelectedVehicle);
+
+        JPanel LabelPanel = new JPanel(new FlowLayout()); //center label for table
+        JLabel ListLabel = new JLabel("Vehicle List");
+        LabelPanel.add(ListLabel);
+
+        JPanel VehicleListPanel = new JPanel();
         vehicle = new Vehicle(CustomerID); //vehicle can get information from CID
         ArrayList<String> list_getVehicle = vehicle.getVehicles();
         list_model = new DefaultListModel();
@@ -35,35 +40,26 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         }
         //initializing a list
         VehicleList = new JList(list_model); //jlist contains list model that recieved all license number
-        VehicleList.setVisibleRowCount(5); //set the visible rows
         VehicleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         VehicleList.addListSelectionListener(this);
-
-        JPanel vehicleListPanel = new JPanel();
-        vehicleListPanel.add(VehicleList);
-
         //declare and initialize a SCROLL PANE
         JScrollPane listScroll = new JScrollPane(VehicleList);
-        listScroll.setPreferredSize(new Dimension(110, 200));
-        vehicleListPanel.add(listScroll);
+        listScroll.setPreferredSize(new Dimension(200, 200));
+        VehicleListPanel.add(listScroll);
 
-        //Buttons for either adding vehicle or removing them from the table
         JPanel ButtonPanel = new JPanel();
-        JButton add = new JButton("Add Vehicle");
-        add.addActionListener(this);
-        JButton remove = new JButton("Remove Vehicle");
-        remove.addActionListener(this);
-        ButtonPanel.add(add);
-        ButtonPanel.add(remove);
-
-        JLabel list_label = new JLabel("Vehicle List");
-        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
-        label_pane.add(list_label);
+        JButton AddVehicleButton = new JButton("Add Vehicle");
+        JButton RemoveVehicleButton = new JButton("Remove Vehicle");
+        AddVehicleButton.addActionListener(this);
+        RemoveVehicleButton.addActionListener(this);
+        ButtonPanel.add(AddVehicleButton);
+        ButtonPanel.add(RemoveVehicleButton);
 
         Box MainPanel = Box.createVerticalBox();
-        MainPanel.add(selectedVehiclePanel);
-        MainPanel.add(label_pane); // list label will be on top of the vehicle list 
-        MainPanel.add(vehicleListPanel);
+        MainPanel.add(SelectedVehiclePanel);
+        //vehicle list
+        MainPanel.add(LabelPanel); // list label will be on top of the vehicle list 
+        MainPanel.add(VehicleListPanel);
         MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
@@ -77,7 +73,7 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         int tempInt = source.getSelectedIndex();
         clickedString = tempString;
         clickedInt = tempInt;
-        selectedVehicle.setText(tempString);
+        SelectedVehicle.setText(tempString);
     }
 
     @Override

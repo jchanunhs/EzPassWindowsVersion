@@ -19,49 +19,46 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
         CustomerID = CID;
         Username = User;
 
-        //JLabels
+        JPanel UsernamePanel = new JPanel();
         JLabel UsernameLabel = new JLabel("Username:");
-        JLabel OldPWLabel = new JLabel("Enter Old Password:");
-        JLabel NewPWLabel = new JLabel("Enter New Password:");
-        JLabel REnterLabel = new JLabel("Re-Enter New Password:");
-
-        //JTextFields
         UsernameField = new JTextField(15);
         UsernameField.setText(Username);
         UsernameField.setEditable(false);
+        UsernamePanel.add(UsernameLabel);
+        UsernamePanel.add(UsernameField);
+
+        JPanel OldPasswordPanel = new JPanel();
+        JLabel OldPasswordLabel = new JLabel("Enter Old Password:");
         OldPassword = new JPasswordField(15);
+        OldPasswordPanel.add(OldPasswordLabel);
+        OldPasswordPanel.add(OldPassword);
+
+        JPanel NewPasswordPanel = new JPanel();
+        JLabel NewPasswordLabel = new JLabel("Enter New Password:");
         NewPassword = new JPasswordField(15);
+        NewPasswordPanel.add(NewPasswordLabel);
+        NewPasswordPanel.add(NewPassword);
+
+        JPanel ReEnterPasswordPanel = new JPanel();
+        JLabel ReEnterLabel = new JLabel("Re-Enter New Password:");
         Retype = new JPasswordField(15);
+        ReEnterPasswordPanel.add(ReEnterLabel);
+        ReEnterPasswordPanel.add(Retype);
 
-        //JPanels
-        JPanel UserPane = new JPanel();
-        JPanel Old = new JPanel();
-        JPanel New = new JPanel();
-        JPanel Re = new JPanel();
         JPanel ButtonPanel = new JPanel();
-
-        //Add Labels and TextFields to Panels
-        UserPane.add(UsernameLabel);
-        UserPane.add(UsernameField);
-        Old.add(OldPWLabel);
-        Old.add(OldPassword);
-        New.add(NewPWLabel);
-        New.add(NewPassword);
-        Re.add(REnterLabel);
-        Re.add(Retype);
+        ChangeButton = new JButton("Change");
+        BackButton = new JButton("Back");
+        ChangeButton.addActionListener(this);
+        BackButton.addActionListener(this);
         ButtonPanel.add(ChangeButton);
         ButtonPanel.add(BackButton);
 
-        //register event listener
-        ChangeButton.addActionListener(this);
-        BackButton.addActionListener(this);
-
         //Vertical design
         Box MainPanel = Box.createVerticalBox();
-        MainPanel.add(UserPane);
-        MainPanel.add(Old);
-        MainPanel.add(New);
-        MainPanel.add(Re);
+        MainPanel.add(UsernamePanel);
+        MainPanel.add(OldPasswordPanel);
+        MainPanel.add(NewPasswordPanel);
+        MainPanel.add(ReEnterPasswordPanel);
         MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);

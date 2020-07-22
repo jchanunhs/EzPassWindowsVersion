@@ -12,65 +12,60 @@ class AddVehiclePanel extends JPanel implements ActionListener {
     private String LicensePlate, Make, Model, Year, Color, TagCode, Email, Balance, CustomerID, Username;
 
     public AddVehiclePanel(String CID, String User) {
-
-        SubmitButton = new JButton("Submit");
-        BackButton = new JButton("Back");
         CustomerID = CID; //set customer id
         Username = User;
 
-        //JTextFields
+        JPanel CustomerIDPanel = new JPanel();
+        JLabel CustomerIDLabel = new JLabel("Customer ID:");
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
-        LicensePlateNumberField = new JTextField(15);
-        MakeField = new JTextField(15);
-        ModelField = new JTextField(15);
-        YearField = new JTextField(15);
-        ColorField = new JTextField(15);
-        TagCodeField = new JTextField(15);
-
-        //JLabels
-        JLabel CustomerIDLabel = new JLabel("Customer ID:");
-        JLabel LicensePlateNumberLabel = new JLabel("License Plate:");
-        JLabel MakeLabel = new JLabel("Make: ");
-        JLabel ModelLabel = new JLabel("Model: ");
-        JLabel YearLabel = new JLabel("Year: ");
-        JLabel ColorLabel = new JLabel("Color: ");
-        JLabel TagCodeLabel = new JLabel("TagCode: ");
-
-        //JPanels
-        JPanel CustomerIDPanel = new JPanel();
-        JPanel LicensePlateNumberPanel = new JPanel();
-        JPanel MakePanel = new JPanel();
-        JPanel ModelPanel = new JPanel();
-        JPanel YearPanel = new JPanel();
-        JPanel ColorPanel = new JPanel();
-        JPanel TagCodePanel = new JPanel();
-        JPanel EmailPanel = new JPanel();
-        JPanel BalancePanel = new JPanel();
-        JPanel ButtonPanel = new JPanel();
-
-        //Add Labels and TextFields to Panels
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
+
+        JPanel LicensePlateNumberPanel = new JPanel();
+        JLabel LicensePlateNumberLabel = new JLabel("License Plate:");
+        LicensePlateNumberField = new JTextField(15);
         LicensePlateNumberPanel.add(LicensePlateNumberLabel);
         LicensePlateNumberPanel.add(LicensePlateNumberField);
+
+        JPanel MakePanel = new JPanel();
+        JLabel MakeLabel = new JLabel("Make: ");
+        MakeField = new JTextField(15);
         MakePanel.add(MakeLabel);
         MakePanel.add(MakeField);
+
+        JPanel ModelPanel = new JPanel();
+        JLabel ModelLabel = new JLabel("Model: ");
+        ModelField = new JTextField(15);
         ModelPanel.add(ModelLabel);
         ModelPanel.add(ModelField);
+
+        JPanel YearPanel = new JPanel();
+        JLabel YearLabel = new JLabel("Year: ");
+        YearField = new JTextField(15);
         YearPanel.add(YearLabel);
         YearPanel.add(YearField);
+
+        JPanel ColorPanel = new JPanel();
+        JLabel ColorLabel = new JLabel("Color: ");
+        ColorField = new JTextField(15);
         ColorPanel.add(ColorLabel);
         ColorPanel.add(ColorField);
+
+        JPanel TagCodePanel = new JPanel();
+        JLabel TagCodeLabel = new JLabel("TagCode: ");
+        TagCodeField = new JTextField(15);
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
-        ButtonPanel.add(SubmitButton);
-        ButtonPanel.add(BackButton);
 
-        //register event listener
+        JPanel ButtonPanel = new JPanel();
+        SubmitButton = new JButton("Submit");
+        BackButton = new JButton("Back");
         SubmitButton.addActionListener(this);
         BackButton.addActionListener(this);
+        ButtonPanel.add(SubmitButton);
+        ButtonPanel.add(BackButton);
 
         //Vertical design 
         Box MainPanel = Box.createVerticalBox();

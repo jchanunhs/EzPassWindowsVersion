@@ -9,10 +9,10 @@ import javax.swing.table.DefaultTableModel;
 
 class TransactionPanel extends JPanel implements ActionListener {
 
-    Transaction transaction;
+    private Transaction transaction;
     private String CustomerID, Username;
-    private JTextField before, after;
-    private JButton getlist;
+    private JTextField BeforeText, AfterText;
+    private JButton GetListButton;
 
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; 
@@ -21,26 +21,30 @@ class TransactionPanel extends JPanel implements ActionListener {
     public TransactionPanel(String CID,String User) {
         CustomerID = CID;
         Username = User;
+        
+        JPanel BeforePanel = new JPanel();
+        JLabel BeforeLabel = new JLabel("Date from:");
+        BeforeText = new JTextField(15);
+        BeforePanel.add(BeforeLabel);
+        BeforePanel.add(BeforeText);
+        
+        JPanel AfterPanel = new JPanel();
+        JLabel AfterLabel = new JLabel("Date to:");
+        AfterText = new JTextField(15);
+        AfterPanel.add(AfterLabel);
+        AfterPanel.add(AfterText);
+        
+        JPanel ButtonPanel = new JPanel();
+        GetListButton = new JButton("Populate list"); 
+        GetListButton.addActionListener(this);
+        ButtonPanel.add(GetListButton);
+        
+        JPanel LabelPanel = new JPanel(new FlowLayout()); //center label for table
+        JLabel ListLabel = new JLabel("Transaction List");
+        LabelPanel.add(ListLabel);
+        
+        JPanel TransactionListTable = new JPanel();
         transaction = new Transaction(CustomerID);
-
-        getlist = new JButton("Populate list"); //button
-        getlist.addActionListener(this);
-
-        JLabel beforelabel = new JLabel("Date from:");
-        JLabel afterlabel = new JLabel("Date to:");
-
-        before = new JTextField(15);
-        after = new JTextField(15);
-
-        //date panels
-        JPanel beforepane = new JPanel();
-        JPanel afterpane = new JPanel();
-        beforepane.add(beforelabel);
-        beforepane.add(before);
-        afterpane.add(afterlabel);
-        afterpane.add(after);
-        afterpane.add(getlist);
-
         //populate table with all transactions as default
         model.setColumnIdentifiers(columnName); //column titles
         ArrayList<String> TID_list = transaction.getAllTransactions("TransactionID");
@@ -50,7 +54,6 @@ class TransactionPanel extends JPanel implements ActionListener {
         ArrayList<String> TP_list = transaction.getAllTransactions("TollPlaza");
         ArrayList<String> TLN_list = transaction.getAllTransactions("TollLaneNumber");
         ArrayList<String> TA_list = transaction.getAllTransactions("TollAmount");
-
         for (int i = 0; i < TID_list.size(); i++) {
             String TID = TID_list.get(i);
             String TC = TC_list.get(i);
@@ -62,29 +65,24 @@ class TransactionPanel extends JPanel implements ActionListener {
             model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
 
         }
-        //initializing a table and scroll pane
+        //initializing a table and scroll panel
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFillsViewportHeight(true);
         JScrollPane scroll = new JScrollPane(table);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setPreferredSize(new Dimension(600, 500));
-
-        JLabel list_label = new JLabel("Transaction List");
-        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
-        label_pane.add(list_label);
-
-        JPanel transactionListPanel = new JPanel();
-        transactionListPanel.add(scroll);
+        scroll.setPreferredSize(new Dimension(700, 550));
+        TransactionListTable.add(scroll);
 
         Box MainPanel = Box.createVerticalBox();
-        //dates
-        MainPanel.add(beforepane);
-        MainPanel.add(afterpane);
+        //date inputs
+        MainPanel.add(BeforePanel);
+        MainPanel.add(AfterPanel);
+        MainPanel.add(ButtonPanel);
         //transaction list
-        MainPanel.add(label_pane); // list label will be on top of the transaction list 
-        MainPanel.add(transactionListPanel);
+        MainPanel.add(LabelPanel); 
+        MainPanel.add(TransactionListTable);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
 
@@ -96,14 +94,14 @@ class TransactionPanel extends JPanel implements ActionListener {
         String arg = evt.getActionCommand();
         model.setRowCount(0); //clear the table
         if (arg.equals("Populate list")) { //populate list based on date
-            if (!before.getText().isEmpty() || !after.getText().isEmpty()) {
-                ArrayList<String> TID_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionID");
-                ArrayList<String> TC_list = transaction.getTransactions(before.getText(), after.getText(), "TagCode");
-                ArrayList<String> TD_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionDate");
-                ArrayList<String> TT_list = transaction.getTransactions(before.getText(), after.getText(), "TransactionTime");
-                ArrayList<String> TP_list = transaction.getTransactions(before.getText(), after.getText(), "TollPlaza");
-                ArrayList<String> TLN_list = transaction.getTransactions(before.getText(), after.getText(), "TollLaneNumber");
-                ArrayList<String> TA_list = transaction.getTransactions(before.getText(), after.getText(), "TollAmount");
+            if (!BeforeText.getText().isEmpty() || !AfterText.getText().isEmpty()) {
+                ArrayList<String> TID_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TransactionID");
+                ArrayList<String> TC_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TagCode");
+                ArrayList<String> TD_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TransactionDate");
+                ArrayList<String> TT_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TransactionTime");
+                ArrayList<String> TP_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TollPlaza");
+                ArrayList<String> TLN_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TollLaneNumber");
+                ArrayList<String> TA_list = transaction.getTransactions(BeforeText.getText(), AfterText.getText(), "TollAmount");
 
                 for (int i = 0; i < TID_list.size(); i++) {
                     String TID = TID_list.get(i);
@@ -116,7 +114,7 @@ class TransactionPanel extends JPanel implements ActionListener {
                     model.addRow(new Object[]{TID, TC, TDate, TTime, TP, TLN, TAmt});
 
                 }
-            } else { //if the user enters empty before and after text, populate with original data
+            } else { //if the user enters empty BeforeText and AfterText text, populate with original data
                 ArrayList<String> TID_list = transaction.getAllTransactions("TransactionID");
                 ArrayList<String> TC_list = transaction.getAllTransactions("TagCode");
                 ArrayList<String> TD_list = transaction.getAllTransactions("TransactionDate");

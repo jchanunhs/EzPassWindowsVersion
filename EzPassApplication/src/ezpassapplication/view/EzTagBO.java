@@ -16,59 +16,49 @@ class EzTagPanel extends JPanel implements ActionListener {
     private DefaultListModel list_model; //list model for EzTagList
 
     public EzTagPanel(String CID, String User) {
-
-        AddButton = new JButton("Add Tag");
-        RemoveButton = new JButton("Remove Tag");
         CustomerID = CID;
         Username = User;
 
-        //Display Customer ID
+        JPanel CustomerIDPanel = new JPanel();
+        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
         CustomerIDField = new JTextField(15);
         CustomerIDField.setText(CustomerID);
         CustomerIDField.setEditable(false);
-        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
-        
-        JPanel CustomerIDPanel = new JPanel();
-        JPanel ButtonPanel = new JPanel();
-
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
+
+        JPanel ButtonPanel = new JPanel();
+        AddButton = new JButton("Add Tag");
+        RemoveButton = new JButton("Remove Tag");
+        AddButton.addActionListener(this);
+        RemoveButton.addActionListener(this);
         ButtonPanel.add(AddButton);
         ButtonPanel.add(RemoveButton);
 
-        //Register event listener
-        AddButton.addActionListener(this);
-        RemoveButton.addActionListener(this);
-        
+        JPanel LabelPanel = new JPanel(new FlowLayout()); //center label for table
+        JLabel ListLabel = new JLabel("Your Ez Tags");
+        LabelPanel.add(ListLabel);
+
+        JPanel EzListPanel = new JPanel();
         ez = new EzTag(CustomerID); //vehicle can get information from CID
         ArrayList<String> list_getEz = ez.getTags();
         list_model = new DefaultListModel();
         for (String object : list_getEz) { //add all vehicles to list model
             list_model.addElement(object);
         }
-        //initializing a list
         EzList = new JList(list_model); //jlist contains list model that recieved all license number
-        EzList.setVisibleRowCount(5); //set the visible rows
-
-        JPanel EzListPanel = new JPanel();
-        EzListPanel.add(EzList);
-
         //declare and initialize a SCROLL PANE
         JScrollPane listScroll = new JScrollPane(EzList);
-        listScroll.setPreferredSize(new Dimension(110, 200));
+        listScroll.setPreferredSize(new Dimension(200, 200));
         EzListPanel.add(listScroll);
-        
-        JLabel list_label = new JLabel("Your Ez Tags");
-        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
-        label_pane.add(list_label);
 
         //Center panel will contain all the other panels
         Box MainPanel = Box.createVerticalBox();
         MainPanel.add(CustomerIDPanel);
         MainPanel.add(ButtonPanel);
-        MainPanel.add(label_pane);
+        //ez tag list
+        MainPanel.add(LabelPanel);
         MainPanel.add(EzListPanel);
-
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
 

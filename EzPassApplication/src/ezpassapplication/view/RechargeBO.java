@@ -2,6 +2,7 @@ package ezpassapplication.view;
 
 import ezpassapplication.model.CreditCard;
 import ezpassapplication.control.RechargeControl;
+import ezpassapplication.model.Customer;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -17,72 +18,75 @@ class RechargePanel extends JPanel implements ActionListener {
     private JTable table; //table
     private String[] columnName = {"CreditID", "Date", "Time", "CreditAmount"};
     private CreditCard credit;
+    private Customer cus;
 
-    public RechargePanel(String CID, String User, float Bal) {
-        RechargeButton = new JButton("Recharge"); //recharge button
-        BackButton = new JButton("Back");
+    public RechargePanel(String CID, String User) {
         CustomerID = CID;
         Username = User;
-        credit = new CreditCard(CustomerID);
-        CurrentBalance = String.valueOf(Bal); //show current balance
 
+        JPanel CIDPanel = new JPanel();
         JLabel CustomerIDLabel = new JLabel("Customer ID:");
-        JLabel BalanceLabel = new JLabel("Current Balance:");
-
-        //dont allow user to change customer id and current balance
         CIDField = new JTextField(15);
         CIDField.setText(CustomerID);
         CIDField.setEditable(false);
+        CIDPanel.add(CustomerIDLabel);
+        CIDPanel.add(CIDField);
+
+        JPanel BalPanel = new JPanel();
+        JLabel BalanceLabel = new JLabel("Current Balance:");
+        cus = new Customer(CustomerID);
+        CurrentBalance = String.valueOf(cus.getBalance()); //show current balance
         CurrentBalField = new JTextField(15);
         CurrentBalField.setText(CurrentBalance);
         CurrentBalField.setEditable(false);
+        BalPanel.add(BalanceLabel);
+        BalPanel.add(CurrentBalField);
 
-        //add them to jpanels
-        JPanel CIDPane = new JPanel();
-        CIDPane.add(CustomerIDLabel);
-        CIDPane.add(CIDField);
-        JPanel BalPane = new JPanel();
-        BalPane.add(BalanceLabel);
-        BalPane.add(CurrentBalField);
-
-        //textfields
-        AddBalField = new JTextField(15);
-        CardField = new JTextField(15);
-        NameField = new JTextField(15);
-        ExpField = new JTextField(15);
-        CVVField = new JTextField(15);
-
-        //labels
-        JLabel AddBalLabel = new JLabel("Add to Balance:");
+        JPanel CardPanel = new JPanel();
         JLabel CardLabel = new JLabel("Card Number:");
-        JLabel NameLabel = new JLabel("Name on Card:");
+        CardField = new JTextField(15);
+        CardPanel.add(CardLabel);
+        CardPanel.add(CardField);
+
+        JPanel EXPPanel = new JPanel();
         JLabel EXPLabel = new JLabel("Expiration Date:");
+        ExpField = new JTextField(15);
+        EXPPanel.add(EXPLabel);
+        EXPPanel.add(ExpField);
+
+        JPanel CVVPanel = new JPanel();
         JLabel CVVLabel = new JLabel("CVV:");
+        CVVField = new JTextField(15);
+        CVVPanel.add(CVVLabel);
+        CVVPanel.add(CVVField);
 
-        //add textfields and labels to respective panels
-        JPanel AddBalPane = new JPanel();
-        AddBalPane.add(AddBalLabel);
-        AddBalPane.add(AddBalField);
-        AddBalPane.add(RechargeButton); // Last panel for form so we put button next to addbalance
-        AddBalPane.add(BackButton);
-        JPanel CardPane = new JPanel();
-        CardPane.add(CardLabel);
-        CardPane.add(CardField);
-        JPanel NamePane = new JPanel();
-        NamePane.add(NameLabel);
-        NamePane.add(NameField);
+        JPanel NamePanel = new JPanel();
+        JLabel NameLabel = new JLabel("Name on Card:");
+        NameField = new JTextField(15);
+        NamePanel.add(NameLabel);
+        NamePanel.add(NameField);
 
-        JPanel EXPPane = new JPanel();
-        EXPPane.add(EXPLabel);
-        EXPPane.add(ExpField);
-        JPanel CVVPane = new JPanel();
-        CVVPane.add(CVVLabel);
-        CVVPane.add(CVVField);
+        JPanel AddBalPanel = new JPanel();
+        JLabel AddBalLabel = new JLabel("Add to Balance:");
+        AddBalField = new JTextField(15);
+        AddBalPanel.add(AddBalLabel);
+        AddBalPanel.add(AddBalField);
 
-        RechargeButton.addActionListener(this); //event listener registration
+        JPanel ButtonPanel = new JPanel();
+        RechargeButton = new JButton("Recharge");
+        BackButton = new JButton("Back");
+        RechargeButton.addActionListener(this);
         BackButton.addActionListener(this);
+        ButtonPanel.add(RechargeButton);
+        ButtonPanel.add(BackButton);
 
+        JPanel LabelPanel = new JPanel(new FlowLayout()); //center label for table
+        JLabel ListLabel = new JLabel("Credit List");
+        LabelPanel.add(ListLabel);
+        
+        JPanel CreditTable = new JPanel();//tables for credit list
         //populate table with all credit transactions as default
+        credit = new CreditCard(CustomerID);
         model.setColumnIdentifiers(columnName); //column titles
         ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
         ArrayList<String> date_list = credit.getAllTransactions("Date");
@@ -95,33 +99,29 @@ class RechargePanel extends JPanel implements ActionListener {
             String Credit_AMT = CDAmt_list.get(i);
             model.addRow(new Object[]{Credit_ID, Date, Time, Credit_AMT});
         }
-
         //initializing a table and scroll pane
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setFillsViewportHeight(true);
-        JScrollPane scroll = new JScrollPane(table);
+        JScrollPane scroll = new JScrollPane(table); //add scroll bar to table
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setPreferredSize(new Dimension(600, 500));
-        JLabel list_label = new JLabel("Credit List");
-        JPanel label_pane = new JPanel(new FlowLayout()); //center label for table
-        label_pane.add(list_label);
-
-        JPanel credit_list = new JPanel();//tables for credit list
-        credit_list.add(scroll);
+        scroll.setPreferredSize(new Dimension(600, 450));
+        CreditTable.add(scroll);
 
         //Credit card form in the top, show credit list in the bottom
         Box MainPanel = Box.createVerticalBox();
-        MainPanel.add(CIDPane);
-        MainPanel.add(BalPane);
-        MainPanel.add(CardPane);
-        MainPanel.add(EXPPane);
-        MainPanel.add(CVVPane);
-        MainPanel.add(NamePane);
-        MainPanel.add(AddBalPane);
-        MainPanel.add(label_pane); // list label will be on top of the credit list
-        MainPanel.add(credit_list);
+        MainPanel.add(CIDPanel);
+        MainPanel.add(BalPanel);
+        MainPanel.add(CardPanel);
+        MainPanel.add(EXPPanel);
+        MainPanel.add(CVVPanel);
+        MainPanel.add(NamePanel);
+        MainPanel.add(AddBalPanel);
+        MainPanel.add(ButtonPanel);
+        //credit list
+        MainPanel.add(LabelPanel); 
+        MainPanel.add(CreditTable);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
 
@@ -161,7 +161,7 @@ public class RechargeBO extends JFrame {
 
     private RechargePanel CP_Panel;
 
-    public RechargeBO(String CID, String User, float Bal) {
+    public RechargeBO(String CID, String User) {
         setTitle("Recharge");
         setSize(800, 800);
 
@@ -180,7 +180,7 @@ public class RechargeBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new RechargePanel(CID, User, Bal);
+        CP_Panel = new RechargePanel(CID, User);
         contentPane.add(CP_Panel);
         setVisible(true);
     }

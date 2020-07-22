@@ -12,57 +12,56 @@ class CreateProfilePanel extends JPanel implements ActionListener {
     private String Name, Street, City, State, Zip, Phone, Email, Username;
 
     public CreateProfilePanel(String UName, String NM) {
-        CreateButton = new JButton("Submit");
-
         Username = UName;
 
-        //JTextFields
+        JPanel NamePanel = new JPanel();
+        JLabel NameLabel = new JLabel("Customer Name:");
         NameField = new JTextField(15);
         NameField.setText(NM);
         NameField.setEditable(false);
-        StreetField = new JTextField(15);
-        CityField = new JTextField(15);
-        StateField = new JTextField(15);
-        ZipField = new JTextField(15);
-        PhoneField = new JTextField(15);
-        EmailField = new JTextField(15);
-
-        //JLabels
-        JLabel NameLabel = new JLabel("Customer Name:");
-        JLabel StreetLabel = new JLabel("Street: ");
-        JLabel CityLabel = new JLabel("City: ");
-        JLabel StateLabel = new JLabel("State: ");
-        JLabel ZipLabel = new JLabel("Zip: ");
-        JLabel PhoneLabel = new JLabel("Phone: ");
-        JLabel EmailLabel = new JLabel("Email: ");
-
-        //JPanels
-        JPanel NamePanel = new JPanel();
-        JPanel StreetPanel = new JPanel();
-        JPanel CityPanel = new JPanel();
-        JPanel StatePanel = new JPanel();
-        JPanel ZipPanel = new JPanel();
-        JPanel PhonePanel = new JPanel();
-        JPanel EmailPanel = new JPanel();
-
-        //Add JTextFields and Labels to panels
         NamePanel.add(NameLabel);
         NamePanel.add(NameField);
+
+        JPanel StreetPanel = new JPanel();
+        JLabel StreetLabel = new JLabel("Street: ");
+        StreetField = new JTextField(15);
         StreetPanel.add(StreetLabel);
         StreetPanel.add(StreetField);
+
+        JPanel CityPanel = new JPanel();
+        JLabel CityLabel = new JLabel("City: ");
+        CityField = new JTextField(15);
         CityPanel.add(CityLabel);
         CityPanel.add(CityField);
+
+        JPanel StatePanel = new JPanel();
+        JLabel StateLabel = new JLabel("State: ");
+        StateField = new JTextField(15);
         StatePanel.add(StateLabel);
         StatePanel.add(StateField);
+
+        JPanel ZipPanel = new JPanel();
+        JLabel ZipLabel = new JLabel("Zip: ");
+        ZipField = new JTextField(15);
         ZipPanel.add(ZipLabel);
         ZipPanel.add(ZipField);
+
+        JPanel PhonePanel = new JPanel();
+        JLabel PhoneLabel = new JLabel("Phone: ");
+        PhoneField = new JTextField(15);
         PhonePanel.add(PhoneLabel);
         PhonePanel.add(PhoneField);
+
+        JPanel EmailPanel = new JPanel();
+        JLabel EmailLabel = new JLabel("Email: ");
+        EmailField = new JTextField(15);
         EmailPanel.add(EmailLabel);
         EmailPanel.add(EmailField);
 
-        //Register event listener
+        JPanel ButtonPanel = new JPanel();
+        CreateButton = new JButton("Submit");
         CreateButton.addActionListener(this);
+        ButtonPanel.add(CreateButton);
 
         //Main Panel 
         Box MainPanel = Box.createVerticalBox();
@@ -73,7 +72,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
         MainPanel.add(ZipPanel);
         MainPanel.add(PhonePanel);
         MainPanel.add(EmailPanel);
-        MainPanel.add(CreateButton);
+        MainPanel.add(ButtonPanel);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);
     }

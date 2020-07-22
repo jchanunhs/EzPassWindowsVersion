@@ -91,20 +91,30 @@ public class Transaction {
             Stmt.setString(1, CustomerID);
             ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
-                if (column_name.equals("TransactionID")) {
-                    list.add(Rslt.getString("TransactionID"));
-                } else if (column_name.equals("TagCode")) {
-                    list.add(Rslt.getString("TagCode"));
-                } else if (column_name.equals("TransactionDate")) {
-                    list.add(Rslt.getString("TransactionDate"));
-                } else if (column_name.equals("TransactionTime")) {
-                    list.add(Rslt.getString("TransactionTime"));
-                } else if (column_name.equals("TollPlaza")) {
-                    list.add(Rslt.getString("TollPlaza"));
-                } else if (column_name.equals("TollLaneNumber")) {
-                    list.add(Rslt.getString("TollLaneNumber"));
-                } else if (column_name.equals("TollAmount")) {
-                    list.add(Rslt.getString("TollAmount"));
+                switch (column_name) {
+                    case "TransactionID":
+                        list.add(Rslt.getString("TransactionID"));
+                        break;
+                    case "TagCode":
+                        list.add(Rslt.getString("TagCode"));
+                        break;
+                    case "TransactionDate":
+                        list.add(Rslt.getString("TransactionDate"));
+                        break;
+                    case "TransactionTime":
+                        list.add(Rslt.getString("TransactionTime"));
+                        break;
+                    case "TollPlaza":
+                        list.add(Rslt.getString("TollPlaza"));
+                        break;
+                    case "TollLaneNumber":
+                        list.add(Rslt.getString("TollLaneNumber"));
+                        break;
+                    case "TollAmount":
+                        list.add(Rslt.getString("TollAmount"));
+                        break;
+                    default:
+                        break;
                 }
             }
             Stmt.close();
@@ -135,20 +145,30 @@ public class Transaction {
             Stmt.setString(3, after);
             ResultSet Rslt = Stmt.executeQuery(); //execute query to get transaction based on dates
             while (Rslt.next()) {
-                if (column_name.equals("TransactionID")) {
-                    list.add(Rslt.getString("TransactionID"));
-                } else if (column_name.equals("TagCode")) {
-                    list.add(Rslt.getString("TagCode"));
-                } else if (column_name.equals("TransactionDate")) {
-                    list.add(Rslt.getString("TransactionDate"));
-                } else if (column_name.equals("TransactionTime")) {
-                    list.add(Rslt.getString("TransactionTime"));
-                } else if (column_name.equals("TollPlaza")) {
-                    list.add(Rslt.getString("TollPlaza"));
-                } else if (column_name.equals("TollLaneNumber")) {
-                    list.add(Rslt.getString("TollLaneNumber"));
-                } else if (column_name.equals("TollAmount")) {
-                    list.add(Rslt.getString("TollAmount"));
+                switch (column_name) {
+                    case "TransactionID":
+                        list.add(Rslt.getString("TransactionID"));
+                        break;
+                    case "TagCode":
+                        list.add(Rslt.getString("TagCode"));
+                        break;
+                    case "TransactionDate":
+                        list.add(Rslt.getString("TransactionDate"));
+                        break;
+                    case "TransactionTime":
+                        list.add(Rslt.getString("TransactionTime"));
+                        break;
+                    case "TollPlaza":
+                        list.add(Rslt.getString("TollPlaza"));
+                        break;
+                    case "TollLaneNumber":
+                        list.add(Rslt.getString("TollLaneNumber"));
+                        break;
+                    case "TollAmount":
+                        list.add(Rslt.getString("TollAmount"));
+                        break;
+                    default:
+                        break;
                 }
             }
             Stmt.close();

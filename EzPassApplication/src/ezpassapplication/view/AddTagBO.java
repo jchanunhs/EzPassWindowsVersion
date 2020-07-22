@@ -12,47 +12,38 @@ class AddTagPanel extends JPanel implements ActionListener {
     private String TagCode, TagType, CustomerID, Username;
     private JComboBox TagTypeGroup;
     public AddTagPanel(String CID, String User) {
-
-        SubmitButton = new JButton("Submit");
-        BackButton = new JButton("Back");
         CustomerID = CID;
         Username = User;
-
-        //JTextFields
-        TagCodeField = new JTextField(15);        
-        CustomerIDField = new JTextField(15);
-        CustomerIDField.setText(CustomerID);
-        CustomerIDField.setEditable(false);
         
-        String[]Options = {"Normal", "Express", "BancPass"};
-        TagTypeGroup = new JComboBox(Options); //ComboBox for tag type
-
-
-        //JLabels
-        JLabel TagCodeLabel = new JLabel("Tag Code: ");
-        JLabel TagTypeLabel = new JLabel("Tag Type: ");
-        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
-
-        //JPanels
-        JPanel TagCodePanel = new JPanel();
-        JPanel TagTypePanel = new JPanel();
         JPanel CustomerIDPanel = new JPanel();
-        JPanel ButtonPanel = new JPanel();
-
-        //Add Labels and TextFields to Panels
+        JLabel CustomerIDLabel = new JLabel("CustomerID: ");
+        CustomerIDField = new JTextField(15);
+        CustomerIDField.setText(CustomerID); 
+        CustomerIDField.setEditable(false);
         CustomerIDPanel.add(CustomerIDLabel);
         CustomerIDPanel.add(CustomerIDField);
+        
+        JPanel TagCodePanel = new JPanel();
+        JLabel TagCodeLabel = new JLabel("Tag Code: ");
+        TagCodeField = new JTextField(15);     
         TagCodePanel.add(TagCodeLabel);
         TagCodePanel.add(TagCodeField);
+        
+        JPanel TagTypePanel = new JPanel();
+        JLabel TagTypeLabel = new JLabel("Tag Type: ");
+        String[]Options = {"Normal", "Express", "BancPass"};
+        TagTypeGroup = new JComboBox(Options); //ComboBox for tag type
         TagTypePanel.add(TagTypeLabel);
         TagTypePanel.add(TagTypeGroup);
-        ButtonPanel.add(SubmitButton);
-        ButtonPanel.add(BackButton);
 
-        //register event listener
+        JPanel ButtonPanel = new JPanel();
+        SubmitButton = new JButton("Submit");
+        BackButton = new JButton("Back");
         SubmitButton.addActionListener(this);
         BackButton.addActionListener(this);
-
+        ButtonPanel.add(SubmitButton);
+        ButtonPanel.add(BackButton);
+        
         //Vertical box
         Box MainPanel = Box.createVerticalBox();
         MainPanel.add(CustomerIDPanel);
