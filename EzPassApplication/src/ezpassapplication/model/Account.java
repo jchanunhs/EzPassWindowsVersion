@@ -21,10 +21,6 @@ public class Account {
 
     }
 
-    //change account information based on CID
-    public Account(String CID) {
-        CustomerID = CID;
-    }
 
     public boolean signUp() {
         boolean done = !Username.equals("") && !Password.equals("") && !Password1.equals("") && Password.equals(Password1);
