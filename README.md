@@ -1,4 +1,4 @@
-# EzPassApplication
+# Ez Pass Application (Windows Version)
 
 Created an EzPass simulation using MVC design patterns and Java 8.
 - Microsoft SQL Server was used to store customer information.
