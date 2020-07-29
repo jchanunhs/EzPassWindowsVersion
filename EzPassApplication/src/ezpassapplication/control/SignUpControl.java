@@ -10,8 +10,8 @@ import javax.swing.SwingUtilities;
 
 public class SignUpControl {
 
-    public SignUpControl(ActionEvent evt, String UName, String PsWord, String PsWord1, String Name) {
-        Account Acct = new Account(UName, PsWord, PsWord1, Name);
+    public SignUpControl(ActionEvent evt, String UName, String PsWord, String Name) {
+        Account Acct = new Account(UName, PsWord, Name);
         if (Acct.signUp()) { //check if password match and attempt to sign up
             JOptionPane.showMessageDialog(null, "Account creation was successful! Please login to your new account!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             LoginBO login = new LoginBO(); //display login screen and close sign up

@@ -4,13 +4,12 @@ import java.sql.*;
 
 public class Account {
 
-    private String CustomerID, Username, Password, Password1, Name;
+    private String CustomerID, Username, Password, Name;
 
     //Create account
-    public Account(String UN, String PassW, String PassW1, String NM) {
+    public Account(String UN, String PassW, String NM) {
         Username = UN;
         Password = PassW;
-        Password1 = PassW1;
         Name = NM;
     }
 
@@ -23,15 +22,15 @@ public class Account {
 
 
     public boolean signUp() {
-        boolean done = !Username.equals("") && !Password.equals("") && !Password1.equals("") && Password.equals(Password1);
+        boolean done = false;
         try {
-            if (done) {
+            if (!done) {
                 DBConnection ToDB = new DBConnection();
                 Connection DBConn = ToDB.openConn();
                 PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Account WHERE Username = ?");
                 Stmt.setString(1, Username);
                 ResultSet Rslt = Stmt.executeQuery();
-                done = done && !Rslt.next();
+                done = !Rslt.next();
                 if (done) { //if username not taken, insert into db
                     Stmt = DBConn.prepareStatement("INSERT into Account (Username, Password, Name) VALUES(?,?,?)");
                     Stmt.setString(1, Username);

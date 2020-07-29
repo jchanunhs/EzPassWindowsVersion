@@ -64,7 +64,7 @@ class SignUpPanel extends JPanel implements ActionListener {
             } else if (!PsWord.equals(PsWord1)) { //check for invalid password matchup
                 JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
-                SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, PsWord1, Name);
+                SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, Name);
             }
 
         }
