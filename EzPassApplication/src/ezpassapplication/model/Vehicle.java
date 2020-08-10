@@ -55,7 +55,7 @@ public class Vehicle {
                 Stmt.setString(1, CustomerID);
                 Stmt.setString(2, TagCode);
                 Stmt.setString(3, LicensePlateNumber);
-                ResultSet Rslt = Stmt.executeQuery(); //if there is a row, that means tag code and customer id are a match
+                ResultSet Rslt = Stmt.executeQuery(); //if there is a row, that means tag code, vehicle and customer id are a match
                 done = Rslt.next();
                 Stmt.close();
                 ToDB.closeConn();

@@ -20,8 +20,8 @@ public class EzTag {
         TagType = TT;
         CustomerID = CID;
     }
-
-    //check tag constructor
+    
+    //check or remove tag constructor 
     public EzTag(String TC, String CID) {
         CustomerID = CID;
         TagCode = TC;
