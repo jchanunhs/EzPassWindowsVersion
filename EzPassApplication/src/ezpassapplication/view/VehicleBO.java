@@ -1,6 +1,7 @@
 package ezpassapplication.view;
 
-import ezpassapplication.model.Vehicle;
+import ezpassapplication.dao.VehicleDAO;
+import ezpassapplication.entity.Vehicle;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import javax.swing.event.*;
 
 class VehiclePanel extends JPanel implements ListSelectionListener, ActionListener {
 
-    private Vehicle vehicle;
+    private VehicleDAO vehicledao;
     private String CustomerID, clickedString, Username;
     private int clickedInt;
     private JTextField SelectedVehicle;
@@ -32,11 +33,12 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
         LabelPanel.add(ListLabel);
 
         JPanel VehicleListPanel = new JPanel();
-        vehicle = new Vehicle(CustomerID); //vehicle can get information from CID
-        ArrayList<String> list_getVehicle = vehicle.getVehicles();
+        //get all vehicle information and populate list with only license plate number
+        vehicledao = new VehicleDAO();
+        ArrayList<Vehicle> vehiclelist = vehicledao.getAllCustomerVehicles(CustomerID);
         list_model = new DefaultListModel();
-        for (String object : list_getVehicle) { //add all vehicles to list model
-            list_model.addElement(object);
+        for (Vehicle vehicle : vehiclelist) { //add all vehicles to list model
+            list_model.addElement(vehicle.getLicensePlateNumber());
         }
         //initializing a list
         VehicleList = new JList(list_model); //jlist contains list model that recieved all license number
@@ -85,8 +87,10 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
         } else if (arg.equals("Remove Vehicle")) { //remove vehicle based on what user clicked from list
-            Vehicle vehicle = new Vehicle(clickedString, CustomerID);
-            if (vehicle.removeVehicle()) {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setLicensePlateNumber(clickedString);
+            vehicle.setCustomerID(CustomerID);
+            if (vehicledao.removeVehicle(vehicle)) {
                 JOptionPane.showMessageDialog(null, "Vehicle was removed successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 list_model.remove(clickedInt);
 

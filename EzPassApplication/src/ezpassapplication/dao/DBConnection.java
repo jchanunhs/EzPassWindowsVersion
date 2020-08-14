@@ -1,4 +1,4 @@
-package ezpassapplication.model;
+package ezpassapplication.dao;
 
 import java.util.*;
 import java.sql.*;
@@ -7,15 +7,16 @@ public class DBConnection {
 
     private Connection connection;
     private String URL;
+    private String User;
+    private String Password;
 
     public DBConnection() {
-        URL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=TangClass;integratedSecurity=true;";
+        URL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=TangClass;user=standardUser;password=standardUser";
         connection = null;
     }
 
     public Connection openConn() {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(URL);
         } catch (Exception e) {
             e.printStackTrace();

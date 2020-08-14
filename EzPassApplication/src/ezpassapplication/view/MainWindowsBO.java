@@ -7,12 +7,12 @@ import javax.swing.*;
 class MainWindowsPanel extends JPanel {
 
     //main windows to show customer informations
-    public MainWindowsPanel(String CID,String User) {
-        UserProfilePanel user = new UserProfilePanel(CID,User); //User Profile
-        VehiclePanel vehicle = new VehiclePanel(CID,User);  //Display Vehicles
-        EzTagPanel eztag = new EzTagPanel(CID,User); //EZ tag
-        PayTollPanel paytoll = new PayTollPanel(CID,User); // PayToll
-        TransactionPanel trans = new TransactionPanel(CID,User); //View transactions
+    public MainWindowsPanel(String CID, String User) {
+        UserProfilePanel user = new UserProfilePanel(CID, User); //User Profile
+        VehiclePanel vehicle = new VehiclePanel(CID, User);  //Display Vehicles
+        EzTagPanel eztag = new EzTagPanel(CID, User); //EZ tag
+        PayTollPanel paytoll = new PayTollPanel(CID, User); // PayToll
+        TransactionPanel trans = new TransactionPanel(CID, User); //View transactions
         JTabbedPane MainPanel = new JTabbedPane();
 
         //add panels to tabs
@@ -33,7 +33,7 @@ public class MainWindowsBO extends JFrame {
 
     private MainWindowsPanel MW_Panel;
 
-    public MainWindowsBO(String CID,String User) {
+    public MainWindowsBO(String CID, String User) {
         setTitle("Main Windows");
         setSize(800, 800);
 
@@ -54,7 +54,7 @@ public class MainWindowsBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        MW_Panel = new MainWindowsPanel(CID,User);
+        MW_Panel = new MainWindowsPanel(CID, User);
         contentPane.add(MW_Panel);
         setVisible(true);
     }

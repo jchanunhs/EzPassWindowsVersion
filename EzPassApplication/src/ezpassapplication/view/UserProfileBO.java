@@ -1,13 +1,15 @@
 package ezpassapplication.view;
 
-import ezpassapplication.model.Customer;
+import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.entity.Customer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 class UserProfilePanel extends JPanel implements ActionListener {
 
-    private Customer cus;
+    private CustomerDAO customerdao;
+    private Customer customer;
     private JButton ChangePassword, Recharge, LogOut;
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
     private String Name, Street, City, State, Zip, Phone, Email, Balance, Username, CustomerID;
@@ -16,12 +18,13 @@ class UserProfilePanel extends JPanel implements ActionListener {
         CustomerID = CID;
         Username = User;
         //create customer object and get their data
-        cus = new Customer(CustomerID);
+        customerdao = new CustomerDAO();
+        customer = customerdao.getCustomerInformation(CustomerID);
 
         JPanel NamePanel = new JPanel();
         JLabel NameLabel = new JLabel("Customer Name:");
         NameField = new JTextField(15);
-        NameField.setText(cus.getName());
+        NameField.setText(customer.getName());
         NameField.setEditable(false);
         NamePanel.add(NameLabel);
         NamePanel.add(NameField);
@@ -29,7 +32,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel StreetPanel = new JPanel();
         JLabel StreetLabel = new JLabel("Street: ");
         StreetField = new JTextField(15);
-        StreetField.setText(cus.getStreet());
+        StreetField.setText(customer.getStreet());
         StreetField.setEditable(false);
         StreetPanel.add(StreetLabel);
         StreetPanel.add(StreetField);
@@ -37,7 +40,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel CityPanel = new JPanel();
         JLabel CityLabel = new JLabel("City: ");
         CityField = new JTextField(15);
-        CityField.setText(cus.getCity());
+        CityField.setText(customer.getCity());
         CityField.setEditable(false);
         CityPanel.add(CityLabel);
         CityPanel.add(CityField);
@@ -45,7 +48,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel StatePanel = new JPanel();
         JLabel StateLabel = new JLabel("State: ");
         StateField = new JTextField(15);
-        StateField.setText(cus.getState());
+        StateField.setText(customer.getState());
         StateField.setEditable(false);
         StatePanel.add(StateLabel);
         StatePanel.add(StateField);
@@ -53,7 +56,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel ZipPanel = new JPanel();
         JLabel ZipLabel = new JLabel("Zip: ");
         ZipField = new JTextField(15);
-        ZipField.setText(cus.getZip());
+        ZipField.setText(customer.getZip());
         ZipField.setEditable(false);
         ZipPanel.add(ZipLabel);
         ZipPanel.add(ZipField);
@@ -61,7 +64,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel PhonePanel = new JPanel();
         JLabel PhoneLabel = new JLabel("Phone: ");
         PhoneField = new JTextField(15);
-        PhoneField.setText(cus.getPhone());
+        PhoneField.setText(customer.getPhone());
         PhoneField.setEditable(false);
         PhonePanel.add(PhoneLabel);
         PhonePanel.add(PhoneField);
@@ -69,7 +72,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel EmailPanel = new JPanel();
         JLabel EmailLabel = new JLabel("Email: ");
         EmailField = new JTextField(15);
-        EmailField.setText(cus.getEmail());
+        EmailField.setText(customer.getEmail());
         EmailField.setEditable(false);
         EmailPanel.add(EmailLabel);
         EmailPanel.add(EmailField);
@@ -77,7 +80,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         JPanel BalancePanel = new JPanel();
         JLabel BalanceLabel = new JLabel("Balance:");
         BalanceField = new JTextField(15);
-        BalanceField.setText(String.valueOf(cus.getBalance()));
+        BalanceField.setText(String.valueOf(customer.getBalance()));
         BalanceField.setEditable(false);
         BalancePanel.add(BalanceLabel);
         BalancePanel.add(BalanceField);

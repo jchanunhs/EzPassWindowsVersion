@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
-import ezpassapplication.model.Account;
+import ezpassapplication.dao.AccountDAO;
+import ezpassapplication.entity.Account;
 import ezpassapplication.view.LoginBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -11,8 +12,11 @@ import javax.swing.SwingUtilities;
 public class ChangePasswordControl {
 
     public ChangePasswordControl(ActionEvent evt, String UName, String OldPass, String NewPass) {
-        Account acct = new Account(UName, OldPass);
-        if (acct.changePassword(NewPass)) { //attempt to change password
+        AccountDAO accountdao = new AccountDAO();
+        Account account = new Account();
+        account.setUsername(UName);
+        account.setPassword(OldPass);
+        if (accountdao.updatePassword(account, NewPass)) { //attempt to change password
             JOptionPane.showMessageDialog(null, "Your password was changed successfully. Please relog with your new password.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             LoginBO login = new LoginBO(); //open login windows and close change password window
             JComponent component = (JComponent) evt.getSource();

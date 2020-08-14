@@ -1,8 +1,10 @@
 package ezpassapplication.view;
 
-import ezpassapplication.model.CreditCard;
 import ezpassapplication.control.RechargeControl;
-import ezpassapplication.model.Customer;
+import ezpassapplication.dao.CreditCardDAO;
+import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.entity.CreditCard;
+import ezpassapplication.entity.Customer;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -17,8 +19,9 @@ class RechargePanel extends JPanel implements ActionListener {
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
     private String[] columnName = {"CreditID", "Date", "Time", "CreditAmount"};
+    CreditCardDAO creditcarddao;
     private CreditCard credit;
-    private Customer cus;
+    private Customer customer;
 
     public RechargePanel(String CID, String User) {
         CustomerID = CID;
@@ -34,8 +37,9 @@ class RechargePanel extends JPanel implements ActionListener {
 
         JPanel BalPanel = new JPanel();
         JLabel BalanceLabel = new JLabel("Current Balance:");
-        cus = new Customer(CustomerID);
-        CurrentBalance = String.valueOf(cus.getBalance()); //show current balance
+        CustomerDAO customerdao = new CustomerDAO();
+        customer = customerdao.getCustomerInformation(CustomerID);
+        CurrentBalance = String.valueOf(customer.getBalance()); //show current balance
         CurrentBalField = new JTextField(15);
         CurrentBalField.setText(CurrentBalance);
         CurrentBalField.setEditable(false);
@@ -83,22 +87,16 @@ class RechargePanel extends JPanel implements ActionListener {
         JPanel LabelPanel = new JPanel(new FlowLayout()); //center label for table
         JLabel ListLabel = new JLabel("Credit List");
         LabelPanel.add(ListLabel);
-        
+
         JPanel CreditTable = new JPanel();//tables for credit list
-        //populate table with all credit transactions as default
-        credit = new CreditCard(CustomerID);
+
+        creditcarddao = new CreditCardDAO();
+        ArrayList<CreditCard> CreditCardList = creditcarddao.getAllTransactions(CustomerID); //get all credit card object from customer
         model.setColumnIdentifiers(columnName); //column titles
-        ArrayList<String> CreditID_list = credit.getAllTransactions("CreditID");
-        ArrayList<String> date_list = credit.getAllTransactions("Date");
-        ArrayList<String> time_list = credit.getAllTransactions("Time");
-        ArrayList<String> CDAmt_list = credit.getAllTransactions("CreditAmount");
-        for (int i = 0; i < CreditID_list.size(); i++) {
-            String Credit_ID = CreditID_list.get(i);
-            String Date = date_list.get(i);
-            String Time = time_list.get(i);
-            String Credit_AMT = CDAmt_list.get(i);
-            model.addRow(new Object[]{Credit_ID, Date, Time, Credit_AMT});
+        for (CreditCard creditcard : CreditCardList) { //add credit card information to model
+            model.addRow(new Object[]{creditcard.getCreditID(), creditcard.getDate(), creditcard.getTime(), creditcard.getCreditAmount()});
         }
+
         //initializing a table and scroll pane
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -120,7 +118,7 @@ class RechargePanel extends JPanel implements ActionListener {
         MainPanel.add(AddBalPanel);
         MainPanel.add(ButtonPanel);
         //credit list
-        MainPanel.add(LabelPanel); 
+        MainPanel.add(LabelPanel);
         MainPanel.add(CreditTable);
         setLayout(new BorderLayout());
         add(MainPanel, BorderLayout.NORTH);

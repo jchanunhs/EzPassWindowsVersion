@@ -1,6 +1,7 @@
 package ezpassapplication.view;
 
-import ezpassapplication.model.EzTag;
+import ezpassapplication.dao.EzTagDAO;
+import ezpassapplication.entity.EzTag;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import javax.swing.*;
 
 class EzTagPanel extends JPanel implements ActionListener {
 
-    private EzTag ez;
+    private EzTagDAO eztagdao; //dao object to get all customer tag code
+    ArrayList<EzTag> EZTagList; //arraylist with ez tags
     private JButton AddButton, RemoveButton;
     private JTextField CustomerIDField;
     private String CustomerID, Username;
@@ -40,11 +42,12 @@ class EzTagPanel extends JPanel implements ActionListener {
         LabelPanel.add(ListLabel);
 
         JPanel EzListPanel = new JPanel();
-        ez = new EzTag(CustomerID); //vehicle can get information from CID
-        ArrayList<String> list_getEz = ez.getTags();
+        //get all ez tags from customer and populate list with tag code
+        eztagdao = new EzTagDAO();
+        EZTagList = eztagdao.getAllCustomerTag(CustomerID);
         list_model = new DefaultListModel();
-        for (String object : list_getEz) { //add all vehicles to list model
-            list_model.addElement(object);
+        for (EzTag eztag : EZTagList) { //add all vehicles to list model
+            list_model.addElement(eztag.getTagCode());
         }
         EzList = new JList(list_model); //jlist contains list model that recieved all license number
         //declare and initialize a SCROLL PANE

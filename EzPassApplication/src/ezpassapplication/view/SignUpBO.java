@@ -1,7 +1,6 @@
 package ezpassapplication.view;
 
 import ezpassapplication.control.SignUpControl;
-import ezpassapplication.model.Account;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,7 +11,6 @@ class SignUpPanel extends JPanel implements ActionListener {
     private JTextField UsernameField, NameField;
     private JPasswordField PasswordField, PasswordField1;
     private String UName, PsWord, PsWord1, Name;
-    private Account Acct;
 
     public SignUpPanel() {
         RegisterButton = new JButton("Register"); //initializing two button references
