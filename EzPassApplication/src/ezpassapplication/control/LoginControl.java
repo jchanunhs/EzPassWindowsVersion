@@ -27,7 +27,7 @@ public class LoginControl {
             win.dispose();
             CreateProfileBO createprof = new CreateProfileBO(Username, account.getName()); //pass user name and the name of person who owns account
         } else {
-            JOptionPane.showMessageDialog(null, "Error: Invalid Username or Password!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Invalid Username and/or Password. Please try again.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
