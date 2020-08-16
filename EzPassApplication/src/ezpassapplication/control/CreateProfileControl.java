@@ -22,7 +22,7 @@ public class CreateProfileControl {
         customer.setPhone(Phone);
         customer.setEmail(Email);
         if (customerdao.createProfile(customer, UName)) { //attempt to create profile 
-            JOptionPane.showMessageDialog(null, "Create profile is successful!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Profile created successfully! Please relog to your account!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             LoginBO login = new LoginBO(); //open login window and close create profile window
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
