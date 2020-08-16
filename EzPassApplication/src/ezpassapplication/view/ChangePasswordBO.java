@@ -9,8 +9,8 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
 
     private JButton ChangeButton, BackButton;
     private JTextField UsernameField;
-    private JPasswordField OldPassword, NewPassword, Retype;
-    private String CustomerID, Username;
+    private JPasswordField OldPasswordField, NewPasswordField, RetypeField;
+    private String CustomerID, Username, OldPassword, NewPassword, NewPassword1;
 
     public ChangePasswordPanel(String CID, String User) {
 
@@ -29,21 +29,21 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
 
         JPanel OldPasswordPanel = new JPanel();
         JLabel OldPasswordLabel = new JLabel("Enter Old Password:");
-        OldPassword = new JPasswordField(15);
+        OldPasswordField = new JPasswordField(15);
         OldPasswordPanel.add(OldPasswordLabel);
-        OldPasswordPanel.add(OldPassword);
+        OldPasswordPanel.add(OldPasswordField);
 
         JPanel NewPasswordPanel = new JPanel();
         JLabel NewPasswordLabel = new JLabel("Enter New Password:");
-        NewPassword = new JPasswordField(15);
+        NewPasswordField = new JPasswordField(15);
         NewPasswordPanel.add(NewPasswordLabel);
-        NewPasswordPanel.add(NewPassword);
+        NewPasswordPanel.add(NewPasswordField);
 
         JPanel ReEnterPasswordPanel = new JPanel();
         JLabel ReEnterLabel = new JLabel("Re-Enter New Password:");
-        Retype = new JPasswordField(15);
+        RetypeField = new JPasswordField(15);
         ReEnterPasswordPanel.add(ReEnterLabel);
-        ReEnterPasswordPanel.add(Retype);
+        ReEnterPasswordPanel.add(RetypeField);
 
         JPanel ButtonPanel = new JPanel();
         ChangeButton = new JButton("Change");
@@ -68,15 +68,15 @@ class ChangePasswordPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         String arg = evt.getActionCommand();
         if (arg.equals("Change")) { //get inputs and pass to control
-            String oldPW = OldPassword.getText();
-            String newPW = NewPassword.getText();
-            String newPW1 = Retype.getText();
-            if (oldPW.equals("") || newPW.equals("") || newPW1.equals("")) {
+            OldPassword = OldPasswordField.getText();
+            NewPassword = NewPasswordField.getText();
+            NewPassword1 = RetypeField.getText();
+            if (OldPassword.isEmpty() || NewPassword.isEmpty() || NewPassword1.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-            } else if (!newPW.equals(newPW1)) { //check if password match
+            } else if (!NewPassword.equals(NewPassword1)) { //check if password match
                 JOptionPane.showMessageDialog(null, "Error: Unmatched new password!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, oldPW, newPW);
+                ChangePasswordControl CP_CTRL = new ChangePasswordControl(evt, Username, OldPassword, NewPassword);
             }
         } else if (arg.equals("Back")) { //return to mainwindows and close change password window
             MainWindowsBO main = new MainWindowsBO(CustomerID, Username);

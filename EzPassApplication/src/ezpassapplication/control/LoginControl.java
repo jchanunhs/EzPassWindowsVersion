@@ -15,13 +15,13 @@ public class LoginControl {
         Account account = accountdao.getAccountInformation(Username, Password); //get account information from dao.
 
         //if customer profile already made and user sign in successfully, pass to main windows
-        if (accountdao.signIn(account) && account.getCustomerID() != null) {
+        if (account.getUsername()!= null && account.getPassword() != null && account.getCustomerID() != null) {
             MainWindowsBO main = new MainWindowsBO(account.getCustomerID(), Username);
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();
             //if user log in successfully but no customer profile, make them create one
-        } else if (accountdao.signIn(account)) {
+        } else if (account.getUsername()!= null && account.getPassword() != null && account.getCustomerID() == null) {
             JComponent component = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(component);
             win.dispose();

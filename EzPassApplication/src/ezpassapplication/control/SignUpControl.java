@@ -18,7 +18,7 @@ public class SignUpControl {
         account.setPassword(PsWord);
         account.setName(Name);
 
-        if (accountdao.signUp(account)) { //check if password match and attempt to sign up
+        if (accountdao.signUp(account)) { 
             JOptionPane.showMessageDialog(null, "Account creation was successful! Please login to your new account!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             LoginBO login = new LoginBO(); //display login screen and close sign up
             JComponent component = (JComponent) evt.getSource();

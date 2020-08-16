@@ -73,7 +73,7 @@ class PayTollPanel extends JPanel implements ActionListener {
                 TollPlaza = TollPlazaField.getText();
                 TollLaneNumber = TollLaneNumberField.getText();
                 TollAmount = TollAmountField.getText();
-                if (LicensePlateNumber.equals("") || TagCode.equals("") || TollPlaza.equals("") || TollLaneNumber.equals("") || TollAmount.equals("")) {
+                if (LicensePlateNumber.isEmpty() || TagCode.isEmpty() || TollPlaza.isEmpty() || TollLaneNumber.isEmpty() || TollAmount.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int intTollLaneNum = Integer.parseInt(String.valueOf(TollLaneNumber)); //Lane number in DB is int

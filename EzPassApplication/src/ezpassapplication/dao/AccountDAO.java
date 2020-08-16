@@ -44,35 +44,6 @@ public class AccountDAO {
         }
         return done;
     }
-
-    public boolean signIn(Account account) {
-        boolean done = false;
-        try {
-            DBConnection ToDB = new DBConnection();
-            Connection DBConn = ToDB.openConn();
-            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM Account WHERE Username = ? AND Password = ?");
-            Stmt.setString(1, account.getUsername());
-            Stmt.setString(2, account.getPassword());
-            ResultSet Rslt = Stmt.executeQuery();
-            done = Rslt.next();//If there is a row, user typed in valid username and password and return true
-            Stmt.close();
-            ToDB.closeConn();
-        } catch (java.sql.SQLException e) {
-            done = false;
-            System.out.println("SQLException: " + e);
-            while (e != null) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e = e.getNextException();
-                System.out.println("");
-            }
-        } catch (java.lang.Exception e) {
-            done = false;
-            System.out.println("Exception: " + e);
-        }
-        return done;
-    }
     
     public Account getAccountInformation(String Username, String Password){
         Account account = new Account();

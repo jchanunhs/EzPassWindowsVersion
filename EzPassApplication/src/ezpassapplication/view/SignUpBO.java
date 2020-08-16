@@ -10,7 +10,7 @@ class SignUpPanel extends JPanel implements ActionListener {
     private JButton RegisterButton, LoginButton;
     private JTextField UsernameField, NameField;
     private JPasswordField PasswordField, PasswordField1;
-    private String UName, PsWord, PsWord1, Name;
+    private String Username, Password, Password1, Name;
 
     public SignUpPanel() {
         RegisterButton = new JButton("Register"); //initializing two button references
@@ -53,16 +53,16 @@ class SignUpPanel extends JPanel implements ActionListener {
         //Object source = evt.getSource(); //get who generates this event
         String arg = evt.getActionCommand();
         if (arg.equals("Register")) {
-            UName = UsernameField.getText(); //take actions
-            PsWord = PasswordField.getText();
-            PsWord1 = PasswordField1.getText();
+            Username = UsernameField.getText(); //take actions
+            Password = PasswordField.getText();
+            Password1 = PasswordField1.getText();
             Name = NameField.getText();
-            if (UName.equals("") || PsWord.equals("") || PsWord1.equals("") || Name.equals("")) {
+            if (Username.isEmpty() || Password.isEmpty() || Password1.isEmpty() || Name.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
-            } else if (!PsWord.equals(PsWord1)) { //check for invalid password matchup
+            } else if (!Password.equals(Password1)) { //check for invalid password matchup
                 JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
-                SignUpControl SU_CTRL = new SignUpControl(evt, UName, PsWord, Name);
+                SignUpControl SU_CTRL = new SignUpControl(evt, Username, Password, Name);
             }
 
         }

@@ -79,7 +79,7 @@ public class LoginBO extends JFrame implements ActionListener {
         if (arg.equals("Login")) {
             String Username = UsernameField.getText();
             String Password = PasswordField.getText();
-            if (Username.equals("") || Password.equals("")) {
+            if (Username.isEmpty() || Password.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
                 LoginControl LoginC = new LoginControl(evt, Username, Password);

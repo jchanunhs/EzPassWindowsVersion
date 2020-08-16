@@ -33,7 +33,7 @@ class AddTagPanel extends JPanel implements ActionListener {
 
         JPanel TagTypePanel = new JPanel();
         JLabel TagTypeLabel = new JLabel("Tag Type: ");
-        String[] Options = {"Car", "Truck", "Overload"};
+        String[] Options = {"", "Car", "Truck", "Overload"};
         TagTypeGroup = new JComboBox(Options); //ComboBox for tag type
         TagTypePanel.add(TagTypeLabel);
         TagTypePanel.add(TagTypeGroup);
@@ -63,7 +63,7 @@ class AddTagPanel extends JPanel implements ActionListener {
         if (arg.equals("Submit")) { //get inputs and forward to control
             TagCode = TagCodeField.getText();
             TagType = (String) TagTypeGroup.getSelectedItem();
-            if (TagCode.equals("") || TagType.equals("")) {
+            if (TagCode.isEmpty() || TagType.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
                 EzTag eztag = new EzTag();

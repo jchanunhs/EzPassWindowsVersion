@@ -90,7 +90,7 @@ class AddVehiclePanel extends JPanel implements ActionListener {
             Year = YearField.getText();
             Color = ColorField.getText();
             TagCode = TagCodeField.getText();
-            if (LicensePlate.equals("") || Make.equals("") || Model.equals("") || Year.equals("") || Color.equals("") || TagCode.equals("")) {
+            if (LicensePlate.isEmpty() || Make.isEmpty() || Model.isEmpty() || Year.isEmpty() || Color.isEmpty() || TagCode.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
                 AddVehicleControl AV_CTRL = new AddVehicleControl(evt, LicensePlate, Make, Model, Year, Color, TagCode, CustomerID);

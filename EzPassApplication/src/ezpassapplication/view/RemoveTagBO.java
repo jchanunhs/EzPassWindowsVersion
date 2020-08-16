@@ -51,7 +51,7 @@ class RemoveTagPanel extends JPanel implements ActionListener {
         String arg = evt.getActionCommand();
         if (arg.equals("Remove")) {//takes user input and forward to control
             TagCode = TagCodeField.getText();
-            if (TagCode.equals("")) {
+            if (TagCode.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter a tag code!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
                 RemoveTagControl RT_CTRL = new RemoveTagControl(evt, TagCode, CustomerID);

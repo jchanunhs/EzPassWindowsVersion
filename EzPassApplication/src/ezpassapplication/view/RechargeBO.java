@@ -135,7 +135,7 @@ class RechargePanel extends JPanel implements ActionListener {
                 ExpirationDate = ExpField.getText();
                 CVV = CVVField.getText();
                 AddBalance = AddBalField.getText();
-                if (CardNumber.equals("") || Name.equals("") || ExpirationDate.equals("") || CVV.equals("") || AddBalance.equals("")) {
+                if (CardNumber.isEmpty() || Name.isEmpty() || ExpirationDate.isEmpty() || CVV.isEmpty() || AddBalance.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
                 } else {
                     float add_bal = Float.parseFloat(AddBalance); //convert string to float

@@ -90,7 +90,7 @@ class CreateProfilePanel extends JPanel implements ActionListener {
             Phone = PhoneField.getText();
             Email = EmailField.getText();
 
-            if (Name.equals("") || Street.equals("") || City.equals("") || State.equals("") || Zip.equals("") || Phone.equals("") || Email.equals("")) {
+            if (Name.isEmpty() || Street.isEmpty() || City.isEmpty() || State.isEmpty() || Zip.isEmpty() || Phone.isEmpty() || Email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty! Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
                 CreateProfileControl CP_CTRL = new CreateProfileControl(evt, Name, Street, City, State, Zip, Phone, Email, Username);
