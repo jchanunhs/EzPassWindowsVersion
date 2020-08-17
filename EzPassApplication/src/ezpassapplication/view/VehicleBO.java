@@ -95,7 +95,7 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
                 list_model.remove(clickedInt);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Remove vehicle failed!", "Confirmation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: Something went wrong when removing vehicle. If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
