@@ -16,7 +16,7 @@ public class AddTagControl {
         if (tagdao.addTag(tag)) {
             JOptionPane.showMessageDialog(null, "Ez Tag was added successfully!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Error: The Ez Tag that you entered is invalid. Please try again.", "Confirmation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: The Ez Tag that you entered is either taken or invalid. Please try again.", "Confirmation", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
