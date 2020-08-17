@@ -23,7 +23,6 @@ public class AccountDAO {
                 Stmt = DBConn.prepareStatement("INSERT into Account (Username, Password, Name) VALUES(?,?,?)");
                 Stmt.setString(1, account.getUsername());
                 Stmt.setString(2, account.getPassword());
-                Stmt.setString(3, account.getName());
                 Stmt.executeUpdate();
             }
             Stmt.close();
@@ -55,7 +54,6 @@ public class AccountDAO {
             Stmt.setString(2, Password);
             ResultSet Rslt = Stmt.executeQuery();
             Rslt.next();
-            account.setName(Rslt.getString("Name"));
             account.setCustomerID(Rslt.getString("CustomerID"));
             account.setUsername(Rslt.getString("Username"));
             account.setPassword(Rslt.getString("Password"));

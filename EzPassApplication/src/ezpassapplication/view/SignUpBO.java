@@ -8,41 +8,34 @@ import javax.swing.*;
 class SignUpPanel extends JPanel implements ActionListener {
 
     private JButton RegisterButton, LoginButton;
-    private JTextField UsernameField, NameField;
+    private JTextField UsernameField;
     private JPasswordField PasswordField, PasswordField1;
-    private String Username, Password, Password1, Name;
+    private String Username, Password, Password1;
 
     public SignUpPanel() {
         RegisterButton = new JButton("Register"); //initializing two button references
-
-        UsernameField = new JTextField(15);
-        PasswordField = new JPasswordField(15);
-        PasswordField1 = new JPasswordField(15);
-        NameField = new JTextField(15);
-
-        JLabel UsernameLabel = new JLabel("Username: ");
-        JLabel PasswordLabel = new JLabel("Password: ");
-        JLabel PasswordLabel1 = new JLabel("Re-enter Password");
-        JLabel NameLabel = new JLabel("Name");
-
+        
         JPanel UsernamePanel = new JPanel();
-        JPanel PasswordPanel = new JPanel();
-        JPanel PasswordPanel1 = new JPanel();
-        JPanel NamePanel = new JPanel();
-
+        JLabel UsernameLabel = new JLabel("Username: ");
+        UsernameField = new JTextField(15);
         UsernamePanel.add(UsernameLabel);
         UsernamePanel.add(UsernameField);
+        
+        JPanel PasswordPanel = new JPanel();
+        JLabel PasswordLabel = new JLabel("Password: ");
+        PasswordField = new JPasswordField(15);
         PasswordPanel.add(PasswordLabel);
         PasswordPanel.add(PasswordField);
+        
+        JPanel PasswordPanel1 = new JPanel();
+        JLabel PasswordLabel1 = new JLabel("Re-enter Password");
+        PasswordField1 = new JPasswordField(15);
         PasswordPanel1.add(PasswordLabel1);
         PasswordPanel1.add(PasswordField1);
-        NamePanel.add(NameLabel);
-        NamePanel.add(NameField);
-
+        
         add(UsernamePanel);
         add(PasswordPanel);
         add(PasswordPanel1);
-        add(NamePanel);
 
         add(RegisterButton);
         RegisterButton.addActionListener(this); //event listener registration
@@ -56,13 +49,13 @@ class SignUpPanel extends JPanel implements ActionListener {
             Username = UsernameField.getText(); //take actions
             Password = PasswordField.getText();
             Password1 = PasswordField1.getText();
-            Name = NameField.getText();
-            if (Username.isEmpty() || Password.isEmpty() || Password1.isEmpty() || Name.isEmpty()) {
+            
+            if (Username.isEmpty() || Password.isEmpty() || Password1.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please fill out all information!", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else if (!Password.equals(Password1)) { //check for invalid password matchup
                 JOptionPane.showMessageDialog(null, "Account creation failed due to unmatched passwords", "Confirmation", JOptionPane.ERROR_MESSAGE);
             } else {
-                SignUpControl SU_CTRL = new SignUpControl(evt, Username, Password, Name);
+                SignUpControl SU_CTRL = new SignUpControl(evt, Username, Password);
             }
 
         }

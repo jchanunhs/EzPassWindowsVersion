@@ -5,7 +5,6 @@ public class Account {
     private String CustomerID;
     private String Username;
     private String Password;
-    private String Name;
 
     public Account() {
         
@@ -33,14 +32,6 @@ public class Account {
 
     public void setPassword(String Password) {
         this.Password = Password;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String Name) {
-        this.Name = Name;
     }
 
 }

@@ -11,12 +11,12 @@ import javax.swing.SwingUtilities;
 
 public class SignUpControl {
 
-    public SignUpControl(ActionEvent evt, String UName, String PsWord, String Name) {
+    public SignUpControl(ActionEvent evt, String UName, String PsWord) {
         AccountDAO accountdao = new AccountDAO();
         Account account = new Account();
         account.setUsername(UName);
         account.setPassword(PsWord);
-        account.setName(Name);
+
 
         if (accountdao.signUp(account)) { 
             JOptionPane.showMessageDialog(null, "Account creation was successful! Please login to your new account!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);

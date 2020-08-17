@@ -11,14 +11,12 @@ class CreateProfilePanel extends JPanel implements ActionListener {
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField;
     private String Name, Street, City, State, Zip, Phone, Email, Username;
 
-    public CreateProfilePanel(String UName, String NM) {
+    public CreateProfilePanel(String UName) {
         Username = UName;
 
         JPanel NamePanel = new JPanel();
         JLabel NameLabel = new JLabel("Customer Name:");
         NameField = new JTextField(15);
-        NameField.setText(NM);
-        NameField.setEditable(false);
         NamePanel.add(NameLabel);
         NamePanel.add(NameField);
 
@@ -104,7 +102,7 @@ public class CreateProfileBO extends JFrame {
 
     private CreateProfilePanel CP_Panel;
 
-    public CreateProfileBO(String UName, String NM) {
+    public CreateProfileBO(String UName) {
         setTitle("Create Your Profile");
         setSize(800, 800);
 
@@ -123,7 +121,7 @@ public class CreateProfileBO extends JFrame {
         });
 
         Container contentPane = getContentPane(); //add a panel to a frame
-        CP_Panel = new CreateProfilePanel(UName, NM);
+        CP_Panel = new CreateProfilePanel(UName);
         contentPane.add(CP_Panel);
         setVisible(true);
     }

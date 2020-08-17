@@ -87,5 +87,6 @@ public class Customer {
     public void setBalance(float Balance) {
         this.Balance = Balance;
     }
+    
 
 }
