@@ -20,7 +20,7 @@ public class AccountDAO {
             ResultSet Rslt = Stmt.executeQuery();
             done = !Rslt.next();
             if (done) { //if username not taken, insert into db
-                Stmt = DBConn.prepareStatement("INSERT into Account (Username, Password, Name) VALUES(?,?)");
+                Stmt = DBConn.prepareStatement("INSERT into Account (Username, Password) VALUES(?,?)");
                 Stmt.setString(1, account.getUsername());
                 Stmt.setString(2, account.getPassword());
                 Stmt.executeUpdate();
