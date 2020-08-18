@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 public class PayTollControl {
 
-    public PayTollControl(ActionEvent evt, String LicensePlateNumber, String TagCode, String TollPlaza, int intTollLaneNum, float TollAmt, String CID) {
+    public PayTollControl(ActionEvent evt, String LicensePlateNumber, String TagCode, String TollPlaza, int TollLaneNumber, float TollAmt, String CID) {
         //process customer balance
         CustomerDAO customerdao = new CustomerDAO();
         Customer customer = customerdao.getCustomerInformation(CID);
@@ -42,7 +42,7 @@ public class PayTollControl {
         transaction.setTagCode(TagCode);
         transaction.setTollAmount(TollAmt);
         transaction.setTollPlaza(TollPlaza);
-        transaction.setTollLaneNumber(intTollLaneNum);
+        transaction.setTollLaneNumber(TollLaneNumber);
         transaction.setCustomerID(CID);
 
         if (eztagdao.checkTag(eztag)) { //check if tag code belongs to customer
