@@ -14,7 +14,7 @@ public class EzTagDAO {
 
     }
 
-    //check if tag belongs to customer
+    //check if tag belongs to customer and is valid
     public boolean checkTag(EzTag ez) {
         boolean done = false;
         try {
