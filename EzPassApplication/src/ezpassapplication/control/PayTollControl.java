@@ -53,7 +53,7 @@ public class PayTollControl {
                     JComponent component = (JComponent) evt.getSource();//close window when customer is charged successfully
                     Window win = SwingUtilities.getWindowAncestor(component);
                     win.dispose();
-                } else { //record transaction will fail if generated transaction id is taken
+                } else { //update balance failed
                     JOptionPane.showMessageDialog(null, "Error: Unable to process payments at this time. If this occurs multiple times please contact help desk.", "Confirmation", JOptionPane.ERROR_MESSAGE);
                 }
             } else { //vehicle and tag code dont match

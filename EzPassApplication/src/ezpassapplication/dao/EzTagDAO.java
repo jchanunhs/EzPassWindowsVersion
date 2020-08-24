@@ -121,43 +121,6 @@ public class EzTagDAO {
         return done;
     }
 
-    //DB Is configured to update tables associated with this tag code
-    public boolean updateTagCode(EzTag ez, String NewTag) {
-        boolean done = false;
-        try {
-            DBConnection ToDB = new DBConnection();
-            Connection DBConn = ToDB.openConn();
-            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM EzTag WHERE CustomerID = ? AND TagCode = ?");
-            Stmt.setString(1, ez.getCustomerID());
-            Stmt.setString(2, ez.getTagCode());
-            ResultSet Rslt = Stmt.executeQuery(); //check if tag code exist
-            done = Rslt.next(); //if yes, then we can update tag code
-            if (done) {
-                Stmt = DBConn.prepareStatement("UPDATE EzTag SET TagCode = ? WHERE TagCode = ? AND CustomerID = ?");
-                Stmt.setString(1, NewTag);
-                Stmt.setString(2, ez.getTagCode());
-                Stmt.setString(3, ez.getCustomerID());
-                Stmt.executeUpdate();
-            }
-            Stmt.close();
-            ToDB.closeConn();
-        } catch (java.sql.SQLException e) {
-            done = false;
-            System.out.println("SQLException: " + e);
-            while (e != null) {
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("Message: " + e.getMessage());
-                System.out.println("Vendor: " + e.getErrorCode());
-                e = e.getNextException();
-                System.out.println("");
-            }
-        } catch (java.lang.Exception e) {
-            done = false;
-            System.out.println("Exception: " + e);
-        }
-        return done;
-    }
-
     public boolean updateTagType(EzTag ez, String NewTagType) {
         boolean done = false;
         try {
