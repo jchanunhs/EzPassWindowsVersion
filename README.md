@@ -1,12 +1,13 @@
 # Ez Pass Application (Windows Version)
 
 Created an EzPass simulation using MVC design patterns and Java 8.
+
 - Microsoft SQL Server was used to store customer information.
 - GUI was created using Java Swing (JTables, JList, JLabels, JTextFields/PasswordFields, Verticle Box Panels, JPanels, JFrame).
 - Control objects handles user input submissions.
-- DAO object contains connection to database and queries to add/modify contents in tables.
+- Data access object and entity object work together to create and make changes to the customer information inside our database.
 
-When user first signs up and logs in, they will see a CreateProfile panel that must be filled out to get customer information. After they fill out the form and relog, they will now see the main windows. The Main windows contains 5 tabs
+There are 5 tabs in the MainWindows
 
 Profile
 - Shows customer information (Name, address, balance on account, etc.).
@@ -31,3 +32,4 @@ Pay Toll
 Transaction
 - Transactions are displayed in a JTable.
 - Users can also enter date intervals to view transactions on specific dates.
+
