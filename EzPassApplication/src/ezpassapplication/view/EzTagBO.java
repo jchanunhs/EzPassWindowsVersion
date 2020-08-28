@@ -1,7 +1,7 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.EzTagDAO;
-import ezpassapplication.entity.EzTag;
+import ezpassapplication.model.EzTag;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;

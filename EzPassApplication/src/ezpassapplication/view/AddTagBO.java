@@ -1,7 +1,7 @@
 package ezpassapplication.view;
 
 import ezpassapplication.control.AddTagControl;
-import ezpassapplication.entity.EzTag;
+import ezpassapplication.model.EzTag;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

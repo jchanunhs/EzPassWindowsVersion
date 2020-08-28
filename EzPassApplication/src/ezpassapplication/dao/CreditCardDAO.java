@@ -1,6 +1,6 @@
 package ezpassapplication.dao;
 
-import ezpassapplication.entity.CreditCard;
+import ezpassapplication.model.CreditCard;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.AccountDAO;
-import ezpassapplication.entity.Account;
+import ezpassapplication.model.Account;
 import ezpassapplication.view.CreateProfileBO;
 import ezpassapplication.view.MainWindowsBO;
 import java.awt.Window;

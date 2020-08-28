@@ -2,8 +2,8 @@ package ezpassapplication.control;
 
 import ezpassapplication.dao.CreditCardDAO;
 import ezpassapplication.dao.CustomerDAO;
-import ezpassapplication.entity.CreditCard;
-import ezpassapplication.entity.Customer;
+import ezpassapplication.model.CreditCard;
+import ezpassapplication.model.Customer;
 import ezpassapplication.view.MainWindowsBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;

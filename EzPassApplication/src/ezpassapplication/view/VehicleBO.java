@@ -1,7 +1,7 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.VehicleDAO;
-import ezpassapplication.entity.Vehicle;
+import ezpassapplication.model.Vehicle;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;

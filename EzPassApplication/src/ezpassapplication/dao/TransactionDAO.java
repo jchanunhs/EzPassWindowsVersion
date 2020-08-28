@@ -1,6 +1,6 @@
 package ezpassapplication.dao;
 
-import ezpassapplication.entity.Transaction;
+import ezpassapplication.model.Transaction;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.AccountDAO;
-import ezpassapplication.entity.Account;
+import ezpassapplication.model.Account;
 import ezpassapplication.view.LoginBO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;

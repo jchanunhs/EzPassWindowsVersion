@@ -1,7 +1,7 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.TransactionDAO;
-import ezpassapplication.entity.Transaction;
+import ezpassapplication.model.Transaction;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;

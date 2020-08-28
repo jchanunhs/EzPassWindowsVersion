@@ -1,7 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.EzTagDAO;
-import ezpassapplication.entity.EzTag;
+import ezpassapplication.model.EzTag;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 

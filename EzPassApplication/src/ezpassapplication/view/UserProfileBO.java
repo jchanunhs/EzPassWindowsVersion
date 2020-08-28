@@ -1,7 +1,7 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.CustomerDAO;
-import ezpassapplication.entity.Customer;
+import ezpassapplication.model.Customer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

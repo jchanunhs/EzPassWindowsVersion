@@ -1,4 +1,4 @@
-package ezpassapplication.entity;
+package ezpassapplication.model;
 
 public class Vehicle {
     

@@ -1,6 +1,6 @@
 package ezpassapplication.dao;
 
-import ezpassapplication.entity.Account;
+import ezpassapplication.model.Account;
 import java.sql.*;
 
 public class AccountDAO {

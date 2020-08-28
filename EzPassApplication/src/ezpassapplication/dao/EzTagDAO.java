@@ -1,6 +1,6 @@
 package ezpassapplication.dao;
 
-import ezpassapplication.entity.EzTag;
+import ezpassapplication.model.EzTag;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
