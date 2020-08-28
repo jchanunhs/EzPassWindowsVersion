@@ -5,7 +5,7 @@ Created an EzPass simulation using MVC design patterns and Java 8.
 - Microsoft SQL Server was used to store customer information.
 - GUI was created using Java Swing (JTables, JList, JLabels, JTextFields/PasswordFields, Verticle Box Panels, JPanels, JFrame).
 - Control objects handles user input submissions.
-- Data access object and entity object work together to create and make changes to the customer information inside our database.
+- Data access object provides access to SQL Server. Some methods may return true or false values depending on whether the query was executed succesfully.
 
 There are 5 tabs in the MainWindows
 
