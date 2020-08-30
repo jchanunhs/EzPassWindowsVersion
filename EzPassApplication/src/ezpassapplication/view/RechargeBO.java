@@ -1,13 +1,13 @@
 package ezpassapplication.view;
 
 import ezpassapplication.control.RechargeControl;
-import ezpassapplication.dao.CreditCardDAO;
-import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.service.CreditCardService;
+import ezpassapplication.service.CustomerService;
 import ezpassapplication.model.CreditCard;
 import ezpassapplication.model.Customer;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,7 +19,7 @@ class RechargePanel extends JPanel implements ActionListener {
     private DefaultTableModel model = new DefaultTableModel();
     private JTable table; //table
     private String[] columnName = {"CreditID", "Date", "Time", "CreditAmount"};
-    CreditCardDAO creditcarddao;
+    CreditCardService creditcarddao;
     private CreditCard credit;
     private Customer customer;
 
@@ -37,7 +37,7 @@ class RechargePanel extends JPanel implements ActionListener {
 
         JPanel BalPanel = new JPanel();
         JLabel BalanceLabel = new JLabel("Current Balance:");
-        CustomerDAO customerdao = new CustomerDAO();
+        CustomerService customerdao = new CustomerService();
         customer = customerdao.getCustomerInformation(CustomerID);
         CurrentBalance = String.valueOf(customer.getBalance()); //show current balance
         CurrentBalField = new JTextField(15);
@@ -90,8 +90,8 @@ class RechargePanel extends JPanel implements ActionListener {
 
         JPanel CreditTable = new JPanel();//tables for credit list
 
-        creditcarddao = new CreditCardDAO();
-        ArrayList<CreditCard> CreditCardList = creditcarddao.getAllTransactions(CustomerID); //get all credit card object from customer
+        creditcarddao = new CreditCardService();
+        List <CreditCard> CreditCardList = creditcarddao.getAllTransactions(CustomerID); //get all credit card object from customer
         model.setColumnIdentifiers(columnName); //column titles
         for (CreditCard creditcard : CreditCardList) { //add credit card information to model
             model.addRow(new Object[]{creditcard.getCreditID(), creditcard.getDate(), creditcard.getTime(), creditcard.getCreditAmount()});

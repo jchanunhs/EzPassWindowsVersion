@@ -2,6 +2,8 @@ package ezpassapplication.control;
 
 import ezpassapplication.dao.CreditCardDAO;
 import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.service.CreditCardService;
+import ezpassapplication.service.CustomerService;
 import ezpassapplication.model.CreditCard;
 import ezpassapplication.model.Customer;
 import ezpassapplication.view.MainWindowsBO;
@@ -15,13 +17,13 @@ public class RechargeControl {
 
     public RechargeControl(ActionEvent evt, String CID, String User, String CNumber, String NM, String EXPDate, String CVV, float CreditAMT) {
         //get customer current balance
-        CustomerDAO customerdao = new CustomerDAO();
+        CustomerDAO customerdao = new CustomerService();
         Customer customer = customerdao.getCustomerInformation(CID);
         float oldBal = customer.getBalance();
         float newBal = oldBal + CreditAMT;
         
         //add transaction
-        CreditCardDAO creditcarddao = new CreditCardDAO();
+        CreditCardDAO creditcarddao = new CreditCardService();
         CreditCard creditcard = new CreditCard();
         creditcard.setCardNumber(CNumber);
         creditcard.setName(NM);

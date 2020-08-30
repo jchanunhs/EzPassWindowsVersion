@@ -1,4 +1,4 @@
-package ezpassapplication.dao;
+package ezpassapplication.service;
 
 import java.util.*;
 import java.sql.*;

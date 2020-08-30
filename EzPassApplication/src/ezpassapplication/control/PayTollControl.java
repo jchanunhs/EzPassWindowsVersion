@@ -4,6 +4,10 @@ import ezpassapplication.dao.CustomerDAO;
 import ezpassapplication.dao.EzTagDAO;
 import ezpassapplication.dao.TransactionDAO;
 import ezpassapplication.dao.VehicleDAO;
+import ezpassapplication.service.CustomerService;
+import ezpassapplication.service.EzTagService;
+import ezpassapplication.service.TransactionService;
+import ezpassapplication.service.VehicleService;
 import ezpassapplication.model.Customer;
 import ezpassapplication.model.EzTag;
 import ezpassapplication.model.Transaction;
@@ -18,26 +22,26 @@ public class PayTollControl {
 
     public PayTollControl(ActionEvent evt, String LicensePlateNumber, String TagCode, String TollPlaza, int TollLaneNumber, float TollAmt, String CID) {
         //process customer balance
-        CustomerDAO customerdao = new CustomerDAO();
+        CustomerDAO customerdao = new CustomerService();
         Customer customer = customerdao.getCustomerInformation(CID);
         float oldBal = customer.getBalance(); //get current balance from customer
         float newBal = oldBal - TollAmt;
 
         //check if tag input is valid
-        EzTagDAO eztagdao = new EzTagDAO();
+        EzTagDAO eztagdao = new EzTagService();
         EzTag eztag = new EzTag();
         eztag.setCustomerID(CID);
         eztag.setTagCode(TagCode);
 
         //check if vehicle input is valid
-        VehicleDAO vehicledao = new VehicleDAO();
+        VehicleDAO vehicledao = new VehicleService();
         Vehicle vehicle = new Vehicle();
         vehicle.setLicensePlateNumber(LicensePlateNumber);
         vehicle.setTagCode(TagCode);
         vehicle.setCustomerID(CID);
 
         //record transaction
-        TransactionDAO transactiondao = new TransactionDAO();
+        TransactionDAO transactiondao = new TransactionService();
         Transaction transaction = new Transaction();
         transaction.setTagCode(TagCode);
         transaction.setTollAmount(TollAmt);

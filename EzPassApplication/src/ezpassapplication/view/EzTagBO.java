@@ -1,16 +1,17 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.EzTagDAO;
+import ezpassapplication.service.EzTagService;
 import ezpassapplication.model.EzTag;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 class EzTagPanel extends JPanel implements ActionListener {
 
     private EzTagDAO eztagdao; //dao object to get all customer tag code
-    ArrayList<EzTag> EZTagList; //arraylist with ez tags
+    List<EzTag> EZTagList; //list with ez tags
     private JButton AddButton, RemoveButton;
     private JTextField CustomerIDField;
     private String CustomerID, Username;
@@ -43,7 +44,7 @@ class EzTagPanel extends JPanel implements ActionListener {
 
         JPanel EzListPanel = new JPanel();
         //get all ez tags from customer and populate list with tag code
-        eztagdao = new EzTagDAO();
+        eztagdao = new EzTagService();
         EZTagList = eztagdao.getAllCustomerTag(CustomerID);
         list_model = new DefaultListModel();
         for (EzTag eztag : EZTagList) { //add all vehicles to list model

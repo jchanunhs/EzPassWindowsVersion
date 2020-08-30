@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.AccountDAO;
+import ezpassapplication.service.AccountService;
 import ezpassapplication.model.Account;
 import ezpassapplication.view.CreateProfileBO;
 import ezpassapplication.view.MainWindowsBO;
@@ -11,7 +12,7 @@ import javax.swing.*;
 public class LoginControl {
 
     public LoginControl(ActionEvent evt, String Username, String Password) {
-        AccountDAO accountdao = new AccountDAO();
+        AccountDAO accountdao = new AccountService();
         Account account = accountdao.getAccountInformation(Username, Password); //get account information from dao.
 
         //if customer profile already made and user sign in successfully, pass to main windows

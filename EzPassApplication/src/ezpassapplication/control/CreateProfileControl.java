@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.service.CustomerService;
 import ezpassapplication.model.Customer;
 import ezpassapplication.view.LoginBO;
 import java.awt.Window;
@@ -12,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class CreateProfileControl {
 
     public CreateProfileControl(ActionEvent evt, String Name, String Street, String City, String State, String Zip, String Phone, String Email, String UName) {
-        CustomerDAO customerdao = new CustomerDAO();
+        CustomerDAO customerdao = new CustomerService();
         Customer customer = new Customer();
         customer.setName(Name);
         customer.setStreet(Street);

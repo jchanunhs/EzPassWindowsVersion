@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.EzTagDAO;
+import ezpassapplication.service.EzTagService;
 import ezpassapplication.model.EzTag;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -8,7 +9,7 @@ import javax.swing.JOptionPane;
 public class RemoveTagControl {
 
     public RemoveTagControl(ActionEvent evt, String TC, String CID) {
-        EzTagDAO eztagdao = new EzTagDAO();
+        EzTagDAO eztagdao = new EzTagService();
         EzTag eztag = new EzTag();
         eztag.setTagCode(TC);
         eztag.setCustomerID(CID);

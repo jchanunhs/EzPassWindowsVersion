@@ -1,6 +1,6 @@
 package ezpassapplication.view;
 
-import ezpassapplication.dao.CustomerDAO;
+import ezpassapplication.service.CustomerService;
 import ezpassapplication.model.Customer;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,7 +8,7 @@ import javax.swing.*;
 
 class UserProfilePanel extends JPanel implements ActionListener {
 
-    private CustomerDAO customerdao;
+    private CustomerService customerdao;
     private Customer customer;
     private JButton ChangePassword, Recharge, LogOut;
     private JTextField NameField, StreetField, CityField, StateField, ZipField, PhoneField, EmailField, BalanceField;
@@ -18,7 +18,7 @@ class UserProfilePanel extends JPanel implements ActionListener {
         CustomerID = CID;
         Username = User;
         //create customer object and get their data
-        customerdao = new CustomerDAO();
+        customerdao = new CustomerService();
         customer = customerdao.getCustomerInformation(CustomerID);
 
         JPanel NamePanel = new JPanel();

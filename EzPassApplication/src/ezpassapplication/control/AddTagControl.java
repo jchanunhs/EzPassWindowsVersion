@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.EzTagDAO;
+import ezpassapplication.service.EzTagService;
 import ezpassapplication.model.EzTag;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -8,7 +9,7 @@ import javax.swing.JOptionPane;
 public class AddTagControl {
 
     public AddTagControl(ActionEvent evt, String TC, String TT, String CID) {
-        EzTagDAO tagdao = new EzTagDAO();
+        EzTagDAO tagdao = new EzTagService();
         EzTag tag = new EzTag();
         tag.setCustomerID(CID);
         tag.setTagCode(TC);

@@ -2,6 +2,8 @@ package ezpassapplication.control;
 
 import ezpassapplication.dao.EzTagDAO;
 import ezpassapplication.dao.VehicleDAO;
+import ezpassapplication.service.EzTagService;
+import ezpassapplication.service.VehicleService;
 import ezpassapplication.model.EzTag;
 import ezpassapplication.model.Vehicle;
 import java.awt.event.ActionEvent;
@@ -11,13 +13,13 @@ public class AddVehicleControl {
 
     public AddVehicleControl(ActionEvent evt, String LicensePlate, String Make, String Model, String Year, String Color, String TagCode, String CID) {
         //check tag
-        EzTagDAO eztagdao = new EzTagDAO();
+        EzTagDAO eztagdao = new EzTagService();
         EzTag eztag = new EzTag();
         eztag.setCustomerID(CID);
         eztag.setTagCode(TagCode);
         
         //add vehicle
-        VehicleDAO vehicledao = new VehicleDAO();
+        VehicleDAO vehicledao = new VehicleService();
         Vehicle vehicle = new Vehicle();
         vehicle.setLicensePlateNumber(LicensePlate);
         vehicle.setMake(Make);

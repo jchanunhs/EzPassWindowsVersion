@@ -1,6 +1,7 @@
 package ezpassapplication.control;
 
 import ezpassapplication.dao.AccountDAO;
+import ezpassapplication.service.AccountService;
 import ezpassapplication.model.Account;
 import ezpassapplication.view.LoginBO;
 import java.awt.Window;
@@ -12,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class ChangePasswordControl {
 
     public ChangePasswordControl(ActionEvent evt, String UName, String OldPass, String NewPass) {
-        AccountDAO accountdao = new AccountDAO();
+        AccountDAO accountdao = new AccountService();
         Account account = new Account();
         account.setUsername(UName);
         account.setPassword(OldPass);

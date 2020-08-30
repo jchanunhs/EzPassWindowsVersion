@@ -1,17 +1,18 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.TransactionDAO;
+import ezpassapplication.service.TransactionService;
 import ezpassapplication.model.Transaction;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 class TransactionPanel extends JPanel implements ActionListener {
 
     private TransactionDAO transactiondao; //access dao object to fetch customers transactions
-    ArrayList<Transaction> transactionlist; // arraylist with transactions
+    List<Transaction> transactionlist; // arraylist with transactions
     private String CustomerID, Username;
     private JTextField BeforeText, AfterText; //date from - date to
     private JButton GetListButton;
@@ -45,7 +46,7 @@ class TransactionPanel extends JPanel implements ActionListener {
         LabelPanel.add(ListLabel);
 
         JPanel TransactionListTable = new JPanel();
-        transactiondao = new TransactionDAO();
+        transactiondao = new TransactionService();
         transactionlist = transactiondao.getAllTransactions(CustomerID);
         //populate table with all transactions as default
         model.setColumnIdentifiers(columnName); //column titles

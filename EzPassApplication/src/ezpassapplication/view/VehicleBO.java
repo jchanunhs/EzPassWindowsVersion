@@ -1,10 +1,11 @@
 package ezpassapplication.view;
 
 import ezpassapplication.dao.VehicleDAO;
+import ezpassapplication.service.VehicleService;
 import ezpassapplication.model.Vehicle;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -34,8 +35,8 @@ class VehiclePanel extends JPanel implements ListSelectionListener, ActionListen
 
         JPanel VehicleListPanel = new JPanel();
         //get all vehicle information and populate list with only license plate number
-        vehicledao = new VehicleDAO();
-        ArrayList<Vehicle> vehiclelist = vehicledao.getAllCustomerVehicles(CustomerID);
+        vehicledao = new VehicleService();
+        List<Vehicle> vehiclelist = vehicledao.getAllCustomerVehicles(CustomerID);
         list_model = new DefaultListModel();
         for (Vehicle vehicle : vehiclelist) { //add all vehicles to list model
             list_model.addElement(vehicle.getLicensePlateNumber());
