@@ -78,7 +78,7 @@ public class TransactionService implements TransactionDAO{
         try {
             DBConnection ToDB = new DBConnection();
             Connection DBConn = ToDB.openConn();
-            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = ?");
+            PreparedStatement Stmt = DBConn.prepareStatement("SELECT * FROM [TangClass].[dbo].[Transaction] WHERE CustomerID = ? ORDER BY 'TransactionDate','TransactionTime' ASC");
             Stmt.setString(1, CustomerID);
             ResultSet Rslt = Stmt.executeQuery();
             while (Rslt.next()) {
